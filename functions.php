@@ -2,6 +2,7 @@
 if (!defined('ABSPATH')) exit;
 
 define('MM_THEME_VERSION','1.0.0');
+require_once get_template_directory().'/inc/blog-admin.php';
 
 add_action('after_setup_theme', function(){
   add_theme_support('title-tag');
@@ -53,6 +54,10 @@ function mm_render_snapshot($file){
   if($wp_query instanceof WP_Query) $wp_query->is_404=false;
   status_header(200);
   $html=file_get_contents($path);
+  if(function_exists('mm_blog_apply_post_to_snapshot')){
+    $html=mm_blog_apply_post_to_snapshot($html,$file);
+    if($html===false) return false;
+  }
   $asset=trailingslashit(get_template_directory_uri()).'assets';
   $theme=trailingslashit(get_template_directory_uri()).'assets';
   $replace=[
@@ -340,15 +345,16 @@ add_action('template_redirect', function(){
     exit;
   }
   $routes=mm_routes();
+  if(function_exists('mm_blog_render_dynamic_route') && mm_blog_render_dynamic_route($route)) exit;
   if(str_starts_with($route,'/support/')) { mm_render_snapshot('@support'); exit; }
   $legacy_page_route='/pages/'.trim($route,'/').'/';
   if($route!=='/' && isset($routes[$legacy_page_route])) { mm_render_snapshot($routes[$legacy_page_route]); exit; }
   // WooCommerce native endpoints win only for checkout/account. The supplied cloned cart page remains the visual shell.
   if (preg_match('#^/(checkout|my-account)(/|$)#',$route) && class_exists('WooCommerce')) return;
-  if (isset($routes[$route])) { mm_render_snapshot($routes[$route]); exit; }
+  if (isset($routes[$route]) && mm_render_snapshot($routes[$route])) exit;
   // tolerate missing trailing or captured .html links
   $alt=rtrim($route,'/').'.html';
-  foreach($routes as $r=>$f){ if(rtrim($r,'/').'.html'===$alt){ mm_render_snapshot($f); exit; } }
+  foreach($routes as $r=>$f){ if(rtrim($r,'/').'.html'===$alt && mm_render_snapshot($f)) exit; }
 }, 0);
 
 add_action('wp_enqueue_scripts', function(){
@@ -428,12 +434,8 @@ function mm_run_import(){
     $slug=trim(substr($route,7),'/'); if(!$slug) continue;
     if(!get_page_by_path($slug)) { wp_insert_post(['post_type'=>'page','post_status'=>'publish','post_title'=>ucwords(str_replace('-',' ',$slug)),'post_name'=>$slug]); $created++; }
   }
-  // blog articles as posts
-  foreach($routes as $route=>$view){
-    if(!preg_match('#^/blogs/([^/]+)/([^/]+)/$#',$route,$m)) continue;
-    $slug=$m[2]; if(get_page_by_path($slug,OBJECT,'post')) continue;
-    wp_insert_post(['post_type'=>'post','post_status'=>'publish','post_title'=>ucwords(str_replace('-',' ',$slug)),'post_name'=>$slug]); $created++;
-  }
+  // Import complete snapshot data into native, editable WordPress posts.
+  if(function_exists('mm_import_blog_posts')) $created+=mm_import_blog_posts($routes);
   if(class_exists('WooCommerce')) mm_create_products();
   flush_rewrite_rules(); return 'Import complete. Created '.$created.' WordPress content records.';
 }
