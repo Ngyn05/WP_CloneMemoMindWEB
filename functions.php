@@ -16,6 +16,10 @@ function mm_routes(){
   if ($routes===null){
     $json=@file_get_contents(get_template_directory().'/routes.json');
     $routes=$json ? json_decode($json,true) : [];
+    // The Vietnamese site is single-language. Ignore legacy French snapshots.
+    if (is_array($routes)) {
+      $routes=array_filter($routes, static fn($file,$route)=>!str_starts_with($route,'/fr/'), ARRAY_FILTER_USE_BOTH);
+    }
   }
   return is_array($routes)?$routes:[];
 }
@@ -60,6 +64,37 @@ function mm_render_snapshot($file){
     '__MM_WP_FOOTER__'=>mm_capture_hook('wp_footer'),
   ];
   $html=strtr($html,$replace);
+  // Kickstarter was only used by the original campaign. Route every campaign
+  // purchase CTA into the corresponding local WooCommerce product instead.
+  $product_path=str_contains($file,'memomind-one-custom')
+    ? '/products/memomind-one-custom/'
+    : '/products/memomind-one-standard/';
+  $product_url=esc_url(home_url($product_path));
+  $html=preg_replace_callback(
+    '#<a\b[^>]*href=["\']https?://(?:www\.)?kickstarter\.com/[^"\']*["\'][^>]*>.*?</a>#is',
+    static function($match) use ($product_url){
+      $link=$match[0];
+      if(!preg_match('/Mua trên Kickstarter|Ủng hộ trên Kickstarter|Tiết kiệm đến 43% trên Kickstarter/i',$link)) return $link;
+      $link=preg_replace('#href=(["\'])https?://(?:www\.)?kickstarter\.com/.*?\1#i','href="'.$product_url.'"',$link,1);
+      $link=preg_replace('/\s+target=(["\'])_blank\1/i','',$link);
+      $link=preg_replace('#\s+title=(["\'])https?://(?:www\.)?kickstarter\.com/.*?\1#i','',$link);
+      $link=str_replace(
+        ['MemoMind One | Tiết kiệm đến 43% trên Kickstarter','Mua trên Kickstarter','Ủng hộ trên Kickstarter'],
+        ['MemoMind One | Mua ngay','Mua ngay','Mua ngay'],
+        $link
+      );
+      return $link;
+    },
+    $html
+  );
+  // Any remaining Kickstarter links are editorial links inside older posts.
+  // Keep their anchor text, but send visitors to the local product instead.
+  $html=preg_replace(
+    '#href=(["\'])https?://(?:www\.)?kickstarter\.com/[^"\']*\1#i',
+    'href="'.$product_url.'"',
+    $html
+  );
+  $html=str_replace('"Back on Kickstarter"','"Mua ngay"',$html);
   if($is_support){
     $html=preg_replace('#<title\b[^>]*>.*?</title>#is','<title>Trung tâm hỗ trợ MemoMind</title>',$html,1);
     $html=preg_replace('#<main\b[^>]*>.*?</main>#is','<main class="anchor" id="main">'.mm_support_content().'</main>',$html,1);
@@ -104,6 +139,7 @@ function mm_render_snapshot($file){
   // Reuse the full local Manrope files already bundled with the mirror and keep
   // the original family names so layout/CSS selectors remain unchanged.
   $font_fix='<style id="mm-vietnamese-font-fix">'
+    .'.header__account-link,.header__search-link,.menu-drawer__footer-item:has(a[href*="/my-account/"]),.menu-drawer__footer-item:has(a[href="/account"]),a[href="/account"],a[href*="/my-account/"],a[href*="/search/"]{display:none!important}'
     .'@font-face{font-family:Manrope;src:url("'.$asset.'/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk79FO_F.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}'
     .'@font-face{font-family:Manrope;src:url("'.$asset.'/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk79FO_F.ttf") format("truetype");font-style:normal;font-weight:500;font-display:swap}'
     .'@font-face{font-family:Manrope;src:url("'.$asset.'/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4jE-_F.ttf") format("truetype");font-style:normal;font-weight:600;font-display:swap}'
@@ -125,6 +161,12 @@ function mm_render_snapshot($file){
   // Normalize the two Shopify-only destinations that appear throughout the
   // snapshots. This also works when WordPress is installed in a subdirectory.
   $html=preg_replace('#href=(["\'])(?:\./|\.\./)*index\.htm\1#i','href=$1'.esc_url(home_url('/')).'$1',$html);
+  // Public pages use clean root-level slugs instead of Shopify's /pages/ prefix.
+  $html=preg_replace_callback(
+    '#href=(["\'])/pages/([^"\']+)/?\1#i',
+    static fn($match)=>'href='.$match[1].esc_url(home_url('/'.$match[2].'/')).$match[1],
+    $html
+  );
   $html=preg_replace('#href=(["\'])/account/?\1#i','href=$1'.esc_url(home_url('/my-account/')).'$1',$html);
   $html=preg_replace('#href=(["\'])https?://support\.memo-mind\.com/hc/en-gb/?\1#i','href=$1'.esc_url(home_url('/support/')).'$1',$html);
   // WordPress search query should populate the cloned search input.
@@ -135,22 +177,54 @@ function mm_render_snapshot($file){
 }
 
 function mm_support_content(){
+  $support_articles=[
+    'cac-kieu-gong-memomind-one'=>[
+      'MemoMind One có bao nhiêu kiểu dáng khác nhau?',
+      '<p>Phiên bản Standard có 3 lựa chọn gọng: <strong>Nomad, Gotham và Archive</strong>. Các mẫu này hỗ trợ tròng kính có độ.</p>'
+    ],
+    'gong-phu-hop-nguoi-dau-lon'=>[
+      'Loại gọng nào phù hợp hơn với người có vòng đầu lớn?',
+      '<p>Dựa trên thông số kích thước, MemoMind thường khuyên dùng gọng <strong>Nomad</strong> để có độ ôm thoải mái hơn. Bạn vẫn nên đối chiếu số đo đầu và sở thích đeo với thông số chi tiết của từng mẫu trước khi chọn.</p>'
+    ],
+    'chon-mau-gong'=>[
+      'Tôi có thể chọn màu gọng không?',
+      '<p>Gọng cơ bản không có tùy chọn màu. Với phiên bản Custom, mẫu <strong>Archive có 6 màu</strong>, còn Nomad hiện có một màu. Phiên bản Custom hiện chưa hỗ trợ tròng kính có độ.</p>'
+    ],
+    'theo-doi-don-hang'=>[
+      'Làm thế nào để theo dõi trạng thái đơn hàng?',
+      '<p>Sau khi đơn được gửi, MemoMind sẽ gửi mã vận đơn qua email. Bạn có thể dùng mã đơn hàng hoặc mã vận đơn để kiểm tra trạng thái; nếu cần thêm trợ giúp, hãy liên hệ đội ngũ hỗ trợ MemoMind.</p>'
+    ],
+    'chinh-sach-doi-tra'=>[
+      'Chính sách đổi trả của MemoMind như thế nào?',
+      '<p>Tròng kính có độ được sản xuất riêng theo thông tin khách hàng cung cấp, vì vậy hãy kiểm tra kỹ đơn kính trước khi xác nhận.</p><h3>Trường hợp không phải lỗi chất lượng</h3><p>Sản phẩm cá nhân hóa không hỗ trợ trả hoặc đổi do thay đổi sở thích, cảm giác trong thời gian làm quen, cảm nhận thị giác cá nhân hoặc đổi ý sau khi nhận hàng.</p><h3>Lỗi chất lượng</h3><p>Nếu tròng kính có lỗi sản xuất hoặc không đúng với đơn kính đã xác nhận, MemoMind sẽ thay thế hoặc đưa ra giải pháp hậu mãi phù hợp mà không thu thêm phí.</p>'
+    ],
+    'thanh-toan-khong-thanh-cong'=>[
+      'Tại sao thanh toán của tôi không thực hiện được?',
+      '<p>Hãy kiểm tra lại thông tin thanh toán, số dư hoặc hạn mức, địa chỉ thanh toán và xác thực từ ngân hàng. Nếu giao dịch vẫn thất bại, thử phương thức khác hoặc liên hệ ngân hàng phát hành thẻ và đội ngũ hỗ trợ MemoMind.</p>'
+    ],
+  ];
+  $support_slug=trim(substr(mm_current_route(),strlen('/support/')),'/');
+  if($support_slug!=='' && isset($support_articles[$support_slug])){
+    [$title,$body]=$support_articles[$support_slug];
+    $home=esc_url(home_url('/support/'));
+    return '<style>.mm-support-article{font-family:Manrope,Arial,sans-serif;max-width:900px;margin:0 auto;padding:80px 24px 120px;color:#111}.mm-support-article__back{display:inline-block;margin-bottom:42px;color:#555;text-decoration:none}.mm-support-article h1{font-size:clamp(34px,5vw,56px);line-height:1.15;margin:0 0 36px}.mm-support-article h3{font-size:22px;margin:32px 0 10px}.mm-support-article p{font-size:18px;line-height:1.75;color:#444}.mm-support-article__contact{margin-top:54px;padding-top:28px;border-top:1px solid #ddd}</style><article class="mm-support-article"><a class="mm-support-article__back" href="'.$home.'">← Trung tâm hỗ trợ</a><h1>'.esc_html($title).'</h1>'.$body.'<p class="mm-support-article__contact">Bạn vẫn cần hỗ trợ? Email: <a href="mailto:Support@memo-mind.com">Support@memo-mind.com</a></p></article>';
+  }
   $markup=<<<'HTML'
 <style>
 body:has(.mm-support)>.shopify-section-group-header-group,body:has(.mm-support)>.shopify-section-group-footer-group,body:has(.mm-support) #shopify-section-sections--18668046647409__announcement-bar,body:has(.mm-support) #shopify-section-sections--18668046647409__header{display:none!important}.mm-support{font-family:Manrope,Arial,sans-serif;color:#111;background:#fff}.mm-support *{box-sizing:border-box}.mm-support__nav{height:88px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 max(40px,9vw);background:#fff}.mm-support__logo{font-size:35px;font-weight:600;letter-spacing:-1.5px;color:#111;text-decoration:none}.mm-support__menu{display:flex;gap:42px}.mm-support__menu a,.mm-support__signin{font-size:16px;color:#111;text-decoration:none}.mm-support__signin{justify-self:end;color:#0868ce}.mm-support__hero{position:relative;min-height:760px;padding:290px 24px 80px;text-align:center;color:#fff;background:#222 url('__MM_SUPPORT_ASSET__/cdn/shop/files/banner_0425.webp') center/cover no-repeat}.mm-support__hero:before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.2)}.mm-support__hero>*{position:relative}.mm-support__hero h1{font-size:clamp(34px,3vw,46px);line-height:1.45;margin:0 0 40px;font-weight:700}.mm-support__eyebrow,.mm-support__lead{display:none}.mm-support__search{display:flex;max-width:890px;height:74px;margin:auto;background:#fff;border:1px solid #ddd;border-radius:999px;overflow:hidden;text-align:left}.mm-support__search:before{content:'⌕';color:#aaa;font-size:38px;line-height:65px;padding-left:34px;transform:rotate(-20deg)}.mm-support__search input{flex:1;min-width:0;border:0;padding:0 22px;font:inherit;font-size:19px;outline:0}.mm-support__search button{display:none}.mm-support__body{max-width:1200px;margin:auto;padding:86px 24px}.mm-support__body>h2{text-align:center;font-size:clamp(30px,4vw,44px);margin:0 0 44px}.mm-support__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.mm-support__card{display:block;padding:30px;min-height:190px;border:1px solid #e2e2e2;border-radius:16px;color:inherit;text-decoration:none;transition:.2s}.mm-support__card:hover{transform:translateY(-3px);border-color:#999;box-shadow:0 14px 32px rgba(0,0,0,.07)}.mm-support__icon{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#f1e6d5;font-size:21px}.mm-support__card h3{font-size:21px;margin:22px 0 9px}.mm-support__card p{margin:0;color:#666;line-height:1.5}.mm-support__popular{margin-top:76px;padding-top:60px;border-top:1px solid #e6e6e6}.mm-support__popular h2{font-size:32px;margin:0 0 26px}.mm-support__links{display:grid;grid-template-columns:1fr 1fr;gap:12px 40px}.mm-support__links a{padding:15px 0;border-bottom:1px solid #e8e8e8;color:#111;text-decoration:none}.mm-support__links a:hover{text-decoration:underline}.mm-support__contact{margin-top:72px;padding:42px;border-radius:18px;background:#111;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:28px}.mm-support__contact h2{margin:0 0 8px;font-size:30px}.mm-support__contact p{margin:0;color:#ccc}.mm-support__contact a{padding:14px 24px;border-radius:999px;background:#fff;color:#111;text-decoration:none;white-space:nowrap}@media(max-width:800px){.mm-support__nav{height:70px;padding:0 18px;grid-template-columns:1fr auto}.mm-support__logo{font-size:24px}.mm-support__menu{display:none}.mm-support__hero{min-height:620px;padding:190px 16px 60px;background-position:58% center}.mm-support__search{height:62px}.mm-support__body{padding:58px 16px}.mm-support__grid,.mm-support__links{grid-template-columns:1fr}.mm-support__contact{align-items:flex-start;flex-direction:column}}
-.mm-support__search input{color:#555!important;background:#fff}.mm-support__search input::placeholder{color:#777;opacity:1}
+.mm-support__search{display:none!important}.mm-support__search input{color:#555!important;background:#fff}.mm-support__search input::placeholder{color:#777;opacity:1}
 </style>
 <section class="mm-support">
- <nav class="mm-support__nav"><a class="mm-support__logo" href="__MM_HOME__/">MEMOMIND</a><div class="mm-support__menu"><a href="__MM_HOME__/">Trang chủ</a><a href="__MM_HOME__/pages/memomind-one/">MemoMind One</a><a href="__MM_HOME__/pages/about-us/">Về chúng tôi</a></div><a class="mm-support__signin" href="https://support.memo-mind.com/hc/en-gb/signin">Đăng nhập</a></nav>
+ <nav class="mm-support__nav"><a class="mm-support__logo" href="__MM_HOME__/">MEMOMIND</a><div class="mm-support__menu"><a href="__MM_HOME__/">Trang chủ</a><a href="__MM_HOME__/pages/memomind-one/">MemoMind One</a><a href="__MM_HOME__/pages/about-us/">Về chúng tôi</a></div></nav>
  <div class="mm-support__hero"><div class="mm-support__eyebrow">MemoMind</div><h1>Chào mừng đến với<br>Trung tâm hỗ trợ MemoMind</h1><p class="mm-support__lead">Tìm câu trả lời về sản phẩm MemoMind, đơn hàng, giao hàng, đổi trả và thanh toán.</p><form class="mm-support__search" action="https://support.memo-mind.com/hc/en-gb/search" method="get"><input aria-label="Tìm kiếm hỗ trợ" name="query" placeholder="Tìm kiếm" type="search"><button type="submit">Tìm kiếm</button></form></div>
  <div class="mm-support__body"><h2>Tìm hỗ trợ bạn cần</h2><div class="mm-support__grid">
-  <a class="mm-support__card" href="https://support.memo-mind.com/hc/en-gb/categories/57915429306649-Product-Support"><span class="mm-support__icon">◎</span><h3>Hỗ trợ sản phẩm</h3><p>Nhận hỗ trợ về tính năng sản phẩm, thiết lập và các vấn đề kỹ thuật.</p></a>
-  <a class="mm-support__card" href="https://support.memo-mind.com/hc/en-gb/categories/57800442477209-Shipping-Delivery"><span class="mm-support__icon">◇</span><h3>Vận chuyển &amp; giao hàng</h3><p>Theo dõi đơn hàng và cập nhật tình trạng vận chuyển, giao hàng.</p></a>
-  <a class="mm-support__card" href="https://support.memo-mind.com/hc/en-gb/categories/57915607719961-Account-Order"><span class="mm-support__icon">○</span><h3>Tài khoản &amp; đơn hàng</h3><p>Cài đặt tài khoản và quản lý đơn hàng.</p></a>
-  <a class="mm-support__card" href="https://support.memo-mind.com/hc/en-gb/categories/57915638839577-Return-Exchange"><span class="mm-support__icon">↻</span><h3>Đổi trả &amp; hoàn hàng</h3><p>Tìm hiểu về chính sách trả hàng, đổi hàng và hoàn tiền.</p></a>
-  <a class="mm-support__card" href="https://support.memo-mind.com/hc/en-gb/categories/57915647215897-Payment-Invoice"><span class="mm-support__icon">$</span><h3>Thanh toán &amp; hóa đơn</h3><p>Tìm thông tin về thanh toán, lập hóa đơn và chứng từ.</p></a>
+  <a class="mm-support__card" href="__MM_HOME__/support/cac-kieu-gong-memomind-one/"><span class="mm-support__icon">◎</span><h3>Hỗ trợ sản phẩm</h3><p>Nhận hỗ trợ về tính năng sản phẩm, thiết lập và các vấn đề kỹ thuật.</p></a>
+  <a class="mm-support__card" href="__MM_HOME__/support/theo-doi-don-hang/"><span class="mm-support__icon">◇</span><h3>Vận chuyển &amp; giao hàng</h3><p>Theo dõi đơn hàng và cập nhật tình trạng vận chuyển, giao hàng.</p></a>
+  <a class="mm-support__card" href="__MM_HOME__/support/theo-doi-don-hang/"><span class="mm-support__icon">○</span><h3>Tài khoản &amp; đơn hàng</h3><p>Cài đặt tài khoản và quản lý đơn hàng.</p></a>
+  <a class="mm-support__card" href="__MM_HOME__/support/chinh-sach-doi-tra/"><span class="mm-support__icon">↻</span><h3>Đổi trả &amp; hoàn hàng</h3><p>Tìm hiểu về chính sách trả hàng, đổi hàng và hoàn tiền.</p></a>
+  <a class="mm-support__card" href="__MM_HOME__/support/thanh-toan-khong-thanh-cong/"><span class="mm-support__icon">$</span><h3>Thanh toán &amp; hóa đơn</h3><p>Tìm thông tin về thanh toán, lập hóa đơn và chứng từ.</p></a>
  </div><section class="mm-support__popular"><h2>Câu hỏi phổ biến</h2><div class="mm-support__links">
-  <a href="https://support.memo-mind.com/hc/en-gb/categories/57915429306649-Product-Support">MemoMind One có bao nhiêu kiểu dáng khác nhau?</a><a href="https://support.memo-mind.com/hc/en-gb/categories/57800442477209-Shipping-Delivery">Làm thế nào để theo dõi trạng thái đơn hàng?</a><a href="https://support.memo-mind.com/hc/en-gb/categories/57915429306649-Product-Support">Loại gọng nào phù hợp hơn với người có vòng đầu lớn?</a><a href="https://support.memo-mind.com/hc/en-gb/categories/57915638839577-Return-Exchange">Chính sách đổi trả của MemoMind như thế nào?</a><a href="https://support.memo-mind.com/hc/en-gb/categories/57915429306649-Product-Support">Tôi có thể chọn màu gọng không?</a><a href="https://support.memo-mind.com/hc/en-gb/categories/57915647215897-Payment-Invoice">Tại sao thanh toán của tôi không thực hiện được?</a>
+  <a href="__MM_HOME__/support/cac-kieu-gong-memomind-one/">MemoMind One có bao nhiêu kiểu dáng khác nhau?</a><a href="__MM_HOME__/support/theo-doi-don-hang/">Làm thế nào để theo dõi trạng thái đơn hàng?</a><a href="__MM_HOME__/support/gong-phu-hop-nguoi-dau-lon/">Loại gọng nào phù hợp hơn với người có vòng đầu lớn?</a><a href="__MM_HOME__/support/chinh-sach-doi-tra/">Chính sách đổi trả của MemoMind như thế nào?</a><a href="__MM_HOME__/support/chon-mau-gong/">Tôi có thể chọn màu gọng không?</a><a href="__MM_HOME__/support/thanh-toan-khong-thanh-cong/">Tại sao thanh toán của tôi không thực hiện được?</a>
  </div></section><div class="mm-support__contact"><div><h2>Vẫn cần hỗ trợ?</h2><p>Hỗ trợ khách hàng &amp; hỗ trợ kỹ thuật · Thứ Hai–Chủ Nhật, 9:00–18:00 CT</p></div><a href="mailto:Support@memo-mind.com">Liên hệ hỗ trợ</a></div></div>
 </section>
 HTML;
@@ -163,8 +237,28 @@ HTML;
 
 add_action('template_redirect', function(){
   if (is_admin() || wp_doing_ajax() || (defined('REST_REQUEST') && REST_REQUEST)) return;
+  // Search is disabled: normalize legacy WordPress ?s= URLs to the homepage.
+  if (array_key_exists('s', $_GET)) {
+    wp_safe_redirect(home_url('/'), 301);
+    exit;
+  }
   $route=mm_current_route();
+  // Redirect legacy Shopify page URLs to clean WordPress-style root slugs.
+  if (str_starts_with($route,'/pages/')) {
+    $clean_route='/'.trim(substr($route,strlen('/pages/')),'/').'/';
+    wp_safe_redirect(home_url($clean_route),301);
+    exit;
+  }
+  // Preserve old inbound links while keeping Vietnamese as the only locale.
+  if (str_starts_with($route,'/fr/')) {
+    $vietnamese_route=substr($route,3);
+    wp_safe_redirect(home_url($vietnamese_route ?: '/'),301);
+    exit;
+  }
   $routes=mm_routes();
+  if(str_starts_with($route,'/support/')) { mm_render_snapshot('@support'); exit; }
+  $legacy_page_route='/pages/'.trim($route,'/').'/';
+  if($route!=='/' && isset($routes[$legacy_page_route])) { mm_render_snapshot($routes[$legacy_page_route]); exit; }
   // WooCommerce native endpoints win only for checkout/account. The supplied cloned cart page remains the visual shell.
   if (preg_match('#^/(checkout|my-account)(/|$)#',$route) && class_exists('WooCommerce')) return;
   if (isset($routes[$route])) { mm_render_snapshot($routes[$route]); exit; }
