@@ -64,6 +64,32 @@ function mm_render_snapshot($file){
     '__MM_WP_FOOTER__'=>mm_capture_hook('wp_footer'),
   ];
   $html=strtr($html,$replace);
+  // The shared About/Collection hero derivatives are heavily compressed.
+  // Force the sharp masters everywhere this banner appears.
+  if(in_array($file,['collections__all.html','pages__about-us.html'],true)){
+    $html=preg_replace_callback(
+      '#<img\b[^>]*ABOUT_US_KV-PC_2x_m_compressed\.webp[^>]*>#i',
+      static fn($match)=>preg_replace('/\s+srcset=(["\']).*?\1/i','',$match[0]),
+      $html,
+      1
+    );
+    $html=preg_replace_callback(
+      '#<source\b[^>]*ABOUT_US_KV-APP_2x_m_compressed[^>]*>#i',
+      static function($match) use ($asset){
+        $mobile_master=$asset.'/cdn/shop/files/ABOUT_US_KV-APP_2x_m_compressed-3.webp';
+        return preg_replace('/srcset=(["\']).*?\1/i','srcset="'.$mobile_master.'"',$match[0]);
+      },
+      $html,
+      1
+    );
+  }
+  // Use one public contact address everywhere, including visible text,
+  // mailto links, metadata and form placeholders embedded in snapshots.
+  $html=preg_replace(
+    '/[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,}/i',
+    'contact@memomind.vn',
+    $html
+  );
   // Kickstarter was only used by the original campaign. Route every campaign
   // purchase CTA into the corresponding local WooCommerce product instead.
   $product_path=str_contains($file,'memomind-one-custom')
@@ -99,6 +125,12 @@ function mm_render_snapshot($file){
     $html=preg_replace('#<title\b[^>]*>.*?</title>#is','<title>Trung tâm hỗ trợ MemoMind</title>',$html,1);
     $html=preg_replace('#<main\b[^>]*>.*?</main>#is','<main class="anchor" id="main">'.mm_support_content().'</main>',$html,1);
   }
+  // Support content is injected after the first normalization pass.
+  $html=preg_replace(
+    '/[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,}/i',
+    'contact@memomind.vn',
+    $html
+  );
   // ES-module imports inside theme.js use the snapshot's import map. Point its
   // vendor/theme entries at the mirrored files; otherwise the whole module
   // aborts offline and drawers, galleries, accordions, and product controls do
@@ -158,9 +190,57 @@ function mm_render_snapshot($file){
   // They are invalid srcset width descriptors and make browsers drop every
   // responsive candidate. Preserve the intended trailing "w" descriptor.
   $html=preg_replace('/(\s\d+w)[pg](?=\?|[\s,])/i','$1',$html);
+  // Unified Vietnamese customer-support footer.
+  $support_footer=<<<'HTML'
+<footer class="mm-site-footer">
+  <div class="mm-site-footer__top">
+    <a class="mm-site-footer__brand" href="__MM_HOME__/" aria-label="MemoMind - Trang chủ">MEMOMIND <span>VN</span></a>
+    <p>Kính AI thông minh cho cuộc sống hiện đại</p>
+  </div>
+  <div class="mm-site-footer__divider"></div>
+  <h2>HỖ TRỢ KHÁCH HÀNG</h2>
+  <div class="mm-site-footer__grid">
+    <article class="mm-site-footer__card">
+      <div class="mm-site-footer__card-head"><span class="mm-site-footer__icon" aria-hidden="true">⌂</span><span class="mm-site-footer__badge">MIỀN BẮC</span></div>
+      <h3>HỖ TRỢ KHÁCH HÀNG MIỀN BẮC</h3>
+      <p class="mm-site-footer__address"><span aria-hidden="true">⌖</span> 226 Đường Láng, Phường Thịnh Quang, Quận Đống Đa, Hà Nội</p>
+      <a class="mm-site-footer__phone" href="tel:02473053268"><span aria-hidden="true">☎</span> 024.7305.3268</a>
+    </article>
+    <article class="mm-site-footer__card">
+      <div class="mm-site-footer__card-head"><span class="mm-site-footer__icon" aria-hidden="true">▦</span><span class="mm-site-footer__badge">MIỀN NAM</span></div>
+      <h3>HỖ TRỢ KHÁCH HÀNG MIỀN NAM</h3>
+      <p class="mm-site-footer__address"><span aria-hidden="true">⌖</span> 137 Hòa Hưng, Phường Hòa Hưng, TP. Hồ Chí Minh</p>
+      <a class="mm-site-footer__phone" href="tel:02873053268"><span aria-hidden="true">☎</span> 028.7305.3268</a>
+    </article>
+    <article class="mm-site-footer__card mm-site-footer__card--primary">
+      <div class="mm-site-footer__card-head"><span class="mm-site-footer__icon" aria-hidden="true">♬</span><span class="mm-site-footer__badge">TƯ VẤN 24/7</span></div>
+      <h3>HỖ TRỢ TRỰC TUYẾN</h3>
+      <a class="mm-site-footer__contact" href="mailto:contact@memomind.vn">contact@memomind.vn</a>
+      <p>Hỗ trợ và tư vấn khách hàng mọi lúc, mọi nơi.</p>
+    </article>
+  </div>
+  <nav class="mm-site-footer__links" aria-label="Liên kết cuối trang">
+    <a href="__MM_HOME__/products/memomind-one-standard/">Sản phẩm chính hãng</a><span></span>
+    <a href="__MM_HOME__/support/">Hỗ trợ tận tâm</a><span></span>
+    <a href="__MM_HOME__/policies/privacy-policy/">Chính sách bảo mật</a>
+  </nav>
+</footer>
+<style id="mm-site-footer-style">
+.memomind-footer__subscribe,.memomind-footer__panel:has(.memomind-footer__panel-subscribe){display:none!important}.memomind-footer__desktop-grid{grid-template-columns:1fr 1fr 1fr 1.4fr!important}.memomind-footer__contact{grid-column:auto!important}.mm-site-footer{box-sizing:border-box;background:#222;color:#fff;padding:30px clamp(22px,4vw,64px) 12px;font-family:Manrope,Arial,sans-serif}.mm-site-footer *{box-sizing:border-box}.mm-site-footer__top{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:64px}.mm-site-footer__brand{color:#fff;text-decoration:none;font-size:31px;font-weight:600;letter-spacing:5px}.mm-site-footer__brand span{display:inline-block;margin-left:8px;padding:5px 10px;border:1px solid #666;border-radius:8px;background:#303030;color:#ddd;font-size:17px;letter-spacing:1px;vertical-align:4px}.mm-site-footer__top p{margin:0;color:#aaa;font-size:17px}.mm-site-footer__divider{height:1px;background:#3d3d3d;margin:0 0 52px}.mm-site-footer h2{margin:0 0 42px;font-size:24px}.mm-site-footer__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}.mm-site-footer__card{min-height:305px;padding:30px;border:1px solid #484848;border-radius:17px;background:#292929}.mm-site-footer__card--primary{border-color:#5a5a5a;background:#2c2c2c}.mm-site-footer__card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.mm-site-footer__icon{display:grid;place-items:center;width:54px;height:54px;border:1px solid #666;border-radius:13px;background:#333;color:#eee;font-size:23px}.mm-site-footer__badge{padding:7px 13px;border:1px solid #606060;border-radius:999px;background:#333;color:#ddd;font-size:13px;font-weight:700}.mm-site-footer__card h3{margin:0 0 14px;font-size:20px}.mm-site-footer__card p{min-height:52px;margin:0;color:#bbb;font-size:15px;line-height:1.65}.mm-site-footer__address{display:flex;gap:10px}.mm-site-footer__address span{flex:0 0 auto;color:#ddd;font-size:18px}.mm-site-footer__phone{display:block;margin-top:21px;padding-top:20px;border-top:1px solid #444;color:#fff;text-decoration:none;font-size:21px;font-weight:700}.mm-site-footer__phone span{margin-right:9px;color:#aaa}.mm-site-footer__contact{display:block;margin:14px 0 28px;padding:17px 18px;border:1px solid #666;border-radius:999px;background:#f5f5f5;color:#171717;text-align:center;text-decoration:none;font-size:18px;font-weight:700}.mm-site-footer__card--primary p{min-height:0;text-align:center}.mm-site-footer__links{display:flex;align-items:center;justify-content:center;gap:32px;padding:28px 0 0}.mm-site-footer__links a{color:#aaa;text-decoration:none;font-size:15px}.mm-site-footer__links a:hover{color:#fff}.mm-site-footer__links span{width:1px;height:18px;background:#4a4a4a}@media(max-width:900px){.mm-site-footer__grid{grid-template-columns:1fr}.mm-site-footer__card{min-height:0}.mm-site-footer__top{align-items:flex-start;flex-direction:column}.mm-site-footer__divider{margin-top:20px;margin-bottom:36px}.mm-site-footer__links{flex-wrap:wrap;gap:14px 20px}}@media(max-width:520px){.mm-site-footer{padding:28px 16px 12px}.mm-site-footer__brand{font-size:24px}.mm-site-footer__top p{font-size:14px}.mm-site-footer h2{font-size:21px;margin-bottom:26px}.mm-site-footer__grid{gap:16px}.mm-site-footer__card{padding:22px}.mm-site-footer__links span{display:none}.mm-site-footer__links{align-items:flex-start;flex-direction:column}}
+</style>
+HTML;
+  $support_footer=str_replace('__MM_HOME__',esc_url(home_url()),$support_footer);
+  if(str_contains($html,'<!-- BEGIN sections: footer-group -->')){
+    $html=str_replace('<!-- BEGIN sections: footer-group -->',$support_footer.'<!-- BEGIN sections: footer-group -->',$html);
+  } else {
+    $html=preg_replace('#</body>#i',$support_footer.'</body>',$html,1);
+  }
   // Normalize the two Shopify-only destinations that appear throughout the
   // snapshots. This also works when WordPress is installed in a subdirectory.
   $html=preg_replace('#href=(["\'])(?:\./|\.\./)*index\.htm\1#i','href=$1'.esc_url(home_url('/')).'$1',$html);
+  // Shopping bag now acts as a product-catalog shortcut; cart UI is disabled.
+  $html=preg_replace('#href=(["\'])/cart/?\1#i','href=$1'.esc_url(home_url('/collections/all/')).'$1',$html);
+  $html=preg_replace('/\s+aria-controls=(["\'])cart-drawer\1/i','',$html);
   // Public pages use clean root-level slugs instead of Shopify's /pages/ prefix.
   $html=preg_replace_callback(
     '#href=(["\'])/pages/([^"\']+)/?\1#i',
@@ -211,7 +291,7 @@ function mm_support_content(){
   }
   $markup=<<<'HTML'
 <style>
-body:has(.mm-support)>.shopify-section-group-header-group,body:has(.mm-support)>.shopify-section-group-footer-group,body:has(.mm-support) #shopify-section-sections--18668046647409__announcement-bar,body:has(.mm-support) #shopify-section-sections--18668046647409__header{display:none!important}.mm-support{font-family:Manrope,Arial,sans-serif;color:#111;background:#fff}.mm-support *{box-sizing:border-box}.mm-support__nav{height:88px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 max(40px,9vw);background:#fff}.mm-support__logo{font-size:35px;font-weight:600;letter-spacing:-1.5px;color:#111;text-decoration:none}.mm-support__menu{display:flex;gap:42px}.mm-support__menu a,.mm-support__signin{font-size:16px;color:#111;text-decoration:none}.mm-support__signin{justify-self:end;color:#0868ce}.mm-support__hero{position:relative;min-height:760px;padding:290px 24px 80px;text-align:center;color:#fff;background:#222 url('__MM_SUPPORT_ASSET__/cdn/shop/files/banner_0425.webp') center/cover no-repeat}.mm-support__hero:before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.2)}.mm-support__hero>*{position:relative}.mm-support__hero h1{font-size:clamp(34px,3vw,46px);line-height:1.45;margin:0 0 40px;font-weight:700}.mm-support__eyebrow,.mm-support__lead{display:none}.mm-support__search{display:flex;max-width:890px;height:74px;margin:auto;background:#fff;border:1px solid #ddd;border-radius:999px;overflow:hidden;text-align:left}.mm-support__search:before{content:'⌕';color:#aaa;font-size:38px;line-height:65px;padding-left:34px;transform:rotate(-20deg)}.mm-support__search input{flex:1;min-width:0;border:0;padding:0 22px;font:inherit;font-size:19px;outline:0}.mm-support__search button{display:none}.mm-support__body{max-width:1200px;margin:auto;padding:86px 24px}.mm-support__body>h2{text-align:center;font-size:clamp(30px,4vw,44px);margin:0 0 44px}.mm-support__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.mm-support__card{display:block;padding:30px;min-height:190px;border:1px solid #e2e2e2;border-radius:16px;color:inherit;text-decoration:none;transition:.2s}.mm-support__card:hover{transform:translateY(-3px);border-color:#999;box-shadow:0 14px 32px rgba(0,0,0,.07)}.mm-support__icon{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#f1e6d5;font-size:21px}.mm-support__card h3{font-size:21px;margin:22px 0 9px}.mm-support__card p{margin:0;color:#666;line-height:1.5}.mm-support__popular{margin-top:76px;padding-top:60px;border-top:1px solid #e6e6e6}.mm-support__popular h2{font-size:32px;margin:0 0 26px}.mm-support__links{display:grid;grid-template-columns:1fr 1fr;gap:12px 40px}.mm-support__links a{padding:15px 0;border-bottom:1px solid #e8e8e8;color:#111;text-decoration:none}.mm-support__links a:hover{text-decoration:underline}.mm-support__contact{margin-top:72px;padding:42px;border-radius:18px;background:#111;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:28px}.mm-support__contact h2{margin:0 0 8px;font-size:30px}.mm-support__contact p{margin:0;color:#ccc}.mm-support__contact a{padding:14px 24px;border-radius:999px;background:#fff;color:#111;text-decoration:none;white-space:nowrap}@media(max-width:800px){.mm-support__nav{height:70px;padding:0 18px;grid-template-columns:1fr auto}.mm-support__logo{font-size:24px}.mm-support__menu{display:none}.mm-support__hero{min-height:620px;padding:190px 16px 60px;background-position:58% center}.mm-support__search{height:62px}.mm-support__body{padding:58px 16px}.mm-support__grid,.mm-support__links{grid-template-columns:1fr}.mm-support__contact{align-items:flex-start;flex-direction:column}}
+body:has(.mm-support)>.shopify-section-group-header-group,body:has(.mm-support) #shopify-section-sections--18668046647409__announcement-bar,body:has(.mm-support) #shopify-section-sections--18668046647409__header{display:none!important}.mm-support{font-family:Manrope,Arial,sans-serif;color:#111;background:#fff}.mm-support *{box-sizing:border-box}.mm-support__nav{height:88px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 max(40px,9vw);background:#fff}.mm-support__logo{font-size:35px;font-weight:600;letter-spacing:-1.5px;color:#111;text-decoration:none}.mm-support__menu{display:flex;gap:42px}.mm-support__menu a,.mm-support__signin{font-size:16px;color:#111;text-decoration:none}.mm-support__signin{justify-self:end;color:#0868ce}.mm-support__hero{position:relative;min-height:760px;padding:290px 24px 80px;text-align:center;color:#fff;background:#222 url('__MM_SUPPORT_ASSET__/cdn/shop/files/banner_0425.webp') center/cover no-repeat}.mm-support__hero:before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.2)}.mm-support__hero>*{position:relative}.mm-support__hero h1{font-size:clamp(34px,3vw,46px);line-height:1.45;margin:0 0 40px;font-weight:700}.mm-support__eyebrow,.mm-support__lead{display:none}.mm-support__search{display:flex;max-width:890px;height:74px;margin:auto;background:#fff;border:1px solid #ddd;border-radius:999px;overflow:hidden;text-align:left}.mm-support__search:before{content:'⌕';color:#aaa;font-size:38px;line-height:65px;padding-left:34px;transform:rotate(-20deg)}.mm-support__search input{flex:1;min-width:0;border:0;padding:0 22px;font:inherit;font-size:19px;outline:0}.mm-support__search button{display:none}.mm-support__body{max-width:1200px;margin:auto;padding:86px 24px}.mm-support__body>h2{text-align:center;font-size:clamp(30px,4vw,44px);margin:0 0 44px}.mm-support__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.mm-support__card{display:block;padding:30px;min-height:190px;border:1px solid #e2e2e2;border-radius:16px;color:inherit;text-decoration:none;transition:.2s}.mm-support__card:hover{transform:translateY(-3px);border-color:#999;box-shadow:0 14px 32px rgba(0,0,0,.07)}.mm-support__icon{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#f1e6d5;font-size:21px}.mm-support__card h3{font-size:21px;margin:22px 0 9px}.mm-support__card p{margin:0;color:#666;line-height:1.5}.mm-support__popular{margin-top:76px;padding-top:60px;border-top:1px solid #e6e6e6}.mm-support__popular h2{font-size:32px;margin:0 0 26px}.mm-support__links{display:grid;grid-template-columns:1fr 1fr;gap:12px 40px}.mm-support__links a{padding:15px 0;border-bottom:1px solid #e8e8e8;color:#111;text-decoration:none}.mm-support__links a:hover{text-decoration:underline}.mm-support__contact{margin-top:72px;padding:42px;border-radius:18px;background:#111;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:28px}.mm-support__contact h2{margin:0 0 8px;font-size:30px}.mm-support__contact p{margin:0;color:#ccc}.mm-support__contact a{padding:14px 24px;border-radius:999px;background:#fff;color:#111;text-decoration:none;white-space:nowrap}@media(max-width:800px){.mm-support__nav{height:70px;padding:0 18px;grid-template-columns:1fr auto}.mm-support__logo{font-size:24px}.mm-support__menu{display:none}.mm-support__hero{min-height:620px;padding:190px 16px 60px;background-position:58% center}.mm-support__search{height:62px}.mm-support__body{padding:58px 16px}.mm-support__grid,.mm-support__links{grid-template-columns:1fr}.mm-support__contact{align-items:flex-start;flex-direction:column}}
 .mm-support__search{display:none!important}.mm-support__search input{color:#555!important;background:#fff}.mm-support__search input::placeholder{color:#777;opacity:1}
 </style>
 <section class="mm-support">
@@ -243,6 +323,10 @@ add_action('template_redirect', function(){
     exit;
   }
   $route=mm_current_route();
+  if($route==='/cart/') {
+    wp_safe_redirect(home_url('/collections/all/'),301);
+    exit;
+  }
   // Redirect legacy Shopify page URLs to clean WordPress-style root slugs.
   if (str_starts_with($route,'/pages/')) {
     $clean_route='/'.trim(substr($route,strlen('/pages/')),'/').'/';
