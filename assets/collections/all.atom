@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en" xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:s="http://jadedpixel.com/-/spec/shopify">
+  <id>https://www.memo-mind.com/collections/all.atom</id>
+  <link rel="alternate" type="text/html" href="https://www.memo-mind.com/collections/all"/>
+  <link rel="self" type="application/atom+xml" href="https://www.memo-mind.com/collections/all.atom"/>
+  <title>MEMOMIND</title>
+  <updated>2026-05-25T22:48:27-07:00</updated>
+  <author>
+    <name>MEMOMIND</name>
+  </author>
+  <entry>
+    <id>https://www.memo-mind.com/products/7652447944817</id>
+    <published>2026-05-25T22:48:27-07:00</published>
+    <updated>2026-05-25T22:48:27-07:00</updated>
+    <link rel="alternate" type="text/html" href="https://www.memo-mind.com/products/memomind-one-standard"/>
+    <title>MemoMind One - Standard</title>
+    <s:type>Glass Goods</s:type>
+    <s:vendor>MemoMind</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0656/0173/2721/files/312a5c1cc3a254d07060071255dd80bb_8bf1006f-9587-4bcf-90dd-fee55b2d24a3.png?v=1779098127"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>MemoMind<br>
+        <strong>Type: </strong>Glass Goods<br>
+        <strong>Price: </strong>
+            30.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><meta charset="utf-8"> <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></p>
+<div>
+<div>
+<ul>
+<li>
+<span><b>Fully Customizable AI Glasses: </b>AI glasses without a camera. Prescription-ready. Built for all-day wear.</span><span><b></b></span>
+</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<span><b>Ultra-Light Comfort Fit: </b></span>Designed to feel like regular glasses — light, natural, and wearable all day.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<span><b>Dual-Eye Display: </b></span>Immersive yet subtle AR experience that keeps information right in your view.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<span><b>Harman AudioEFX Stereo Sound: </b></span>Precision-tuned audio for calls, AI interaction, and everyday listening</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<span><b>Camera-Free Privacy Design: </b></span>No camera. No recording. Built for privacy-first, everyday use.</li>
+</ul>
+</div>
+</div></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Glasses</s:tag>
+    <s:tag>MemoMind One</s:tag>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7652447944817</id>
+      <title>Nomad / Non-Prescription Lenses</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_1000</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7652447944817</id>
+      <title>Nomad / Prescription Lenses</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_Z_1000</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7652447944817</id>
+      <title>Gotham / Non-Prescription Lenses</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_1001</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7652447944817</id>
+      <title>Gotham / Prescription Lenses</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_Z_1001</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7652447944817</id>
+      <title>Archive / Non-Prescription Lenses</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_1002</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7652447944817</id>
+      <title>Archive / Prescription Lenses</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_Z_1002</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://www.memo-mind.com/products/7617949532273</id>
+    <published>2026-05-19T03:41:15-07:00</published>
+    <updated>2026-05-19T03:41:15-07:00</updated>
+    <link rel="alternate" type="text/html" href="https://www.memo-mind.com/products/memomind-one-custom"/>
+    <title>MemoMind One - Custom</title>
+    <s:type>Glass Goods</s:type>
+    <s:vendor>MemoMind</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0656/0173/2721/files/3a26110d05793f2088ca93b3880038d4_849d7a34-7554-464a-9b97-788e934da6e2.png?v=1779094734"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>MemoMind<br>
+        <strong>Type: </strong>Glass Goods<br>
+        <strong>Price: </strong>
+            30.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><div>
+<meta charset="utf-8"> <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<div>
+<div>
+<meta charset="utf-8"> <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div>
+<div>
+<div>
+<ul>
+<li>
+<span><b>Fully Customizable AI Glasses: </b>AI glasses without a camera. Prescription-ready. Built for all-day wear.</span><span><b></b></span>
+</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<span><b>Ultra-Light Comfort Fit: </b></span>Designed to feel like regular glasses — light, natural, and wearable all day.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<span><b>Dual-Eye Display: </b></span>Immersive yet subtle AR experience that keeps information right in your view.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<span><b>Harman AudioEFX Stereo Sound: </b></span>Precision-tuned audio for calls, AI interaction, and everyday listening</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<span><b>Camera-Free Privacy Design: </b></span>No camera. No recording. Built for privacy-first, everyday use.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Glasses</s:tag>
+    <s:tag>MemoMind One</s:tag>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7617949532273</id>
+      <title>Archive / Amber</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_2013</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7617949532273</id>
+      <title>Archive / Haze</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_2014</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7617949532273</id>
+      <title>Archive / Forest</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_2015</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7617949532273</id>
+      <title>Archive / Veil</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_2016</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7617949532273</id>
+      <title>Archive / Midnight</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_2017</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7617949532273</id>
+      <title>Archive / Lunar</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_2018</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://www.memo-mind.com/products/7617949532273</id>
+      <title>Nomad / Amber</title>
+      <s:price currency="USD">30.00</s:price>
+      <s:sku>GMN_2001</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+</feed>

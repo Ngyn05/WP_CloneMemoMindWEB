@@ -1,0 +1,1460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en" xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:s="http://jadedpixel.com/-/spec/shopify">
+  <id>https://www.memo-mind.com/blogs/tech-hub.atom</id>
+  <link rel="alternate" type="text/html" href="https://www.memo-mind.com/blogs/tech-hub"/>
+  <link rel="self" type="application/atom+xml" href="https://www.memo-mind.com/blogs/tech-hub.atom"/>
+  <title>MEMOMIND - Tech Hub</title>
+  <updated>2026-08-10T01:39:59-07:00</updated>
+  <author>
+    <name>MEMOMIND</name>
+  </author>
+  <entry>
+    <id>https://www.memo-mind.com/blogs/tech-hub/ai-glasses-eye-strain-display-alignment-calibration</id>
+    <published>2026-08-10T01:39:59-07:00</published>
+    <updated>2026-08-12T00:14:54-07:00</updated>
+    <link rel="alternate" type="text/html" href="https://www.memo-mind.com/blogs/tech-hub/ai-glasses-eye-strain-display-alignment-calibration"/>
+    <title>AI Glasses Eye Strain: How Display Alignment Calibration Helps</title>
+    <author>
+      <name>MEMOMIND Tech</name>
+    </author>
+    <summary type="html">
+      <![CDATA[<p>A MemoMind One tester noticed that the display looked clear with one eye but felt tiring with both eyes open. Here's how Display Alignment Calibration helps fine-tune binocular display comfort in Memo Lab.</p><p><a class="read-more" href="https://www.memo-mind.com/blogs/tech-hub/ai-glasses-eye-strain-display-alignment-calibration">More</a></p>]]>
+    </summary>
+    <content type="html">
+      <![CDATA[<style>
+.blog-article-container {
+    --ink:#1a1a1a; --paper:#faf5e8; --kraft:#e6d9b8; --kraft-dark:#cdb87f;
+    --gold:#D4AF37; --rust:#E67E22; --stamp:#a8362a; --pencil:#4a4536;
+    /* 统一系统清晰字体，彻底不糊 */
+    font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+    font-size:16px; line-height:1.55;
+    max-width:800px; margin:0 auto; padding:0 20px 70px;
+    /* 强制字体超清渲染（关键代码） */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  .blog-article-container *{box-sizing:border-box;}
+  /* ===== Case File (Display Calibration) ===== */
+  .case-file{
+    background:var(--kraft); border:1px solid #c9b586;
+    margin:30px 0 44px; box-shadow:0 8px 14px rgba(0,0,0,.08);
+    position:relative;
+    transform: none !important; /* 删掉旋转 → 解决模糊 */
+  }
+  .case-file-tab{
+    display:inline-block; background:var(--kraft); border:1px solid #c9b586; border-bottom:none;
+    font-size:11.5px; letter-spacing:.08em;
+    padding:8px 18px; margin-left:24px; position:relative; top:1px; color:#5b4f30; font-weight:700;
+    font-family: inherit;
+  }
+  .case-file-body{ background:#fffdf7; border:1px solid #c9b586; padding:34px 30px 30px; position:relative; }
+  .stamp{
+    position:absolute; top:26px; right:28px;
+    font-weight:700; font-size:14px;
+    color:var(--stamp); border:3px double var(--stamp); border-radius:6px;
+    padding:6px 14px; letter-spacing:.08em; opacity:.82;
+    transform:rotate(-9deg);
+    font-family: inherit;
+  }
+  .case-file-meta{ font-size:11.5px; color:#8a8168; margin-bottom:20px; font-family: inherit; }
+  .margin-note{
+    font-size:19px; color:var(--rust); font-weight:700;
+    border-left:2px dashed var(--rust); padding-left:14px; margin:22px 0; line-height:1.3;
+    font-family: inherit;
+  }
+  .result-card{
+    background:var(--ink); color:#f2ede2; padding:18px 20px; margin:22px 0;
+    border-radius:2px; font-size:15px; position:relative;
+  }
+  .result-card .rc-label{
+    font-size:10.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:6px; display:block; font-weight:700;
+    font-family: inherit;
+  }
+  .paperclip{
+    position:absolute; top:-18px; left:34px; width:26px; height:52px;
+    border:5px solid #9fa3a8; border-radius:14px; border-bottom-color:transparent;
+    transform:rotate(-6deg); opacity:.85;
+  }
+  .faq-article details summary {
+    cursor: pointer;
+    padding: 16px 0;
+    border-bottom: 1px solid #EAEAEA;
+    list-style: none;
+    position: relative;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .faq-article details summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    color: #999;
+  }
+  .faq-article details[open] summary::after {
+    content: "−";
+    color: #D4AF37;
+  }
+  .faq-answer {
+    padding: 10px 0 20px;
+    border-bottom: 1px solid #EAEAEA;
+  }
+</style>
+<div class="blog-article-container" style="text-align: start;">
+<!-- ===== HERO / CORKBOARD ===== -->
+<div class="corkboard">
+<meta charset="utf-8">
+<div>
+<div class="ace-line ace-line old-record-id-FbATdoAS2ofRKnxCyoxcirblnnl">
+<meta charset="utf-8">
+<div>
+<div class="ace-line ace-line old-record-id-MYDrdRhr1oRk0GxoLbscq6mgnOb">
+<strong>Quick Answer:</strong> AI glasses eye strain is not always caused by screen sharpness or display resolution. Small differences in vertical or horizontal display alignment can make smart glasses feel blurry or tiring over time. <strong>MemoMind One's Display Alignment Calibration</strong> lets users fine-tune each display position inside <strong>Memo Lab</strong>. It can help some users improve comfort, but persistent eye discomfort should be taken seriously and may require professional vision advice.</div>
+<h2 class="heading-2 ace-line old-record-id-IuIydCD10oQp1UxUdkzcDheJnnc">Why AI Glasses Can Cause Eye Strain</h2>
+<div class="ace-line ace-line old-record-id-TnKddocrioiHsOxgVOycZJ1Anrg">When people search for <strong>"AI glasses eye strain, smart glasses eye fatigue, or blurry smart glasses display"</strong>, they often assume the problem is image quality.</div>
+<div class="ace-line ace-line old-record-id-GWE1dP8gQoidQwx7ZHBcZ0wOnZg">Sometimes it is. A display may be too dim, too bright, poorly focused, or difficult to read outdoors.</div>
+<div class="ace-line ace-line old-record-id-ATFDdwVJnoOZ4CxXp2QcpNlCnFg">But with<span> binocular smart glasses like </span><span><a href="https://www.memo-mind.com/" title="AI glasses without a camera, prescription-ready, all day.">MemoMind One</a></span>, your eyes are not looking at one screen. They are receiving two separate images, one for the left eye and one for the right eye, and your brain has to combine them into one comfortable view.</div>
+<div class="ace-line ace-line old-record-id-HxRBdFd9EoHFgjxjcMUcBRcQnId">If the two images are slightly misaligned, the display can create a strange experience. That does not always mean the display itself is blurry. It may mean the two images are not landing in the most comfortable position for your eyes.</div>
+<h2 class="ace-line ace-line old-record-id-HxRBdFd9EoHFgjxjcMUcBRcQnId">
+<span class="htext"></span>A Real MemoMind One Tester Case</h2>
+</div>
+<span class="lark-record-clipboard"></span>
+</div>
+</div>
+</div>
+<div class="case-file">
+<div class="case-file-tab">CASE FILE NO. 001 — MEMO LAB</div>
+<div class="case-file-body">
+<span class="paperclip"></span>
+<div class="stamp">IN THE LAB</div>
+<div class="case-file-meta">SUBJECT: Display Alignment Calibration  ·  STATUS: Experiment Completed</div>
+<div>
+<div class="ace-line ace-line old-record-id-MgTgdTRfzoJ1DRxB0LmcPnqan2f">
+<meta charset="utf-8">
+<div>
+<div class="ace-line ace-line old-record-id-IO2Zdz3STor6K8xwFF3ccKQGnoc">On June 25, we received feedback from an early MemoMind One tester <em>@Dango</em> about the<a href="https://www.memo-mind.com/blogs/buyers-guide/prescription-ai-glasses-memomind-one-guide" title="Prescription AI glasses guide: How memomind one supports your vision"> prescription-lens</a> PVT version.</div>
+<div class="ace-line ace-line old-record-id-H5RUdPJABozLfgxIK8qcbIoln7c">Here’s what he experienced:</div>
+</div>
+<span class="lark-record-clipboard"></span>
+</div>
+<div class="ace-line ace-line old-record-id-QyYrd1KyXoVtFOxgGbZcqGVdnzd">
+<ul>
+<li>Monocular (one eye closed): Sharp, clear, comfortable, no focusing problems.</li>
+<li>Binocular (dual‑screen, both eyes open): Mild persistent focus‑related eye strain.</li>
+<li>ECO mode (single‑screen, both eyes open): For this tester, discomfort became more noticeable unless he closed one eye.</li>
+</ul>
+</div>
+<div class="ace-line ace-line old-record-id-V7pidoCYyoyJzuxneFBcdxqSnAY">
+<meta charset="utf-8">
+<div>
+<div class="ace-line ace-line old-record-id-HmJAduZhqoVqfhx6qN6cTpCMnVe">
+<meta charset="utf-8">
+<div>
+<div class="ace-line ace-line old-record-id-H6CKdnAE1omIDoxhsTQcCSK3nid">The issue did not seem to be basic screen sharpness. <strong>Each eye could see the image clearly on its own. The discomfort appeared when the visual experience had to feel natural with both eyes open.</strong>
+</div>
+<div class="ace-line ace-line old-record-id-FpejdJqtvoy6eVxXMOvcLFspnTf">Before changing the software, we worked with Dango to rule out other possible causes. With guidance from our support team, he tried moving the virtual display distance from roughly 5 meters to 1 meter, swapping nose pads, adjusting frame tilt, and checking his prescription with an optometrist using both <a href="https://www.memo-mind.com/pages/memomind-one" title="The most natural AI display glasses, MemoMind One">MemoMind One</a> and a well-fitting pair of regular glasses.</div>
+<div class="ace-line ace-line old-record-id-VHPAdpuxboq1OsxeGUCcBhpWnbb">Those changes helped slightly, but they did not fully resolve the discomfort.</div>
+<div class="ace-line ace-line old-record-id-PJy7dxGOTorS4rxfpC1cBCRbnTe">That told us a fixed factory display position might not be enough for every user. Prescription lenses, wearing position, face shape, and individual binocular vision can all affect how comfortable a <span>near-eye display</span> glasses feels. So we built <strong>a display alignment calibration tool </strong>that lets MemoMind One users fine-tune the left and right display positions themselves.</div>
+</div>
+<span class="lark-record-clipboard"></span>
+</div>
+</div>
+<span class="lark-record-clipboard"></span>
+</div>
+</div>
+<div class="result-card">
+<span class="rc-label">Result Logged</span><meta charset="utf-8">
+<div>
+<div class="old-record-id-MQYFdKs3comIDsx5pPLcVfNpnxh">After we built the first version of the calibration tool, we sent it back to Dango for testing.</div>
+</div>
+<span class="lark-record-clipboard"></span>It took only two minutes for the discomfort he had previously mentioned to almost completely disappear.<br>
+</div>
+<div>
+<div class="ace-line ace-line old-record-id-MDL5dLvQuoJ7V5xWpsccp0oenQc">
+<meta charset="utf-8">
+<div>
+<div class="ace-line ace-line old-record-id-HdXddkDTmod4j8xEnkacs6APnug">That wasn't the end of the experiment. We kept refining the experience based on what we learned—and the<strong> <meta charset="utf-8"></strong><strong>MemoMind AI glasses Display Alignment Calibration</strong> tool is now staying in <strong>Memo Lab</strong>.<strong><span class="lark-record-clipboard"></span></strong>
+</div>
+  <div class="ace-line ace-line old-record-id-PJy7dxGOTorS4rxfpC1cBCRbnTe" style="font-size:12px;"><em>*Special thanks to @Dango for sharing his testing experience and feedback, which helped us identify this pain point and shape the calibration feature.</em></div>
+</div>
+<span class="lark-record-clipboard"></span>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h2 class="heading-2 ace-line old-record-id-GVmfdNE9Qo5jtJxloUXcDKnPnph">How to Adjust MemoMind One Display Alignment</h2>
+</div>
+<div>
+<div class="ace-line ace-line old-record-id-XN7IdxaQMoruTsxqrywcXFtunye">
+<strong>Connect</strong> your own AI glasses, open the<em><strong> </strong></em><strong>MemoMind app</strong>, go to <strong>Settings → Device → Memo Lab</strong>, and follow the on-screen instructions to adjust the display.</div>
+<div class="ace-line ace-line old-record-id-VHqFdxir7oZ4moxy49ocb6Qmn8g">
+<meta charset="utf-8">
+<div>
+<div class="ace-line ace-line old-record-id-X2x0dq8yMovLDKxVVb2cEC5RnPf">
+<div>
+<div class="ace-line ace-line old-record-id-X2x0dq8yMovLDKxVVb2cEC5RnPf">For best results:</div>
+<ul start="1" class="list-bullet1">
+<li class="ace-line ace-line old-record-id-LHqydvV6HoEjBmxVxFqcVFmun3g">
+<div>Keep both eyes open during calibration.</div>
+</li>
+<li class="ace-line ace-line old-record-id-JVv8d1zvxovJXqxjsdqc4s8InTe">
+<div>Adjust vertical alignment first.</div>
+</li>
+<li class="ace-line ace-line old-record-id-AmTgdg5YYoamFZxc028cJSdVnxh">
+<div>Adjust horizontal alignment after vertical alignment feels comfortable.</div>
+</li>
+<li class="ace-line ace-line old-record-id-Teq2dBUnZoczyVxA5mFc2Hl4nAb">
+<div>Make small changes instead of large jumps.</div>
+</li>
+<li class="ace-line ace-line old-record-id-HRFLdTtobo5vnUxjzC8cfFIRnLh">
+<div>After each adjustment, wait a few seconds and let your eyes settle.</div>
+</li>
+<li class="ace-line ace-line old-record-id-IBjXdTt4SoiRdOxjIZgcqWdpnAb">
+<div>Stop if the display becomes uncomfortable or causes pain.<meta charset="utf-8"> <meta charset="utf-8">
+</div>
+</li>
+</ul>
+</div>
+<span class="lark-record-clipboard"></span><img src="https://cdn.shopify.com/s/files/1/0656/0173/2721/files/setup_for_memo_lab.webp?v=1785988377" alt="How to Use Display Alignment Calibration?" style="float: none;">
+</div>
+</div>
+</div>
+</div>
+<div>
+<h2 class="heading-2 ace-line old-record-id-DddjdFgcko6HQ2xX19LcdLZHn1f">Why This Feature Lives in Memo Lab</h2>
+<div class="ace-line ace-line old-record-id-MLoVdhhTSo9VOXxCdX5cZtbJnSg">Display Alignment Calibration is not a feature every user will need.</div>
+<div class="ace-line ace-line old-record-id-CF4VdXh33oBp88xH0GXc6J0ynse">For many people, MemoMind One will feel comfortable without manual display adjustment. For others, especially users with prescription lenses or more sensitive binocular vision, a fine-tuning tool can be useful.</div>
+<div class="ace-line ace-line old-record-id-HnsidthWuoSN94xSKmzcUZaHnKg">That is exactly why this feature belongs in<strong> Memo Lab</strong>.</div>
+<div class="ace-line ace-line old-record-id-BgRndoOWwoFFhvxG705cWvpAnUb">Memo Lab is where we test real-world ideas before deciding whether they should become part of the everyday MemoMind experience.</div>
+<div>
+<div class="ace-line ace-line old-record-id-R2p7dzXnfo1PDWx3cxKcXCJxnWe">Display Alignment Calibration is not the only experiment. Since <a href="https://www.memo-mind.com/pages/memomind-one" title="AI glasses without a camera, prescription-ready, all day.">MemoMind One AI glasses</a> debuted at CES 2026, our team has continued refining and optimizing the experience. We’ve also invited early testers and tech enthusiasts to <a href="https://www.memo-mind.com/blogs/buyers-guide/three-ai-glasses-comparison" title="MemoMind vs meta display vs Ray-Ban Meta Blayzer">try the product firsthand</a> and share their feedback with us.</div>
+<div class="ace-line ace-line old-record-id-A6aEdieSCofoB7xnKXKcDqaPnBf">For example:</div>
+<ul start="1" class="list-bullet1">
+<li class="ace-line ace-line old-record-id-BECddoj0jo9qQdx0wwTckg5xnMc">
+<div><em>What if capturing what you see through AI glasses could be as simple as taking a screenshot?</em></div>
+</li>
+<li class="ace-line ace-line old-record-id-Ag7Nda2OoodzeFxqkkcciOygnzd">
+<div><em>What if AI glasses could connect to external intelligence beyond the app itself?</em></div>
+</li>
+</ul>
+<div class="ace-line ace-line old-record-id-XAMqd6v1DoGm2sxoddMcnmPsnBb">These questions have led to experiments like <strong>Screenshot</strong> and <strong>OpenClaw</strong>, which we will introduce to you in the next article.</div>
+</div>
+</div>
+<div>
+<div class="ace-line ace-line old-record-id-Bl8EdOE8aootJoxPm6Dc2ZoRnJg">
+<div>
+<div class="ace-line ace-line old-record-id-A8A4d8AupoKpvLx67lOcCcDLnhb">
+<div>
+<div class="ace-line ace-line old-record-id-ZxW8dKkl4ogENmxeaoncbaLCncc" style="text-align: center;"><br></div>
+<div class="ace-line ace-line old-record-id-ZxW8dKkl4ogENmxeaoncbaLCncc" style="text-align: center; font-size: 19px;"><em><strong>Tell us what you want MemoMind One to try next.</strong></em></div>
+<div class="ace-line ace-line old-record-id-ZxW8dKkl4ogENmxeaoncbaLCncc" style="text-align: center; center;font-size: 19px;"><a href="https://discord.gg/h2kHkQZq98" title="You ask, we ship!" rel="noopener" target="_blank"><em><strong>Join us on Discord→</strong></em></a></div>
+<div class="ace-line ace-line old-record-id-ZxW8dKkl4ogENmxeaoncbaLCncc" style="text-align: center; center;font-size: 19px;">
+<em><strong></strong></em><br>
+</div>
+</div>
+<span class="lark-record-clipboard"></span>
+</div>
+</div>
+<span class="lark-record-clipboard"></span>
+</div>
+</div>
+</div>
+<h2 class="heading-2">FAQs</h2>
+<div class="faq-article">
+<details>
+<summary>What is MemoMind One's Display Alignment Calibration?</summary>
+<div class="faq-answer">Display Alignment Calibration is a Memo Lab tool that lets MemoMind One users fine‑tune the vertical and horizontal position of the left and right displays. It is designed to help the two images feel more naturally aligned when both eyes are open.</div>
+</details>
+<details>
+<summary>What is MemoMind’s Memo Lab?</summary>
+<div class="faq-answer">Memo Lab is where MemoMind tests experimental features based on real user feedback. Some experiments may become part of the everyday MemoMind experience after they are validated and refined.</div>
+</details>
+<details>
+<summary>Can prescription lenses affect smart glasses comfort?</summary>
+<div class="faq-answer">Yes. Prescription accuracy, lens fit, wearing position, and individual vision differences can all affect how comfortable smart glasses feel. If discomfort continues, it is best to stop using the device and consult an optometrist or eye care professional.</div>
+</details>
+</div>
+<p><br></p>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://www.memo-mind.com/blogs/tech-hub/how-do-memomind-smart-audio-glasses-hear-you-clearly</id>
+    <published>2026-08-03T22:45:34-07:00</published>
+    <updated>2026-08-06T00:17:09-07:00</updated>
+    <link rel="alternate" type="text/html" href="https://www.memo-mind.com/blogs/tech-hub/how-do-memomind-smart-audio-glasses-hear-you-clearly"/>
+    <title>How Do Open-Ear Audio Glasses Hear You Clearly? Inside MemoMind One</title>
+    <author>
+      <name>MEMOMIND Tech</name>
+    </author>
+    <summary type="html">
+      <![CDATA[<p>Discover how MemoMind One smart audio glasses cut through background noise using advanced edge AI to ensure your voice is heard, understood, and personalized in any environment.</p><p><a class="read-more" href="https://www.memo-mind.com/blogs/tech-hub/how-do-memomind-smart-audio-glasses-hear-you-clearly">More</a></p>]]>
+    </summary>
+    <content type="html">
+      <![CDATA[<style>
+.faq-article details summary {
+    cursor: pointer;
+    padding: 16px 0;
+    border-bottom: 1px solid #EAEAEA;
+    list-style: none;
+    position: relative;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .faq-article details summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    color: #999;
+  }
+  .faq-article details[open] summary::after {
+    content: "−";
+    color: #D4AF37;
+  }
+  .faq-answer {
+    padding: 10px 0 20px;
+    border-bottom: 1px solid #EAEAEA;
+  }
+</style>
+<div>
+<div style="text-align: start;">
+<div class="ace-line ace-line old-record-id-XKgBdupFwoU0n6xFFHzc3Scunxn">
+<strong>Quick Answer:</strong> MemoMind One hears you clearly with <strong>three microphones and MemoMind Audio AI</strong>, its self-developed acoustic system, which layers AI beamforming, echo and noise cancellation, and wind suppression on top of wake word detection and voice recognition.</div>
+<div class="ace-line ace-line old-record-id-Q1P5diMwCoxdzhx4aW0cycr2nBf"><br></div>
+<div class="ace-line ace-line old-record-id-RcfGdFmJFo3mj7x2uB6cLIpanrf">In the last tech article, we looked at <a href="https://www.memo-mind.com/blogs/tech-hub/memomind-one-sound-leakage-test" title="Can other people hear your ai glasses? Memomind one sound leakage test">how MemoMind One controls sound leakage</a> — how far you, and the people around you, hear MemoMind One. This piece answers the reverse question: <strong>how does MemoMind One hear you clearly in noise?</strong>
+</div>
+<h2 class="heading-2 ace-line old-record-id-Mi2JddojNoWIKfxZo44cpVirnje">Capture You: Microphone Array inside MemoMind One</h2>
+<div class="ace-line ace-line old-record-id-RkWJdupz3oRBsUxJQYMcfJNWnTe">You say, "Hi, Memo," on a busy train station platform. To you, it's a few words. To the <a href="https://www.memo-mind.com/" title="AI glasses without a camera, prescription-ready, all day.">MemoMind One</a>'s microphones, it's everything at once — your voice, announcements, nearby conversations, footsteps. Before MemoMind One can hear you clearly, it first has to capture all of that.</div>
+<div class="ace-line ace-line old-record-id-WOgAdMfd1oGHnNxmWW1cOJ5nnRh">With <strong>three high-sensitivity microphones built into its titanium temples</strong>, MemoMind One forms a microphone array that captures sound from different positions. While a single microphone hears only one version of a sound, three microphones capture slightly different versions of that same sound. <strong>MemoMind One’s audio AI</strong> then processes these inputs, ultimately filtering out the specific sound you intend for the device to hear.</div>
+<h2 class="heading-2 ace-line old-record-id-MEokdIbUToInOGxIg9pclmTLnae">Hear You: Smart Audio Glasses Pick Up Your Voice</h2>
+<div class="ace-line ace-line old-record-id-DdCzd3qJXop0UqxX427cDQhHnrh">The MemoMind Audio AI, which is MemoMind's <strong>self-developed edge-side intelligent acoustic system</strong>, analyzes the sound field environment in real time to precisely extract the wearer's voice.</div>
+<p class="heading-3 ace-line old-record-id-SwrUdwe4EoiztMxSqLecvT80nZf"><strong><img src="https://cdn.shopify.com/s/files/1/0656/0173/2721/files/memomind_one_audio_AI.webp?v=1785814246" alt="How MemoMind One hears you clearly" style="float: none;"></strong></p>
+<h3 class="heading-3 ace-line old-record-id-SwrUdwe4EoiztMxSqLecvT80nZf"><strong>Step 1: Find Your Voice</strong></h3>
+<div class="ace-line ace-line old-record-id-FRumdAMySoMOlBxSyFWcwkcTnWf">
+<strong>AI Beamforming</strong> uses the tiny timing differences between multiple microphones to narrow the system's attention toward the direction you're speaking from, making your voice easier to pick out of it.</div>
+<div class="ace-line ace-line old-record-id-N1kOdDbNtoKJ1Gx4rqocMPwinhh">The beam itself adapts to what you're doing: in Meeting mode it widens to pick up far-field voices up to about 5 meters away; in <a href="https://www.memo-mind.com/blogs/in-the-moment/memomind-ai-translation-for-26-languages" title="Memomind ai translator glasses: A more natural way to understand">Translation</a> mode it narrows to the person speaking directly in front of you; in AI Conversation mode it focuses on the wearer's own voice.</div>
+<h3 class="heading-3 ace-line old-record-id-QnTTdaeLCoQYT4xTxxIcLEgmnWd">Step 2: Filter Out the Noise</h3>
+<div class="ace-line ace-line old-record-id-HxzaddUILoAPhjxVtNjc1EirnTh">Once the system knows where to listen, it still has to deal with everything else.</div>
+<div class="ace-line ace-line old-record-id-BfYfdv6npouftOxeuvNcKxX9nTd">
+<strong>Environmental Noise Cancellation (ENC)</strong> helps reduce background sounds such as chatter, nearby speech, and steady hums during calls. <strong>Ambient Noise Reduction (ANR)</strong> handles broader environmental noise in everyday situations, while <strong>Wind Noise Reduction</strong> helps suppress the low-frequency turbulence created when wind hits the microphones.</div>
+<div class="ace-line ace-line old-record-id-AmuPd8GHmo5zldxWYqQc2dt3n9c">There's another potential source of interference: the glasses themselves. When audio from the speakers is picked up by the microphones again, <strong><a href="https://www.consilient-tech.com/resources/acoustic-echo-cancellation-the-complete-guide-to-echo-free-voice-communication/" title="Acoustic Echo Cancellation: The Complete Guide to Echo-Free Voice Communication" target="_blank">Acoustic Echo Cancellation (AEC)</a></strong> helps remove that feedback and prevent it from becoming an echo.</div>
+<h3 class="heading-3 ace-line old-record-id-I0LVdYz90oFK1AxvAvmcF1E8nOb">Step 3: Keep Your Voice Clear</h3>
+<div class="ace-line ace-line old-record-id-WPEMdPxHxoPC0PxF7ZlcTCNInkg">Your voice doesn't stay at exactly the same volume all the time. You might speak quietly in a meeting and raise your voice outdoors.</div>
+<div class="ace-line ace-line old-record-id-PKqNdZ4bMo4evsx9FchcqnVhnUh">
+<strong><a href="https://www.forasoft.com/learn/audio-for-video/articles-audio/automatic-gain-control-agc2" title="Automatic gain control (AGC): keeping voice level consistent" target="_blank">Automatic Gain Control (AGC)</a></strong><strong> </strong>automatically adjusts the captured voice level to keep your speech more consistent. Meanwhile, <strong>Multi-scene Audio Optimization </strong>adapts voice processing to different environments, helping balance vocal volume and clarity whether you're indoors or outside.</div>
+<div class="ace-line ace-line old-record-id-FF5rdoQTIoVZ2Yx3dllcDV8Dncd">This is the input side of MemoMind's acoustic system — hearing your voice accurately before anything gets processed. Paired with the output side: your voice going in cleanly, and the MemoMind One minimizes sound leakage to those around you.</div>
+<h2 class="heading-2 ace-line old-record-id-FsPLdIvgtobCARxFG6zcmvk9nig">Understand You: From Speech Recognition to AI Response</h2>
+<div class="ace-line ace-line old-record-id-F7S7dBWMhou7HSxu9HpcHPO1nfc">In a noisy train station, capturing your voice is merely the first step for the <a href="https://www.memo-mind.com/pages/memomind-one" title="AI glasses without a camera, prescription-ready, all day.">MemoMind One</a> audio processing system; what truly matters is the audio AI's ability to accurately understand you:</div>
+<p class="heading-3 ace-line old-record-id-RcDkd4VeFoRLuwx9b0zcEe7Unre"><img src="https://cdn.shopify.com/s/files/1/0656/0173/2721/files/memomind_one_audio_AI-2.webp?v=1785814445" alt="How MemoMind One understands you accurately" style="float: none;"></p>
+<h3 class="heading-3 ace-line old-record-id-RcDkd4VeFoRLuwx9b0zcEe7Unre">Step 1: Wake Up</h3>
+<div class="ace-line ace-line old-record-id-T3nYdPH27oionKxnRRFczatLngo">MemoMind One continuously listens at low power for the wake word <a href="https://www.memo-mind.com/blogs/in-the-moment/memomind-ai-hands-free-intelligence" title="Speak to memo AI: Get your own hands-free ai assistant">"Hi, Memo."</a><strong> On-device wake word detectio</strong>n activates the full voice pipeline only when you call for it, without continuously streaming raw audio elsewhere.</div>
+<h3 class="heading-3 ace-line old-record-id-JTYXd4pK8oA0vUx4ER7c5qWWntc">Step 2: Detect Speech</h3>
+<div class="ace-line ace-line old-record-id-Z627dFv24oogjHxMY8ec8kaOndf">Once activated, <strong>AI Voice Activity Detection (VAD)</strong> helps the system tell speech apart from everyday sounds such as a cough, a closing door, or background music. This helps prevent irrelevant sounds from being mistaken for speech and avoids unnecessary processing.</div>
+<h3 class="heading-3 ace-line old-record-id-AQJ3dvRZyow6HFxRTODcUTNAnNg">Step 3: Separate Voices</h3>
+<div class="ace-line ace-line old-record-id-QH5Cd3m8HozQOsxXjAKcYtIQnOe">In a meeting, café, or other busy environment, more than one person may be speaking at once. <strong>Speaker separation</strong> helps distinguish your voice from nearby conversations, giving the AI a cleaner signal to work with.</div>
+<h3 class="heading-3 ace-line old-record-id-KZQfd2zwKoR5gGx9xZscIg9JnIb">Step 4: Respond Fast</h3>
+<div class="ace-line ace-line old-record-id-R2vXdI1DToyzUkxUFIlcbCU9nqb">Understanding your words is only half the experience. A <strong>low-latency voice pipeline</strong> keeps each stage of processing tightly connected, reducing the delay between when you finish speaking and when the assistant responds—so the interaction feels more natural.</div>
+<div class="ace-line ace-line old-record-id-BhNJdfje9oLOghxhr6scXOh0nwf">Together with continuously optimizing the quality of speech pre-processing, improve the comprehension accuracy of <strong>ASR</strong> and <strong>AI models</strong>, enabling <a href="https://www.kickstarter.com/projects/1963472698/memomind-one-the-most-natural-ai-display-glasses" title="Get MemoMind One now and save up to 43%">MemoMind One display glasses</a> to maintain stable and natural human-machine interaction even in complex environments — no need to repeat yourself again and again.</div>
+</div>
+<h2 class="ace-line ace-line old-record-id-MfHVdr1D1oTVbGx5m59ckaOcnFc">Recognize You: Voiceprint Privacy in MemoMind's Audio Glasses</h2>
+</div>
+<div>
+<div class="ace-line ace-line old-record-id-N1eFdeU7cod3adxfat1cQbbCn6g">Today's MemoMind Audio AI is focused on one goal: helping the glasses hear you more accurately. The next layer we're building goes a step further — not just hearing a voice clearly, but recognizing <em>whose</em> voice it is:</div>
+<ul class="list-bullet1" start="1">
+<li class="ace-line ace-line old-record-id-NopzdO4h2oqlY8xhPRPcc39Unde">
+<div>
+<strong>Voiceprint recognition</strong> – identifies the wearer by unique vocal characteristics, similar to how a fingerprint identifies a person. In the <a href="https://www.memo-mind.com/blogs/buyers-guide/how-memomind-one-protects-your-data" title="How memomind one protects your data？A privacy guide">Privacy </a>module on the MemoMind App, once your voiceprint is enrolled, wishes, to-dos, meeting recordings, and memory entries are only attributed to you when the voiceprint matches — <em>so if someone standing next to you says "I want a Switch," it won't get logged as your wish. And in meeting recordings, whatever you say gets tagged "Me."</em>
+</div>
+</li>
+<li class="ace-line ace-line old-record-id-Q7ZrdH6iooI36wxgCCDcH1kfnWf">
+<div>
+<strong>User identity confirmation</strong> – ensures the assistant is responding to its actual wearer, not to ambient conversation nearby.</div>
+</li>
+</ul>
+<div class="ace-line ace-line old-record-id-OG0LdujVhopOfnxLENpcu1ZanUf">The future of MemoMind camera-free AI glasses lies in continuously refining the audio experience, making voice a more natural and intuitive way for people to interact with AI.</div>
+<div class="ace-line ace-line old-record-id-N6uhdfwx1oBnuNx5DBscaaHVnTe"><br></div>
+<div style="font-size: 19px; text-align: center;" class="ace-line">
+<a href="https://www.kickstarter.com/projects/1963472698/memomind-one-the-most-natural-ai-display-glasses?ref=974x89" title="Back us and save up to 43%"><em><strong>Back Us and </strong></em></a><a href="https://www.kickstarter.com/projects/1963472698/memomind-one-the-most-natural-ai-display-glasses?ref=974x89" title="Back us and save up to 43%"><em><strong>Get Your MemoMind Audio Assistant Today→</strong></em></a>
+</div>
+<div style="font-size: 19px;" class="ace-line">
+<strong></strong><br>
+</div>
+<h2 class="heading-2">FAQs</h2>
+<div class="faq-article">
+<details>
+<summary>Can MemoMind One hear me clearly?</summary>
+<div class="faq-answer">Yes, MemoMind Audio AI is designed to hear you clearly. It is an intelligent acoustic system that employs AI to drive the entire audio processing chain to ensure voice interaction in environments ranging from offices and coffee shops to outdoor settings.</div>
+</details>
+<details>
+<summary>Is my voice processed on-device or in the cloud?</summary>
+<div class="faq-answer">MemoMind One performs key parts of its audio processing on-device, including portions of directional voice isolation, helping reduce latency before audio is passed to downstream services. However, features such as transcript processing, AI assistance, and memory may involve connected services and cloud processing depending on the feature and connection state.</div>
+</details>
+<details>
+<summary>How can MemoMind One work without a camera?</summary>
+<div class="faq-answer">MemoMind One takes an audio-first approach to AI interaction. Its microphone array captures speech and ambient sound, while AI-powered audio processing helps identify and prioritize relevant audio. This allows you to interact with the assistant naturally through your voice while keeping the glasses camera-free.</div>
+</details>
+</div>
+<p><br></p>
+</div>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://www.memo-mind.com/blogs/tech-hub/memomind-one-sound-leakage-test</id>
+    <published>2026-07-26T20:13:23-07:00</published>
+    <updated>2026-07-26T20:13:27-07:00</updated>
+    <link rel="alternate" type="text/html" href="https://www.memo-mind.com/blogs/tech-hub/memomind-one-sound-leakage-test"/>
+    <title>Can Other People Hear Your AI Glasses? MemoMind One Sound Leakage Test</title>
+    <author>
+      <name>MEMOMIND Tech</name>
+    </author>
+    <summary type="html">
+      <![CDATA[<p>"Can Other People Hear Your AI Glasses?" Here's what our internal testing on MemoMind One actually found.</p><p><a class="read-more" href="https://www.memo-mind.com/blogs/tech-hub/memomind-one-sound-leakage-test">More</a></p>]]>
+    </summary>
+    <content type="html">
+      <![CDATA[<style>
+.faq-article details summary {
+    cursor: pointer;
+    padding: 16px 0;
+    border-bottom: 1px solid #EAEAEA;
+    list-style: none;
+    position: relative;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .faq-article details summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    color: #999;
+  }
+  .faq-article details\[open\] summary::after {
+    content: "−";
+    color: #D4AF37;
+  }
+  .faq-answer {
+    padding: 10px 0 20px;
+    border-bottom: 1px solid #EAEAEA;
+  }
+</style>
+<div data-page-id="AryddiNSCoc9R7xBDBtcwMrUnVb" data-lark-html-role="root" data-docx-has-block-data="true">
+<div class="ace-line ace-line old-record-id-NQJJdbq7ToFDIyxjxEgcLoNCnec">
+<meta charset="utf-8">
+<div data-page-id="AryddiNSCoc9R7xBDBtcwMrUnVb" data-lark-html-role="root" data-docx-has-block-data="false">
+<div class="ace-line ace-line old-record-id-TMFCdta7poYsnmxorDtc0wiQnQc"><strong>"Can Other People Hear Your AI Glasses?"</strong></div>
+<div class="ace-line ace-line old-record-id-IgbOdD09CoHr9gxduhzcRW1hn5b">Honestly, people nearby may hear faint audio at close range or high volume, especially in quiet spaces. In typical everyday environments, background noise can make that leakage less noticeable.</div>
+<h2 class="heading-2 ace-line old-record-id-IHzddPydToB5XKxARaKcDcqgn2g">MemoMind One Internal Sound Leakage Test: Key Findings</h2>
+<ul start="1" class="list-bullet1">
+<li class="ace-line ace-line old-record-id-SFWtdo8aeoYH7kxyNLFcEKZMn8y" data-list="bullet">
+<div>
+<strong>Sound leakage is not a MemoMind-One-specific flaw.</strong> Almost every <a data-lark-is-custom="true" href="https://www.soundcore.com/blogs/earbuds/can-other-people-hear-your-music-with-open-ear-headphones" title="Can Other People Hear Open Ear Earbuds? Sound Leakage Explained" rel="noopener" target="_blank">open-ear smart glasses design leaks sound</a> to some degree — that's inherent to how open-ear audio works, not unique to any one product.</div>
+</li>
+<li class="ace-line ace-line old-record-id-TBHgdRUd4oPtgrxMefkcOEkgnte" data-list="bullet">
+<div>
+<strong>Firmware has measurably reduced it.</strong> Since release, the Team has continuously optimized MemoMind One AI display glasses, and the latest firmware has cut overall sound leakage by 5 to 10 decibels.</div>
+</li>
+<li class="ace-line ace-line old-record-id-EMvHdNrc9oYLajxKN3XcgvoGnXd" data-list="bullet">
+<div>
+<strong>At normal volume, it's basically a non-issue.</strong> In most everyday environments — roughly <a href="https://sounddbmeter.com/office-noise-level/" data-lark-is-custom="true" title="Office Noise Level: Acceptable dB Range + How to Measure" rel="noopener" target="_blank">40–60 dB(A)</a> of ambient noise, the range of a typical office or living room — listening at a comfortable volume no longer produces noticeable leakage from<a href="https://www.memo-mind.com/" data-lark-is-custom="true" title="AI glasses without a camera. Prescription-ready, all day."> MemoMind One</a>.</div>
+</li>
+</ul>
+</div>
+<span data-lark-record-data="{&quot;isCut&quot;:false,&quot;rootId&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;parentId&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;blockIds&quot;:[3,47,58,57,56,55],&quot;recordIds&quot;:[&quot;TMFCdta7poYsnmxorDtc0wiQnQc&quot;,&quot;IgbOdD09CoHr9gxduhzcRW1hn5b&quot;,&quot;IHzddPydToB5XKxARaKcDcqgn2g&quot;,&quot;SFWtdo8aeoYH7kxyNLFcEKZMn8y&quot;,&quot;TBHgdRUd4oPtgrxMefkcOEkgnte&quot;,&quot;EMvHdNrc9oYLajxKN3XcgvoGnXd&quot;],&quot;recordMap&quot;:{&quot;TMFCdta7poYsnmxorDtc0wiQnQc&quot;:{&quot;id&quot;:&quot;TMFCdta7poYsnmxorDtc0wiQnQc&quot;,&quot;snapshot&quot;:{&quot;type&quot;:&quot;text&quot;,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;comments&quot;:[],&quot;revisions&quot;:[],&quot;locked&quot;:false,&quot;hidden&quot;:false,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[],&quot;text&quot;:{&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;\&quot;Can Other People Hear Your AI Glasses?\&quot;&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*1*0+14&quot;}},&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;bold&quot;,&quot;true&quot;],&quot;1&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;]},&quot;nextNum&quot;:2}},&quot;align&quot;:&quot;&quot;,&quot;folded&quot;:false}},&quot;IgbOdD09CoHr9gxduhzcRW1hn5b&quot;:{&quot;id&quot;:&quot;IgbOdD09CoHr9gxduhzcRW1hn5b&quot;,&quot;snapshot&quot;:{&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;type&quot;:&quot;text&quot;,&quot;children&quot;:[],&quot;comments&quot;:[],&quot;revisions&quot;:[],&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;text&quot;:{&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;Honestly, people nearby may hear faint audio at close range or high volume, especially in quiet spaces. In typical everyday environments, background noise can make that leakage less noticeable. &quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0+5e&quot;},&quot;rows&quot;:{},&quot;cols&quot;:{}},&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;]},&quot;nextNum&quot;:1,&quot;attribToNum&quot;:{&quot;author,7638452154002033871&quot;:0}}},&quot;folded&quot;:false}},&quot;EMvHdNrc9oYLajxKN3XcgvoGnXd&quot;:{&quot;id&quot;:&quot;EMvHdNrc9oYLajxKN3XcgvoGnXd&quot;,&quot;snapshot&quot;:{&quot;type&quot;:&quot;bullet&quot;,&quot;children&quot;:[],&quot;comments&quot;:[],&quot;revisions&quot;:[],&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;text&quot;:{&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;At normal volume, it's basically a non-issue. In most everyday environments — roughly 40–60 dB(A) of ambient noise, the range of a typical office or living room — listening at a comfortable volume no longer produces noticeable leakage from MemoMind One.&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0*1+19*0+15*0*2+b*0+3y*0*3+d*0+1&quot;}},&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;],&quot;2&quot;:[&quot;link&quot;,&quot;https%3A%2F%2Fsounddbmeter.com%2Foffice-noise-level%2F&quot;],&quot;3&quot;:[&quot;link&quot;,&quot;https%3A%2F%2Fwww.memo-mind.com%2F&quot;]},&quot;nextNum&quot;:4}},&quot;level&quot;:1,&quot;folded&quot;:false,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;}},&quot;TBHgdRUd4oPtgrxMefkcOEkgnte&quot;:{&quot;id&quot;:&quot;TBHgdRUd4oPtgrxMefkcOEkgnte&quot;,&quot;snapshot&quot;:{&quot;type&quot;:&quot;bullet&quot;,&quot;children&quot;:[],&quot;comments&quot;:[],&quot;revisions&quot;:[],&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;text&quot;:{&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;Firmware has measurably reduced it. Since release, the MemoMind Team has continuously optimized MemoMind One, its first camera-free smart glasses, and the latest firmware has cut overall sound leakage by 5 to 10 decibels.&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0*1+z*0+56&quot;}},&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;]},&quot;nextNum&quot;:2}},&quot;level&quot;:1,&quot;folded&quot;:false,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;}},&quot;SFWtdo8aeoYH7kxyNLFcEKZMn8y&quot;:{&quot;id&quot;:&quot;SFWtdo8aeoYH7kxyNLFcEKZMn8y&quot;,&quot;snapshot&quot;:{&quot;type&quot;:&quot;bullet&quot;,&quot;children&quot;:[],&quot;comments&quot;:[],&quot;revisions&quot;:[],&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;text&quot;:{&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;It's not a MemoMind-One-specific flaw. Almost every open-ear smart glasses design leaks sound to some degree — that's inherent to how open-ear audio works, not unique to any one product.&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0*1+12*0+e*0*2+15*0+2l&quot;},&quot;rows&quot;:{},&quot;cols&quot;:{}},&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;],&quot;2&quot;:[&quot;link&quot;,&quot;https%3A%2F%2Fwww.soundcore.com%2Fblogs%2Fearbuds%2Fcan-other-people-hear-your-music-with-open-ear-headphones&quot;]},&quot;nextNum&quot;:3,&quot;attribToNum&quot;:{&quot;author,7638452154002033871&quot;:0,&quot;bold,true&quot;:1,&quot;link,https%3A%2F%2Fwww.soundcore.com%2Fblogs%2Fearbuds%2Fcan-other-people-hear-your-music-with-open-ear-headphones&quot;:2}}},&quot;level&quot;:1,&quot;folded&quot;:false,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;}},&quot;IHzddPydToB5XKxARaKcDcqgn2g&quot;:{&quot;id&quot;:&quot;IHzddPydToB5XKxARaKcDcqgn2g&quot;,&quot;snapshot&quot;:{&quot;type&quot;:&quot;heading2&quot;,&quot;children&quot;:[],&quot;comments&quot;:[],&quot;revisions&quot;:[],&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;text&quot;:{&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;MemoMind One Sound Leakage Test: Key Findings&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0+19&quot;}},&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;]},&quot;nextNum&quot;:1}},&quot;folded&quot;:false,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;}},&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;:{&quot;id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;snapshot&quot;:{&quot;type&quot;:&quot;page&quot;,&quot;parent_id&quot;:&quot;&quot;,&quot;comments&quot;:[],&quot;revisions&quot;:[],&quot;locked&quot;:false,&quot;hidden&quot;:false,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[&quot;McD8dSMUSox08Wx0AfvcsZLOn3f&quot;,&quot;TMFCdta7poYsnmxorDtc0wiQnQc&quot;,&quot;IgbOdD09CoHr9gxduhzcRW1hn5b&quot;,&quot;IHzddPydToB5XKxARaKcDcqgn2g&quot;,&quot;SFWtdo8aeoYH7kxyNLFcEKZMn8y&quot;,&quot;TBHgdRUd4oPtgrxMefkcOEkgnte&quot;,&quot;EMvHdNrc9oYLajxKN3XcgvoGnXd&quot;,&quot;RPj1dKCOVoptA1xQkH3c5x3rnFb&quot;,&quot;Oy8Zd7Eqroo0icxMV8xcpHsjnpc&quot;,&quot;S3w8dmaFcoLlTwxrj44cWxhbn1b&quot;,&quot;RHZKd7HvqowKJ7x8fgCcuZ42nWc&quot;,&quot;Cea4dVwrho1LDZxOUlBcjXYdnMb&quot;,&quot;FQI9d29vHofMNPxGPKkcsfP1nqh&quot;,&quot;ACUIdeYSboMfWOxDwXNc0gMDnHb&quot;,&quot;EEwsd8tR8oPon2x87PqcbKr2nZc&quot;,&quot;Lz7idcGxFopGPzxbEOvcMRt3nAe&quot;,&quot;EKond96YYoElGcxwziTcOSExnFe&quot;,&quot;HlWSdnkfUoIZTOxz2T6csvqnnC4&quot;,&quot;V0FGdsEuyoceagxz5lac4tUBnab&quot;,&quot;Y73YdMw2PoCLCsx1z9ecSUOLnWg&quot;,&quot;KvSCdxCMNoHHvSxmaEYcy1qQnkd&quot;,&quot;WvRKdTo5woWMi4xqmb1cVVUNnTe&quot;,&quot;X2wTd7YBBodYJVxT7qrckuNQnLh&quot;,&quot;IQEqdhf5toJHFAxnR01c2Gs5n4c&quot;,&quot;EWi8d1bV9o5NZlxP6eYczGIUnCc&quot;,&quot;GcAbdZQZYoUsmnxrf0VcWlHKn8A&quot;,&quot;Oscbd93Mto08nKxx9s2cr36bn8c&quot;,&quot;AlipdH7vboI8FlxSPdwc2s1Encg&quot;,&quot;B8Wndedrto3RmMx6o3VcxTlYn4g&quot;,&quot;GktXdM14No3nuaxIZYNc1EbsnSd&quot;,&quot;RG7idjtx4o2u0Dx7Ow6crky6nKg&quot;,&quot;WiladdJ8yo88vzxUSTycsyA9nxh&quot;,&quot;KQcFdzNuio3uCExDXnYcxqnOnqb&quot;,&quot;WU9PdewMFoycVkxgKGncSQDgnwe&quot;,&quot;DWMIdjow0oH0Ruxvd52cmYxZnIg&quot;,&quot;IsBydtlctoLAwXx89VVcR8Y8nQb&quot;,&quot;UeLtdfNTLo8pW5xy9uTcvjEXnCf&quot;,&quot;FLusdxhxHosRVhxn3GbcnRgjnLc&quot;,&quot;YICpd6me6o5osuxkXxvcYK2Fntg&quot;,&quot;IEFDdRMaUoBd56x6W7dcievzneh&quot;,&quot;Fb7ydkrUnoEJ1gxo8kyc8BYXnwe&quot;,&quot;NCXudrxstoXZG4xZ85CcYki9nub&quot;,&quot;BcSxdhGqNo46qZxNFBhcZwVZnny&quot;,&quot;AckQdepS9oruc7x0iCocXbP1nyh&quot;,&quot;OiHmdzYbfovIL3x7RcIcaf5cnZg&quot;,&quot;JSygdqbMxoyvMGxIdnuccEbLnDc&quot;,&quot;QPjNdd5W9oekzax7UM1cPhNVnSg&quot;],&quot;text&quot;:{&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;]},&quot;nextNum&quot;:1,&quot;attribToNum&quot;:{&quot;author,7638452154002033871&quot;:0}},&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;B22-Can Other People Hear Your AI Glasses? MemoMind One Sound Leakage Test&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0+22&quot;},&quot;rows&quot;:{},&quot;cols&quot;:{}}},&quot;align&quot;:&quot;&quot;,&quot;doc_info&quot;:{&quot;editors&quot;:[&quot;7638452154002033871&quot;,&quot;7529865599216926721&quot;],&quot;options&quot;:[&quot;editors&quot;,&quot;edit_time&quot;],&quot;deleted_editors&quot;:[],&quot;option_modified&quot;:null}}}},&quot;payloadMap&quot;:{&quot;TMFCdta7poYsnmxorDtc0wiQnQc&quot;:{&quot;level&quot;:1},&quot;IgbOdD09CoHr9gxduhzcRW1hn5b&quot;:{&quot;level&quot;:1}},&quot;extra&quot;:{&quot;channel&quot;:&quot;saas&quot;,&quot;pasteRandomId&quot;:&quot;e9f6b4f3-0541-413a-b0d1-21dd1a0224ef&quot;,&quot;mention_page_title&quot;:{},&quot;external_mention_url&quot;:{},&quot;isEqualBlockSelection&quot;:true},&quot;isKeepQuoteContainer&quot;:false,&quot;selection&quot;:[{&quot;id&quot;:3,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:40},&quot;recordId&quot;:&quot;TMFCdta7poYsnmxorDtc0wiQnQc&quot;},{&quot;id&quot;:47,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:194},&quot;recordId&quot;:&quot;IgbOdD09CoHr9gxduhzcRW1hn5b&quot;},{&quot;id&quot;:58,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:45},&quot;recordId&quot;:&quot;IHzddPydToB5XKxARaKcDcqgn2g&quot;},{&quot;id&quot;:57,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:186},&quot;recordId&quot;:&quot;SFWtdo8aeoYH7kxyNLFcEKZMn8y&quot;},{&quot;id&quot;:56,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:221},&quot;recordId&quot;:&quot;TBHgdRUd4oPtgrxMefkcOEkgnte&quot;},{&quot;id&quot;:55,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:253},&quot;recordId&quot;:&quot;EMvHdNrc9oYLajxKN3XcgvoGnXd&quot;}],&quot;pasteFlag&quot;:&quot;be9b3117-74e9-40c8-9d31-a7a71f5275ae&quot;}" data-lark-record-format="docx/record" class="lark-record-clipboard"></span>
+</div>
+<h3 class="heading-3 ace-line old-record-id-CtqsdNsjhoAvduxXuvFc22LSnNk">How We Tested It</h3>
+<div class="ace-line ace-line old-record-id-Q2bFdvEcpoNDGPxEi60c9TJznTf">
+<meta charset="utf-8">
+<div data-docx-has-block-data="false" data-lark-html-role="root" data-page-id="AryddiNSCoc9R7xBDBtcwMrUnVb">
+<div class="ace-line ace-line old-record-id-Q2bFdvEcpoNDGPxEi60c9TJznTf">
+<meta charset="utf-8">
+<div data-page-id="AryddiNSCoc9R7xBDBtcwMrUnVb" data-lark-html-role="root" data-docx-has-block-data="false">
+<div class="ace-line ace-line old-record-id-Oy8Zd7Eqroo0icxMV8xcpHsjnpc">The MemoMind team conducted internal tests on three MemoMind One firmware versions(April Initial, July, and the Latest).</div>
+</div>
+<span data-lark-record-data='{"rootId":"AryddiNSCoc9R7xBDBtcwMrUnVb","text":{"initialAttributedTexts":{"text":{"0":"The MemoMind team ran a series of internal tests comparing three firmware versions of MemoMind One. To ensure a fair comparison, every firmware version was tested under the same conditions."},"attribs":{"0":"*0+59"}},"apool":{"numToAttrib":{"0":["author","7638452154002033871"]},"nextNum":1}},"type":"text","referenceRecordMap":{},"extra":{"channel":"saas","isEqualBlockSelection":true,"pasteRandomId":"ded5ccb5-d699-4691-8703-d7b9b6c0a1c7","mention_page_title":{},"external_mention_url":{}},"isKeepQuoteContainer":false,"isFromCode":false,"selection":[{"id":53,"type":"text","selection":{"start":0,"end":189},"recordId":"Oy8Zd7Eqroo0icxMV8xcpHsjnpc"}],"payloadMap":{},"isCut":false}' data-lark-record-format="docx/text" class="lark-record-clipboard"></span>
+</div>
+<div class="ace-line ace-line old-record-id-Sf0zdXb9XoZX5YxVeEQc7Qi2noh">Two typical listening scenarios were chosen:</div>
+<ul class="list-bullet1" start="1">
+<li data-list="bullet" class="ace-line ace-line old-record-id-CGmDdTDW2oss5GxEpyQcdc6wn3c">
+<div><strong>An anechoic environment</strong></div>
+</li>
+<li data-list="bullet" class="ace-line ace-line old-record-id-MpmwdIQVso4DOixWA2gcnh8fnsc">
+<div><strong>An ambient noise environment</strong></div>
+</li>
+</ul>
+<div class="ace-line ace-line old-record-id-XI8odw5pAoSkiox6CapcXrYPnif">
+<meta charset="utf-8">
+<div data-page-id="AryddiNSCoc9R7xBDBtcwMrUnVb" data-lark-html-role="root" data-docx-has-block-data="false">
+<div class="ace-line ace-line old-record-id-FQI9d29vHofMNPxGPKkcsfP1nqh">All tests adopted <strong>a consistent wearing position, playback volume, and audio track. </strong> Sound leakage was then measured at three distances:</div>
+</div>
+<span data-lark-record-data='{"rootId":"AryddiNSCoc9R7xBDBtcwMrUnVb","text":{"initialAttributedTexts":{"text":{"0":"All tests adopted a consistent wearing position, playback volume, and audio track.  Sound leakage was then measured at three distances:"},"attribs":{"0":"*0+i*0*1+1t*0+1g"}},"apool":{"numToAttrib":{"0":["author","7638452154002033871"],"1":["bold","true"]},"nextNum":2}},"type":"text","referenceRecordMap":{},"extra":{"channel":"saas","isEqualBlockSelection":true,"pasteRandomId":"7a84265a-e647-40e9-8651-49c850eeeb23","mention_page_title":{},"external_mention_url":{}},"isKeepQuoteContainer":false,"isFromCode":false,"selection":[{"id":82,"type":"text","selection":{"start":0,"end":135},"recordId":"FQI9d29vHofMNPxGPKkcsfP1nqh"}],"payloadMap":{},"isCut":false}' data-lark-record-format="docx/text" class="lark-record-clipboard"></span>
+</div>
+<ul class="list-bullet1" start="1">
+<li data-list="bullet" class="ace-line ace-line old-record-id-J0Z8d5vY5onMODxQdSfcPQTtnMd">
+<div><strong>At-ear</strong></div>
+</li>
+<li data-list="bullet" class="ace-line ace-line old-record-id-CUuLdDmLhoUmL7x1AgTcoIZMnQc">
+<div><strong>30 cm (approximately arm's length)</strong></div>
+</li>
+<li data-list="bullet" class="ace-line ace-line old-record-id-MA3jdPXVRol89Hxf08Tchq8sngf">
+<div><strong>1 meter (a typical conversational distance)</strong></div>
+</li>
+</ul>
+</div>
+<span class="lark-record-clipboard" data-lark-record-format="docx/record" data-lark-record-data="{&quot;isCut&quot;:false,&quot;rootId&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;parentId&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;blockIds&quot;:[185,231,226,187,188,189,190,191],&quot;recordIds&quot;:[&quot;Q2bFdvEcpoNDGPxEi60c9TJznTf&quot;,&quot;Sf0zdXb9XoZX5YxVeEQc7Qi2noh&quot;,&quot;CGmDdTDW2oss5GxEpyQcdc6wn3c&quot;,&quot;MpmwdIQVso4DOixWA2gcnh8fnsc&quot;,&quot;XI8odw5pAoSkiox6CapcXrYPnif&quot;,&quot;J0Z8d5vY5onMODxQdSfcPQTtnMd&quot;,&quot;CUuLdDmLhoUmL7x1AgTcoIZMnQc&quot;,&quot;MA3jdPXVRol89Hxf08Tchq8sngf&quot;],&quot;recordMap&quot;:{&quot;Q2bFdvEcpoNDGPxEi60c9TJznTf&quot;:{&quot;id&quot;:&quot;Q2bFdvEcpoNDGPxEi60c9TJznTf&quot;,&quot;snapshot&quot;:{&quot;type&quot;:&quot;text&quot;,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;comments&quot;:[],&quot;hidden&quot;:false,&quot;align&quot;:&quot;&quot;,&quot;folded&quot;:false,&quot;revisions&quot;:[],&quot;locked&quot;:false,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[],&quot;text&quot;:{&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;The MemoMind team conducted a series of internal tests comparing three different firmware versions of MemoMind One. To ensure a fair comparison, every firmware version was tested under the same conditions.&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0+5p&quot;}},&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;]},&quot;nextNum&quot;:1}}}},&quot;MpmwdIQVso4DOixWA2gcnh8fnsc&quot;:{&quot;id&quot;:&quot;MpmwdIQVso4DOixWA2gcnh8fnsc&quot;,&quot;snapshot&quot;:{&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;align&quot;:&quot;&quot;,&quot;folded&quot;:false,&quot;type&quot;:&quot;bullet&quot;,&quot;comments&quot;:[],&quot;hidden&quot;:false,&quot;children&quot;:[],&quot;text&quot;:{&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;]},&quot;nextNum&quot;:2,&quot;attribToNum&quot;:{&quot;author,7638452154002033871&quot;:0,&quot;bold,true&quot;:1}},&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;An ambient noise environment&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0*1+s&quot;},&quot;rows&quot;:{},&quot;cols&quot;:{}}},&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;revisions&quot;:[],&quot;locked&quot;:false}},&quot;XI8odw5pAoSkiox6CapcXrYPnif&quot;:{&quot;id&quot;:&quot;XI8odw5pAoSkiox6CapcXrYPnif&quot;,&quot;snapshot&quot;:{&quot;folded&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;comments&quot;:[],&quot;locked&quot;:false,&quot;hidden&quot;:false,&quot;text&quot;:{&quot;apool&quot;:{&quot;nextNum&quot;:2,&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;]}},&quot;initialAttributedTexts&quot;:{&quot;attribs&quot;:{&quot;0&quot;:&quot;*0+t*0*1+27*0+1h&quot;},&quot;text&quot;:{&quot;0&quot;:&quot;For each test, we maintained the same wearing position, the same playback volume, and the same audio content. Sound leakage was then measured at three distances:&quot;}}},&quot;align&quot;:&quot;&quot;,&quot;revisions&quot;:[],&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[]}},&quot;J0Z8d5vY5onMODxQdSfcPQTtnMd&quot;:{&quot;id&quot;:&quot;J0Z8d5vY5onMODxQdSfcPQTtnMd&quot;,&quot;snapshot&quot;:{&quot;type&quot;:&quot;bullet&quot;,&quot;locked&quot;:false,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;text&quot;:{&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;]},&quot;nextNum&quot;:2,&quot;attribToNum&quot;:{&quot;author,7638452154002033871&quot;:0,&quot;bold,true&quot;:1}},&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;At-ear&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0*1+6&quot;},&quot;rows&quot;:{},&quot;cols&quot;:{}}},&quot;align&quot;:&quot;&quot;,&quot;folded&quot;:false,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;comments&quot;:[],&quot;revisions&quot;:[],&quot;hidden&quot;:false,&quot;children&quot;:[]}},&quot;CUuLdDmLhoUmL7x1AgTcoIZMnQc&quot;:{&quot;id&quot;:&quot;CUuLdDmLhoUmL7x1AgTcoIZMnQc&quot;,&quot;snapshot&quot;:{&quot;text&quot;:{&quot;apool&quot;:{&quot;nextNum&quot;:2,&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;]}},&quot;initialAttributedTexts&quot;:{&quot;attribs&quot;:{&quot;0&quot;:&quot;*0*1+y&quot;},&quot;text&quot;:{&quot;0&quot;:&quot;30 cm (approximately arm's length)&quot;}}},&quot;folded&quot;:false,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;comments&quot;:[],&quot;locked&quot;:false,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[],&quot;type&quot;:&quot;bullet&quot;,&quot;revisions&quot;:[],&quot;hidden&quot;:false,&quot;align&quot;:&quot;&quot;}},&quot;MA3jdPXVRol89Hxf08Tchq8sngf&quot;:{&quot;id&quot;:&quot;MA3jdPXVRol89Hxf08Tchq8sngf&quot;,&quot;snapshot&quot;:{&quot;folded&quot;:false,&quot;type&quot;:&quot;bullet&quot;,&quot;comments&quot;:[],&quot;revisions&quot;:[],&quot;locked&quot;:false,&quot;hidden&quot;:false,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[],&quot;text&quot;:{&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;1 meter (a typical conversational distance)&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0*1+17&quot;}},&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;]},&quot;nextNum&quot;:2}},&quot;align&quot;:&quot;&quot;}},&quot;CGmDdTDW2oss5GxEpyQcdc6wn3c&quot;:{&quot;id&quot;:&quot;CGmDdTDW2oss5GxEpyQcdc6wn3c&quot;,&quot;snapshot&quot;:{&quot;revisions&quot;:[],&quot;locked&quot;:false,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[],&quot;align&quot;:&quot;&quot;,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;comments&quot;:[],&quot;text&quot;:{&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;]},&quot;nextNum&quot;:2,&quot;attribToNum&quot;:{&quot;author,7638452154002033871&quot;:0,&quot;bold,true&quot;:1}},&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;An anechoic environment&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0*1+n&quot;},&quot;rows&quot;:{},&quot;cols&quot;:{}}},&quot;folded&quot;:false,&quot;type&quot;:&quot;bullet&quot;,&quot;hidden&quot;:false}},&quot;Sf0zdXb9XoZX5YxVeEQc7Qi2noh&quot;:{&quot;id&quot;:&quot;Sf0zdXb9XoZX5YxVeEQc7Qi2noh&quot;,&quot;snapshot&quot;:{&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;type&quot;:&quot;text&quot;,&quot;children&quot;:[],&quot;comments&quot;:[],&quot;revisions&quot;:[],&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;text&quot;:{&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;We selected two common listening environments:&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0+1a&quot;}},&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;]},&quot;nextNum&quot;:1}},&quot;folded&quot;:false}},&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;:{&quot;id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;snapshot&quot;:{&quot;hidden&quot;:false,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[&quot;J7tndHcrKoPx9AxioEUctQPEnLX&quot;,&quot;NQJJdbq7ToFDIyxjxEgcLoNCnec&quot;,&quot;UdDMdiBmmomlDix9KzFcfBPhnBf&quot;,&quot;ZSRddf7EEoTjFdx4f5FcBdqgnHh&quot;,&quot;CtqsdNsjhoAvduxXuvFc22LSnNk&quot;,&quot;Q2bFdvEcpoNDGPxEi60c9TJznTf&quot;,&quot;Sf0zdXb9XoZX5YxVeEQc7Qi2noh&quot;,&quot;CGmDdTDW2oss5GxEpyQcdc6wn3c&quot;,&quot;MpmwdIQVso4DOixWA2gcnh8fnsc&quot;,&quot;XI8odw5pAoSkiox6CapcXrYPnif&quot;,&quot;J0Z8d5vY5onMODxQdSfcPQTtnMd&quot;,&quot;CUuLdDmLhoUmL7x1AgTcoIZMnQc&quot;,&quot;MA3jdPXVRol89Hxf08Tchq8sngf&quot;,&quot;MaJLdWpl6oGTiTx6HH7ccmfGnPn&quot;,&quot;HlWSdnkfUoIZTOxz2T6csvqnnC4&quot;,&quot;OuVYdaLq5oAUGbx1yXOcz9cknqe&quot;,&quot;Sfkudk2sso3blexxyi4cLevznyg&quot;,&quot;TTc9dmEn2omMqWxn0KNcBkv7nth&quot;,&quot;GnIwd7GkCoQDKWxqH9eczusLnxh&quot;,&quot;TnzudL9zjoTcV4xxmnQcUzKUnDc&quot;,&quot;ECladAg9ooBpcKx9TlIcd6zhnVh&quot;,&quot;EVLBdlmuqouWAvxcD6jcrptynxh&quot;,&quot;OSDbdOZ1BoTn6SxIk29ck0tunfe&quot;,&quot;YgRldDEdXogtRQx44k2chbERn3e&quot;,&quot;DKPrdxSdpof9DtxUUEAcLsiBnhT&quot;,&quot;GktXdM14No3nuaxIZYNc1EbsnSd&quot;,&quot;RG7idjtx4o2u0Dx7Ow6crky6nKg&quot;,&quot;WiladdJ8yo88vzxUSTycsyA9nxh&quot;,&quot;KQcFdzNuio3uCExDXnYcxqnOnqb&quot;,&quot;WU9PdewMFoycVkxgKGncSQDgnwe&quot;,&quot;DWMIdjow0oH0Ruxvd52cmYxZnIg&quot;,&quot;UsA8dGFsZogT2SxIOgkcTWNknPf&quot;,&quot;IsBydtlctoLAwXx89VVcR8Y8nQb&quot;,&quot;FLusdxhxHosRVhxn3GbcnRgjnLc&quot;,&quot;IEFDdRMaUoBd56x6W7dcievzneh&quot;,&quot;Fb7ydkrUnoEJ1gxo8kyc8BYXnwe&quot;,&quot;NCXudrxstoXZG4xZ85CcYki9nub&quot;,&quot;BcSxdhGqNo46qZxNFBhcZwVZnny&quot;,&quot;AckQdepS9oruc7x0iCocXbP1nyh&quot;,&quot;OiHmdzYbfovIL3x7RcIcaf5cnZg&quot;,&quot;JSygdqbMxoyvMGxIdnuccEbLnDc&quot;,&quot;QPjNdd5W9oekzax7UM1cPhNVnSg&quot;],&quot;doc_info&quot;:{&quot;editors&quot;:[&quot;7638452154002033871&quot;],&quot;options&quot;:[&quot;editors&quot;,&quot;edit_time&quot;],&quot;deleted_editors&quot;:null,&quot;option_modified&quot;:null},&quot;parent_id&quot;:&quot;&quot;,&quot;revisions&quot;:[],&quot;locked&quot;:false,&quot;text&quot;:{&quot;apool&quot;:{&quot;nextNum&quot;:1,&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;]}},&quot;initialAttributedTexts&quot;:{&quot;attribs&quot;:{&quot;0&quot;:&quot;*0+2b&quot;},&quot;text&quot;:{&quot;0&quot;:&quot;B22-Is there any sound leakage from MemoMind One? Real Test Answers(标题和battery对比一下)&quot;}}},&quot;align&quot;:&quot;&quot;,&quot;type&quot;:&quot;page&quot;,&quot;comments&quot;:[]}}},&quot;payloadMap&quot;:{&quot;Q2bFdvEcpoNDGPxEi60c9TJznTf&quot;:{&quot;level&quot;:1},&quot;Sf0zdXb9XoZX5YxVeEQc7Qi2noh&quot;:{&quot;level&quot;:1},&quot;XI8odw5pAoSkiox6CapcXrYPnif&quot;:{&quot;level&quot;:1}},&quot;extra&quot;:{&quot;channel&quot;:&quot;saas&quot;,&quot;pasteRandomId&quot;:&quot;c9c580ac-4faf-4566-acfd-c5a0afb1d4f9&quot;,&quot;mention_page_title&quot;:{},&quot;external_mention_url&quot;:{},&quot;isEqualBlockSelection&quot;:true},&quot;isKeepQuoteContainer&quot;:false,&quot;selection&quot;:[{&quot;id&quot;:185,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:205},&quot;recordId&quot;:&quot;Q2bFdvEcpoNDGPxEi60c9TJznTf&quot;},{&quot;id&quot;:231,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:46},&quot;recordId&quot;:&quot;Sf0zdXb9XoZX5YxVeEQc7Qi2noh&quot;},{&quot;id&quot;:226,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:23},&quot;recordId&quot;:&quot;CGmDdTDW2oss5GxEpyQcdc6wn3c&quot;},{&quot;id&quot;:187,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:28},&quot;recordId&quot;:&quot;MpmwdIQVso4DOixWA2gcnh8fnsc&quot;},{&quot;id&quot;:188,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:161},&quot;recordId&quot;:&quot;XI8odw5pAoSkiox6CapcXrYPnif&quot;},{&quot;id&quot;:189,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:6},&quot;recordId&quot;:&quot;J0Z8d5vY5onMODxQdSfcPQTtnMd&quot;},{&quot;id&quot;:190,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:34},&quot;recordId&quot;:&quot;CUuLdDmLhoUmL7x1AgTcoIZMnQc&quot;},{&quot;id&quot;:191,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:43},&quot;recordId&quot;:&quot;MA3jdPXVRol89Hxf08Tchq8sngf&quot;}],&quot;pasteFlag&quot;:&quot;3617da20-4bcf-493e-a939-fb40aa957d99&quot;}"></span>
+</div>
+<div class="ace-line ace-line old-record-id-Q2bFdvEcpoNDGPxEi60c9TJznTf">
+<div class="ace-line ace-line old-record-id-MaJLdWpl6oGTiTx6HH7ccmfGnPn">
+<meta charset="utf-8">
+<div data-page-id="AryddiNSCoc9R7xBDBtcwMrUnVb" data-lark-html-role="root" data-docx-has-block-data="false">
+<div class="ace-line ace-line old-record-id-EKond96YYoElGcxwziTcOSExnFe">This setup created a total of six distinct measurement groups — 3 distance readings taken in each of the two environments — to quantify how firmware iterations alter audio sound leakage.</div>
+</div>
+<span data-lark-record-data='{"rootId":"AryddiNSCoc9R7xBDBtcwMrUnVb","text":{"initialAttributedTexts":{"text":{"0":"This setup created a total of six distinct measurement groups — 3 distance readings taken in each of the two environments — to quantify how firmware iterations alter audio sound leakage."},"attribs":{"0":"*0+56"}},"apool":{"numToAttrib":{"0":["author","7638452154002033871"]},"nextNum":1}},"type":"text","referenceRecordMap":{},"extra":{"channel":"saas","isEqualBlockSelection":true,"pasteRandomId":"05325419-c639-46fd-bf66-39fa6eb7882d","mention_page_title":{},"external_mention_url":{}},"isKeepQuoteContainer":false,"isFromCode":false,"selection":[{"id":77,"type":"text","selection":{"start":0,"end":186},"recordId":"EKond96YYoElGcxwziTcOSExnFe"}],"payloadMap":{},"isCut":false}' data-lark-record-format="docx/text" class="lark-record-clipboard"></span>
+</div>
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%; margin-bottom: 16px;"><iframe src="https://www.youtube.com/embed/8H6FtDejnKE?si=-QgTrPb8lVmNAE0V" title="YouTube video player" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe></div>
+<h3 class="heading-3 ace-line old-record-id-HlWSdnkfUoIZTOxz2T6csvqnnC4">What We Found</h3>
+<div class="ace-line ace-line old-record-id-GnIwd7GkCoQDKWxqH9eczusLnxh">Across this internal test,<strong> sound leakage decreased by between 5 and 10 dB from our April firmware to the latest one. </strong>More importantly, every firmware update showed measurable improvement, demonstrating that reducing sound leakage has been an ongoing engineering priority for the <a data-lark-is-custom="true" href="https://www.memo-mind.com/pages/about-us" title="Learn more about MemoMind">MemoMind team</a> rather than a one-time optimization.</div>
+<div class="ace-line ace-line old-record-id-TnzudL9zjoTcV4xxmnQcUzKUnDc">
+<meta charset="utf-8">
+<div data-docx-has-block-data="false" data-lark-html-role="root" data-page-id="AryddiNSCoc9R7xBDBtcwMrUnVb">
+<div class="ace-line ace-line old-record-id-FSo9dDZoFomO27x6xThcH6j0ngc">With the newest firmware, measurements show an approximately 10 dB reduction at the ear. The reduction may not seem particularly dramatic. However, as <a rel="noopener" title="The Wacky World of Acoustics: Decibel “Funny” Math and Human Hearing" href="https://community.sw.siemens.com/s/article/the-wacky-world-of-acoustics-decibel-funny-math-and-human-hearing" target="_blank">a general rule in acoustics</a>, <strong>a 10 dB change is perceived as roughly twice or half as loud to the human ear.</strong> This means the wearer hears a much lower volume, while less sound escapes into the surrounding environment as well.</div>
+<div class="ace-line ace-line old-record-id-BLu3dGn63oIu1ixN7IncNXxhnP5">The reductions measured at 30 cm and 1 meter were more modest. Because once sound leaves the speakers, it mixes with reflections, ambient room noise, and other environmental sounds that firmware cannot control.<span data-lark-record-data='{"isCut":false,"rootId":"AryddiNSCoc9R7xBDBtcwMrUnVb","parentId":"AryddiNSCoc9R7xBDBtcwMrUnVb","blockIds":[87,86],"recordIds":["FSo9dDZoFomO27x6xThcH6j0ngc","BLu3dGn63oIu1ixN7IncNXxhnP5"],"recordMap":{"BLu3dGn63oIu1ixN7IncNXxhnP5":{"id":"BLu3dGn63oIu1ixN7IncNXxhnP5","snapshot":{"type":"text","children":[],"comments":[],"revisions":[],"author":"7638452154002033871","text":{"initialAttributedTexts":{"text":{"0":"The reductions measured at 30 cm and 1 meter were more modest. Once sound leaves the speakers, it mixes with reflections, ambient room noise, and other environmental sounds that firmware cannot control. As a result, improvements measured farther away will naturally appear smaller than those measured directly at the glasses."},"attribs":{"0":"*0+91"}},"apool":{"numToAttrib":{"0":["author","7638452154002033871"]},"nextNum":1}},"folded":false,"parent_id":"AryddiNSCoc9R7xBDBtcwMrUnVb"}},"FSo9dDZoFomO27x6xThcH6j0ngc":{"id":"FSo9dDZoFomO27x6xThcH6j0ngc","snapshot":{"type":"text","children":[],"comments":[],"revisions":[],"author":"7638452154002033871","text":{"initialAttributedTexts":{"text":{"0":"With the newest firmware, measurements show an approximately 10 dB reduction at the ear. This means the wearer hears a lower volume as well, while less sound escapes into the surrounding environment because the speakers themselves are producing less output."},"attribs":{"0":"*0+1p*0*1+5*0+5b"}},"apool":{"numToAttrib":{"0":["author","7638452154002033871"],"1":["bold","true"]},"nextNum":2}},"folded":false,"parent_id":"AryddiNSCoc9R7xBDBtcwMrUnVb"}},"AryddiNSCoc9R7xBDBtcwMrUnVb":{"id":"AryddiNSCoc9R7xBDBtcwMrUnVb","snapshot":{"type":"page","parent_id":"","comments":[],"revisions":[],"locked":false,"hidden":false,"author":"7638452154002033871","children":["McD8dSMUSox08Wx0AfvcsZLOn3f","TMFCdta7poYsnmxorDtc0wiQnQc","IgbOdD09CoHr9gxduhzcRW1hn5b","IHzddPydToB5XKxARaKcDcqgn2g","SFWtdo8aeoYH7kxyNLFcEKZMn8y","TBHgdRUd4oPtgrxMefkcOEkgnte","EMvHdNrc9oYLajxKN3XcgvoGnXd","RPj1dKCOVoptA1xQkH3c5x3rnFb","Oy8Zd7Eqroo0icxMV8xcpHsjnpc","S3w8dmaFcoLlTwxrj44cWxhbn1b","RHZKd7HvqowKJ7x8fgCcuZ42nWc","Cea4dVwrho1LDZxOUlBcjXYdnMb","FQI9d29vHofMNPxGPKkcsfP1nqh","ACUIdeYSboMfWOxDwXNc0gMDnHb","EEwsd8tR8oPon2x87PqcbKr2nZc","Lz7idcGxFopGPzxbEOvcMRt3nAe","EKond96YYoElGcxwziTcOSExnFe","HlWSdnkfUoIZTOxz2T6csvqnnC4","V0FGdsEuyoceagxz5lac4tUBnab","Y73YdMw2PoCLCsx1z9ecSUOLnWg","KvSCdxCMNoHHvSxmaEYcy1qQnkd","WvRKdTo5woWMi4xqmb1cVVUNnTe","X2wTd7YBBodYJVxT7qrckuNQnLh","FSo9dDZoFomO27x6xThcH6j0ngc","BLu3dGn63oIu1ixN7IncNXxhnP5","GcAbdZQZYoUsmnxrf0VcWlHKn8A","Oscbd93Mto08nKxx9s2cr36bn8c","AlipdH7vboI8FlxSPdwc2s1Encg","B8Wndedrto3RmMx6o3VcxTlYn4g","GktXdM14No3nuaxIZYNc1EbsnSd","RG7idjtx4o2u0Dx7Ow6crky6nKg","WiladdJ8yo88vzxUSTycsyA9nxh","KQcFdzNuio3uCExDXnYcxqnOnqb","WU9PdewMFoycVkxgKGncSQDgnwe","DWMIdjow0oH0Ruxvd52cmYxZnIg","IsBydtlctoLAwXx89VVcR8Y8nQb","UeLtdfNTLo8pW5xy9uTcvjEXnCf","FLusdxhxHosRVhxn3GbcnRgjnLc","YICpd6me6o5osuxkXxvcYK2Fntg","IEFDdRMaUoBd56x6W7dcievzneh","Fb7ydkrUnoEJ1gxo8kyc8BYXnwe","NCXudrxstoXZG4xZ85CcYki9nub","BcSxdhGqNo46qZxNFBhcZwVZnny","AckQdepS9oruc7x0iCocXbP1nyh","OiHmdzYbfovIL3x7RcIcaf5cnZg","JSygdqbMxoyvMGxIdnuccEbLnDc","QPjNdd5W9oekzax7UM1cPhNVnSg"],"text":{"apool":{"numToAttrib":{"0":["author","7638452154002033871"]},"nextNum":1,"attribToNum":{"author,7638452154002033871":0}},"initialAttributedTexts":{"text":{"0":"B22-Can Other People Hear Your AI Glasses? MemoMind One Sound Leakage Test"},"attribs":{"0":"*0+22"},"rows":{},"cols":{}}},"align":"","doc_info":{"editors":["7638452154002033871","7529865599216926721"],"options":["editors","edit_time"],"deleted_editors":[],"option_modified":null}}}},"payloadMap":{"FSo9dDZoFomO27x6xThcH6j0ngc":{"level":1},"BLu3dGn63oIu1ixN7IncNXxhnP5":{"level":1}},"extra":{"channel":"saas","pasteRandomId":"e39f2fa3-78f7-4b43-935b-a6d2fec63d03","mention_page_title":{},"external_mention_url":{},"isEqualBlockSelection":true},"isKeepQuoteContainer":false,"selection":[{"id":87,"type":"text","selection":{"start":0,"end":257},"recordId":"FSo9dDZoFomO27x6xThcH6j0ngc"},{"id":86,"type":"text","selection":{"start":0,"end":325},"recordId":"BLu3dGn63oIu1ixN7IncNXxhnP5"}],"pasteFlag":"be9b3117-74e9-40c8-9d31-a7a71f5275ae"}' data-lark-record-format="docx/record" class="lark-record-clipboard"></span>
+</div>
+</div>
+<span class="lark-record-clipboard" data-lark-record-format="docx/record" data-lark-record-data='{"isCut":false,"rootId":"AryddiNSCoc9R7xBDBtcwMrUnVb","parentId":"AryddiNSCoc9R7xBDBtcwMrUnVb","blockIds":[87,86],"recordIds":["FSo9dDZoFomO27x6xThcH6j0ngc","BLu3dGn63oIu1ixN7IncNXxhnP5"],"recordMap":{"BLu3dGn63oIu1ixN7IncNXxhnP5":{"id":"BLu3dGn63oIu1ixN7IncNXxhnP5","snapshot":{"type":"text","children":[],"comments":[],"revisions":[],"author":"7638452154002033871","text":{"initialAttributedTexts":{"text":{"0":"The reductions measured at 30 cm and 1 meter were more modest. Because once sound leaves the speakers, it mixes with reflections, ambient room noise, and other environmental sounds that firmware cannot control. "},"attribs":{"0":"*0+5v"}},"apool":{"numToAttrib":{"0":["author","7638452154002033871"]},"nextNum":1}},"folded":false,"parent_id":"AryddiNSCoc9R7xBDBtcwMrUnVb"}},"FSo9dDZoFomO27x6xThcH6j0ngc":{"id":"FSo9dDZoFomO27x6xThcH6j0ngc","snapshot":{"type":"text","children":[],"comments":[],"revisions":[],"author":"7638452154002033871","text":{"initialAttributedTexts":{"text":{"0":"With the newest firmware, measurements show an approximately 10 dB reduction at the ear. The reduction may not seem particularly dramatic. However,  as a general rule in acoustics, a 10 dB change is perceived as roughly twice or half as loud to the human ear. This means the wearer hears a lower volume, while less sound escapes into the surrounding environment as well."},"attribs":{"0":"*0+45*0*1*2+u*0+5b"}},"apool":{"numToAttrib":{"0":["author","7638452154002033871"],"1":["link","https%3A%2F%2Fcommunity.sw.siemens.com%2Fs%2Farticle%2Fthe-wacky-world-of-acoustics-decibel-funny-math-and-human-hearing"],"2":["underline","true"]},"nextNum":3}},"folded":false,"parent_id":"AryddiNSCoc9R7xBDBtcwMrUnVb"}},"AryddiNSCoc9R7xBDBtcwMrUnVb":{"id":"AryddiNSCoc9R7xBDBtcwMrUnVb","snapshot":{"type":"page","parent_id":"","comments":[],"revisions":[],"locked":false,"hidden":false,"author":"7638452154002033871","children":["McD8dSMUSox08Wx0AfvcsZLOn3f","TMFCdta7poYsnmxorDtc0wiQnQc","IgbOdD09CoHr9gxduhzcRW1hn5b","IHzddPydToB5XKxARaKcDcqgn2g","SFWtdo8aeoYH7kxyNLFcEKZMn8y","TBHgdRUd4oPtgrxMefkcOEkgnte","EMvHdNrc9oYLajxKN3XcgvoGnXd","RPj1dKCOVoptA1xQkH3c5x3rnFb","Oy8Zd7Eqroo0icxMV8xcpHsjnpc","S3w8dmaFcoLlTwxrj44cWxhbn1b","RHZKd7HvqowKJ7x8fgCcuZ42nWc","Cea4dVwrho1LDZxOUlBcjXYdnMb","FQI9d29vHofMNPxGPKkcsfP1nqh","ACUIdeYSboMfWOxDwXNc0gMDnHb","EEwsd8tR8oPon2x87PqcbKr2nZc","Lz7idcGxFopGPzxbEOvcMRt3nAe","EKond96YYoElGcxwziTcOSExnFe","HlWSdnkfUoIZTOxz2T6csvqnnC4","V0FGdsEuyoceagxz5lac4tUBnab","Y73YdMw2PoCLCsx1z9ecSUOLnWg","KvSCdxCMNoHHvSxmaEYcy1qQnkd","WvRKdTo5woWMi4xqmb1cVVUNnTe","FSo9dDZoFomO27x6xThcH6j0ngc","BLu3dGn63oIu1ixN7IncNXxhnP5","GcAbdZQZYoUsmnxrf0VcWlHKn8A","Oscbd93Mto08nKxx9s2cr36bn8c","AlipdH7vboI8FlxSPdwc2s1Encg","B8Wndedrto3RmMx6o3VcxTlYn4g","GktXdM14No3nuaxIZYNc1EbsnSd","RG7idjtx4o2u0Dx7Ow6crky6nKg","WiladdJ8yo88vzxUSTycsyA9nxh","KQcFdzNuio3uCExDXnYcxqnOnqb","WU9PdewMFoycVkxgKGncSQDgnwe","DWMIdjow0oH0Ruxvd52cmYxZnIg","IsBydtlctoLAwXx89VVcR8Y8nQb","UeLtdfNTLo8pW5xy9uTcvjEXnCf","FLusdxhxHosRVhxn3GbcnRgjnLc","YICpd6me6o5osuxkXxvcYK2Fntg","IEFDdRMaUoBd56x6W7dcievzneh","Fb7ydkrUnoEJ1gxo8kyc8BYXnwe","NCXudrxstoXZG4xZ85CcYki9nub","BcSxdhGqNo46qZxNFBhcZwVZnny","AckQdepS9oruc7x0iCocXbP1nyh","OiHmdzYbfovIL3x7RcIcaf5cnZg","JSygdqbMxoyvMGxIdnuccEbLnDc","QPjNdd5W9oekzax7UM1cPhNVnSg"],"text":{"apool":{"numToAttrib":{"0":["author","7638452154002033871"]},"nextNum":1,"attribToNum":{"author,7638452154002033871":0}},"initialAttributedTexts":{"text":{"0":"B22-Can Other People Hear Your AI Glasses? MemoMind One Sound Leakage Test"},"attribs":{"0":"*0+22"},"rows":{},"cols":{}}},"align":"","doc_info":{"editors":["7638452154002033871","7529865599216926721"],"options":["editors","edit_time"],"deleted_editors":[],"option_modified":null}}}},"payloadMap":{"FSo9dDZoFomO27x6xThcH6j0ngc":{"level":1},"BLu3dGn63oIu1ixN7IncNXxhnP5":{"level":1}},"extra":{"channel":"saas","pasteRandomId":"e52f67ce-252c-476a-8afa-20cb38f62797","mention_page_title":{},"external_mention_url":{},"isEqualBlockSelection":true},"isKeepQuoteContainer":false,"selection":[{"id":87,"type":"text","selection":{"start":0,"end":370},"recordId":"FSo9dDZoFomO27x6xThcH6j0ngc"},{"id":86,"type":"text","selection":{"start":0,"end":211},"recordId":"BLu3dGn63oIu1ixN7IncNXxhnP5"}],"pasteFlag":"be9b3117-74e9-40c8-9d31-a7a71f5275ae"}'></span>
+</div>
+<div class="ace-line ace-line old-record-id-EVLBdlmuqouWAvxcD6jcrptynxh">
+<div style="text-align: start;" class="ace-line ace-line old-record-id-Sfkudk2sso3blexxyi4cLevznyg"><img style="margin-bottom: 16px; float: none;" alt="memomind one sound leakage test result" src="https://cdn.shopify.com/s/files/1/0656/0173/2721/files/memomind_one_sound_leakage_test_result.webp?v=1784888474"></div>
+<div style="font-size: 12px;" class="ace-line ace-line old-record-id-Sfkudk2sso3blexxyi4cLevznyg"><em>Note: readings in the ambient noise environment reflect total sound pressure at the measurement point (ambient noise plus device output combined) </em></div>
+</div>
+<h2 class="heading-2 ace-line old-record-id-OSDbdOZ1BoTn6SxIk29ck0tunfe">Does Sound Leakage Mean Poor Privacy?</h2>
+<div class="ace-line ace-line old-record-id-YgRldDEdXogtRQx44k2chbERn3e">There's a real difference between <strong>"Someone noticing your glasses are playing something"</strong> and <strong>"Someone actually making out what you're listening to"</strong>. </div>
+<div class="ace-line ace-line old-record-id-YgRldDEdXogtRQx44k2chbERn3e">Test results show that while MemoMind One may exhibit slight sound leakage at close range when the volume is high, it is difficult for bystanders to distinguish that from the ambient noise in a typical, bustling environment. This means under identical listening conditions, the MemoMind One significantly reduces the chance of your audio playback drawing unwanted attention from people nearby. Lower sound leakage greatly reduces the chance that bystanders can clearly distinguish the audio content as well.</div>
+<div class="ace-line ace-line old-record-id-YgRldDEdXogtRQx44k2chbERn3e">Therefore, you can <a data-lark-is-custom="true" href="https://www.kickstarter.com/projects/1963472698/memomind-one-the-most-natural-ai-display-glasses" title="Get your MemoMind One AI glasses now and enjoy special offers.">choose this most natural AI eyewear</a> for all-day use.</div>
+<h2 class="heading-2 ace-line old-record-id-GktXdM14No3nuaxIZYNc1EbsnSd">Why MemoMind Chose Open-Ear Audio Anyway?</h2>
+<div class="ace-line ace-line old-record-id-RG7idjtx4o2u0Dx7Ow6crky6nKg">If total acoustic isolation were the goal, earbuds would win every time.</div>
+<div class="ace-line ace-line old-record-id-RG7idjtx4o2u0Dx7Ow6crky6nKg">But<a data-lark-is-custom="true" href="https://www.memo-mind.com/blogs/tech-hub/how-and-why-ai-glasses-differ-from-other-ai-wearables" title="How and Why AI Glasses Differ From Other AI Wearables"> AI glasses aren't earbuds</a> — they're built to stay part of your day, not shut them out. Whether you're getting walking directions, checking your calendar, or glancing at notes before a meeting, staying aware of what's around you matters. Open-ear audio keeps that connection intact without asking you to take your glasses off.</div>
+<h2 class="heading-2 ace-line old-record-id-WiladdJ8yo88vzxUSTycsyA9nxh">How to Minimize MemoMind One’s Sound Leakage?<strong></strong>
+</h2>
+<div class="ace-line ace-line old-record-id-IsBydtlctoLAwXx89VVcR8Y8nQb">
+<meta charset="utf-8">
+<div data-docx-has-block-data="false" data-lark-html-role="root" data-page-id="AryddiNSCoc9R7xBDBtcwMrUnVb">
+<ul class="list-bullet1" start="1">
+<li data-list="bullet" class="ace-line ace-line old-record-id-KQcFdzNuio3uCExDXnYcxqnOnqb">
+<div>
+<strong>Keep your volume no higher than you need.</strong> Cranking it up past what's comfortable barely improves your own listening experience, but noticeably increases what others nearby can hear.</div>
+</li>
+<li data-list="bullet" class="ace-line ace-line old-record-id-WU9PdewMFoycVkxgKGncSQDgnwe">
+<div>
+<strong>Update your firmware.</strong> Each release includes speaker and volume tuning improvements — our own testing shows real, measurable gains from version to version.</div>
+</li>
+<li data-list="bullet" class="ace-line ace-line old-record-id-DWMIdjow0oH0Ruxvd52cmYxZnIg">
+<div>
+<strong>Be extra mindful in silent spaces.</strong> In a library or a quiet meeting room, dial your volume down a notch to stay discreet.</div>
+</li>
+</ul>
+</div>
+<span class="lark-record-clipboard" data-lark-record-format="docx/record" data-lark-record-data="{&quot;isCut&quot;:false,&quot;rootId&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;parentId&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;blockIds&quot;:[207,208,209],&quot;recordIds&quot;:[&quot;KQcFdzNuio3uCExDXnYcxqnOnqb&quot;,&quot;WU9PdewMFoycVkxgKGncSQDgnwe&quot;,&quot;DWMIdjow0oH0Ruxvd52cmYxZnIg&quot;],&quot;recordMap&quot;:{&quot;KQcFdzNuio3uCExDXnYcxqnOnqb&quot;:{&quot;id&quot;:&quot;KQcFdzNuio3uCExDXnYcxqnOnqb&quot;,&quot;snapshot&quot;:{&quot;type&quot;:&quot;bullet&quot;,&quot;comments&quot;:[],&quot;locked&quot;:false,&quot;text&quot;:{&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;Keep your volume no higher than you need. Cranking it up past what's comfortable barely improves your own listening experience, but noticeably increases what others nearby can hear.&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0*1+15*0+3w&quot;}},&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;]},&quot;nextNum&quot;:2}},&quot;align&quot;:&quot;&quot;,&quot;folded&quot;:false,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;revisions&quot;:[],&quot;hidden&quot;:false,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[]}},&quot;WU9PdewMFoycVkxgKGncSQDgnwe&quot;:{&quot;id&quot;:&quot;WU9PdewMFoycVkxgKGncSQDgnwe&quot;,&quot;snapshot&quot;:{&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;comments&quot;:[],&quot;locked&quot;:false,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[],&quot;text&quot;:{&quot;apool&quot;:{&quot;nextNum&quot;:2,&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;]}},&quot;initialAttributedTexts&quot;:{&quot;attribs&quot;:{&quot;0&quot;:&quot;*0*1+l*0+3p&quot;},&quot;text&quot;:{&quot;0&quot;:&quot;Update your firmware. Each release includes speaker and volume tuning improvements — our own testing shows real, measurable gains from version to version.&quot;}}},&quot;align&quot;:&quot;&quot;,&quot;type&quot;:&quot;bullet&quot;,&quot;revisions&quot;:[],&quot;hidden&quot;:false,&quot;folded&quot;:false}},&quot;DWMIdjow0oH0Ruxvd52cmYxZnIg&quot;:{&quot;id&quot;:&quot;DWMIdjow0oH0Ruxvd52cmYxZnIg&quot;,&quot;snapshot&quot;:{&quot;hidden&quot;:false,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[],&quot;text&quot;:{&quot;initialAttributedTexts&quot;:{&quot;text&quot;:{&quot;0&quot;:&quot;Be extra mindful in silent spaces. In a library or a quiet meeting room, dial your volume down a notch to stay discreet.&quot;},&quot;attribs&quot;:{&quot;0&quot;:&quot;*0*1+y*0+2e&quot;}},&quot;apool&quot;:{&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;],&quot;1&quot;:[&quot;bold&quot;,&quot;true&quot;]},&quot;nextNum&quot;:2}},&quot;type&quot;:&quot;bullet&quot;,&quot;comments&quot;:[],&quot;revisions&quot;:[],&quot;folded&quot;:false,&quot;parent_id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;locked&quot;:false,&quot;align&quot;:&quot;&quot;}},&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;:{&quot;id&quot;:&quot;AryddiNSCoc9R7xBDBtcwMrUnVb&quot;,&quot;snapshot&quot;:{&quot;hidden&quot;:false,&quot;author&quot;:&quot;7638452154002033871&quot;,&quot;children&quot;:[&quot;J7tndHcrKoPx9AxioEUctQPEnLX&quot;,&quot;NQJJdbq7ToFDIyxjxEgcLoNCnec&quot;,&quot;UdDMdiBmmomlDix9KzFcfBPhnBf&quot;,&quot;ZSRddf7EEoTjFdx4f5FcBdqgnHh&quot;,&quot;CtqsdNsjhoAvduxXuvFc22LSnNk&quot;,&quot;Q2bFdvEcpoNDGPxEi60c9TJznTf&quot;,&quot;Sf0zdXb9XoZX5YxVeEQc7Qi2noh&quot;,&quot;CGmDdTDW2oss5GxEpyQcdc6wn3c&quot;,&quot;MpmwdIQVso4DOixWA2gcnh8fnsc&quot;,&quot;XI8odw5pAoSkiox6CapcXrYPnif&quot;,&quot;J0Z8d5vY5onMODxQdSfcPQTtnMd&quot;,&quot;CUuLdDmLhoUmL7x1AgTcoIZMnQc&quot;,&quot;MA3jdPXVRol89Hxf08Tchq8sngf&quot;,&quot;MaJLdWpl6oGTiTx6HH7ccmfGnPn&quot;,&quot;HlWSdnkfUoIZTOxz2T6csvqnnC4&quot;,&quot;OuVYdaLq5oAUGbx1yXOcz9cknqe&quot;,&quot;Sfkudk2sso3blexxyi4cLevznyg&quot;,&quot;TTc9dmEn2omMqWxn0KNcBkv7nth&quot;,&quot;GnIwd7GkCoQDKWxqH9eczusLnxh&quot;,&quot;TnzudL9zjoTcV4xxmnQcUzKUnDc&quot;,&quot;ECladAg9ooBpcKx9TlIcd6zhnVh&quot;,&quot;EVLBdlmuqouWAvxcD6jcrptynxh&quot;,&quot;OSDbdOZ1BoTn6SxIk29ck0tunfe&quot;,&quot;YgRldDEdXogtRQx44k2chbERn3e&quot;,&quot;DKPrdxSdpof9DtxUUEAcLsiBnhT&quot;,&quot;GktXdM14No3nuaxIZYNc1EbsnSd&quot;,&quot;RG7idjtx4o2u0Dx7Ow6crky6nKg&quot;,&quot;WiladdJ8yo88vzxUSTycsyA9nxh&quot;,&quot;KQcFdzNuio3uCExDXnYcxqnOnqb&quot;,&quot;WU9PdewMFoycVkxgKGncSQDgnwe&quot;,&quot;DWMIdjow0oH0Ruxvd52cmYxZnIg&quot;,&quot;UsA8dGFsZogT2SxIOgkcTWNknPf&quot;,&quot;IsBydtlctoLAwXx89VVcR8Y8nQb&quot;,&quot;FLusdxhxHosRVhxn3GbcnRgjnLc&quot;,&quot;IEFDdRMaUoBd56x6W7dcievzneh&quot;,&quot;Fb7ydkrUnoEJ1gxo8kyc8BYXnwe&quot;,&quot;NCXudrxstoXZG4xZ85CcYki9nub&quot;,&quot;BcSxdhGqNo46qZxNFBhcZwVZnny&quot;,&quot;AckQdepS9oruc7x0iCocXbP1nyh&quot;,&quot;OiHmdzYbfovIL3x7RcIcaf5cnZg&quot;,&quot;JSygdqbMxoyvMGxIdnuccEbLnDc&quot;,&quot;QPjNdd5W9oekzax7UM1cPhNVnSg&quot;],&quot;doc_info&quot;:{&quot;editors&quot;:[&quot;7638452154002033871&quot;],&quot;options&quot;:[&quot;editors&quot;,&quot;edit_time&quot;],&quot;deleted_editors&quot;:null,&quot;option_modified&quot;:null},&quot;parent_id&quot;:&quot;&quot;,&quot;revisions&quot;:[],&quot;locked&quot;:false,&quot;text&quot;:{&quot;apool&quot;:{&quot;nextNum&quot;:1,&quot;numToAttrib&quot;:{&quot;0&quot;:[&quot;author&quot;,&quot;7638452154002033871&quot;]}},&quot;initialAttributedTexts&quot;:{&quot;attribs&quot;:{&quot;0&quot;:&quot;*0+2b&quot;},&quot;text&quot;:{&quot;0&quot;:&quot;B22-Is there any sound leakage from MemoMind One? Real Test Answers(标题和battery对比一下)&quot;}}},&quot;align&quot;:&quot;&quot;,&quot;type&quot;:&quot;page&quot;,&quot;comments&quot;:[]}}},&quot;payloadMap&quot;:{},&quot;extra&quot;:{&quot;channel&quot;:&quot;saas&quot;,&quot;pasteRandomId&quot;:&quot;dea67136-62b7-4662-b8ff-6f19062f6149&quot;,&quot;mention_page_title&quot;:{},&quot;external_mention_url&quot;:{},&quot;isEqualBlockSelection&quot;:true},&quot;isKeepQuoteContainer&quot;:false,&quot;selection&quot;:[{&quot;id&quot;:207,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:181},&quot;recordId&quot;:&quot;KQcFdzNuio3uCExDXnYcxqnOnqb&quot;},{&quot;id&quot;:208,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:154},&quot;recordId&quot;:&quot;WU9PdewMFoycVkxgKGncSQDgnwe&quot;},{&quot;id&quot;:209,&quot;type&quot;:&quot;text&quot;,&quot;selection&quot;:{&quot;start&quot;:0,&quot;end&quot;:120},&quot;recordId&quot;:&quot;DWMIdjow0oH0Ruxvd52cmYxZnIg&quot;}],&quot;pasteFlag&quot;:&quot;3617da20-4bcf-493e-a939-fb40aa957d99&quot;}"></span>
+</div>
+<div class="ace-line ace-line old-record-id-IsBydtlctoLAwXx89VVcR8Y8nQb">Still deciding whether MemoMind One fits your daily routine? Our AI glasses <a data-lark-is-custom="true" href="https://www.memo-mind.com/blogs/buyers-guide" title="Everything you should know before you buy MemoMind One">Buyer's Guide</a> covers display quality and battery life and the latest side-by-side comparisons.</div>
+<div class="ace-line ace-line old-record-id-IsBydtlctoLAwXx89VVcR8Y8nQb"><br></div>
+<br>
+<p style="text-align: center;"><strong><a title="Back MemoMind One now and save up to 43%" style="display: inline-block; padding: 10px 20px; background: #1F7A4D; color: white; border-radius: 6px; text-decoration: none; font-weight: 800;" href="https://www.kickstarter.com/projects/1963472698/memomind-one-the-most-natural-ai-display-glasses">Back MemoMind One on Kickstarter →</a></strong></p>
+<p style="text-align: center;"> </p>
+</div>
+</div>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://www.memo-mind.com/blogs/tech-hub/memomind-one-display-resolution-brightness</id>
+    <published>2026-07-20T00:54:48-07:00</published>
+    <updated>2026-07-20T00:54:50-07:00</updated>
+    <link rel="alternate" type="text/html" href="https://www.memo-mind.com/blogs/tech-hub/memomind-one-display-resolution-brightness"/>
+    <title>MemoMind One Smart Glasses Display Resolution, Brightness, FOV &amp; More</title>
+    <author>
+      <name>MEMOMIND Tech</name>
+    </author>
+    <summary type="html">
+      <![CDATA[<p>Why MemoMind One's display specs — resolution, brightness, and field of view — were chosen for readability and comfort rather than to win a spec sheet.</p><p><a class="read-more" href="https://www.memo-mind.com/blogs/tech-hub/memomind-one-display-resolution-brightness">More</a></p>]]>
+    </summary>
+    <content type="html">
+      <![CDATA[<div data-page-id="GPP5dsPpzoGfTQxmVqXckh1Rn5U" data-lark-html-role="root" data-docx-has-block-data="true">
+<div class="ace-line ace-line old-record-id-AMVBdXeSaoKQXrx09YZc8P3VnIb">The MemoMind One AI glasses feature <strong>a display resolution of 600 x 350</strong>—a figure that seems negligible when compared to smartphone or laptop displays.</div>
+<div class="ace-line ace-line old-record-id-W4F6dnsP8obyPtxvt1QcEcevnSb">Such comparisons are based on the assumption that smart glasses serve the same display function as smartphones, but that is not the case. So once the intended function of the <a data-lark-is-custom="true" href="https://www.memo-mind.com/" title="AI glasses without a camera. Prescription-ready, all day.">MemoMind</a> display is understood, need to go on to get through why, spec by spec.</div>
+<h2 class="heading-2 ace-line old-record-id-Pr6pdBJqzoVqNmxYGvSc1IC5nYb"><strong>Smart Glasses With a Heads-Up Display (HUD) </strong></h2>
+<div class="ace-line ace-line old-record-id-UcmBdPUK1oiBAxxCrlncqKNqnwb">First, most smart glasses run on HUD technology, not the kind of screen a phone or laptop uses.</div>
+<div class="ace-line ace-line old-record-id-CKK8duNNooHYGmxyJKocjoRbnLc">A <a data-lark-is-custom="true" href="https://www.ansys.com/simulation-topics/what-is-heads-up-display" title="What is a HUD&amp; How Does it Work?" rel="noopener" target="_blank">HUD</a>, or heads-up display, is a transparent display that projects information directly into a user's line of sight. It was originally developed for military aircraft, later adopted in commercial aviation and cars.</div>
+<div class="ace-line ace-line old-record-id-NPGWdHJtWoq6E5x4GkKcl8ftnRb">For smart glasses, that translates into a specific job: not replacing your phone, but reducing the moments you'd otherwise need to pull it out. That reframes the right question <strong>from</strong><em><strong> "how many pixels does it have"</strong></em><strong> to </strong><em><strong>"can I read what I need, exactly when I need it" </strong></em>— something that depends on far more than display resolution alone.</div>
+<h2 class="heading-2 ace-line old-record-id-F1WtdJFbVoKVGOxxdJccaOZPnfe"><strong>MemoMind One Display Breakdown</strong></h2>
+<h3 class="heading-3 ace-line old-record-id-WEvVdPzvjorknbxyK8McheSZnUd">A quick overview</h3>
+<div class="mm-table-card">
+<table class="mm-table" style="width: 100%; height: 215.531px;">
+<thead>
+<tr>
+<th>Specification</th>
+<th>MemoMind One</th>
+<th>What It Means in Daily Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Display Technology</strong></td>
+<td>Binocular single-green Micro‑LED</td>
+<td>Delivers vivid bright visuals with a miniature, power‑saving optical engine</td>
+</tr>
+<tr>
+<td><strong>Optical System</strong></td>
+<td>2D Diffractive Waveguide</td>
+<td>Projects digital overlays while keeping lenses transparent to your surroundings</td>
+</tr>
+<tr>
+<td><strong>Display Resolution</strong></td>
+<td>600 × 350</td>
+<td>Sufficient pixel density for crisp text, icons and simple graphics at a quick glance</td>
+</tr>
+<tr>
+<td><strong>Brightness</strong></td>
+<td>Up to 2000 nits in‑eye brightness</td>
+<td>Remains visible indoors and under regular outdoor sunlight</td>
+</tr>
+<tr>
+<td><strong>Field of View</strong></td>
+<td>25° diagonal FOV</td>
+<td>Shows essential info without overwhelming or blocking most of your natural sightline</td>
+</tr>
+<tr>
+<td><strong>Virtual Viewing Distance</strong></td>
+<td>Adjustable 1–5 meters</td>
+<td>Minimizes constant eye refocus strain during all‑day extended wear</td>
+</tr>
+<tr>
+<td><strong>Display Adjustment Options</strong></td>
+<td>Brightness, vertical height, virtual depth</td>
+<td>Customize screen position and brightness to match your eye comfort preferences</td>
+</tr>
+<tr>
+<td><strong>Refresh Rate</strong></td>
+<td>30 Hz</td>
+<td>Ensures smooth text scrolling and fluid navigation UI transitions for daily text use</td>
+</tr>
+<tr>
+<td><strong>Privacy Performance</strong></td>
+<td>Ultra-low outward light leakage</td>
+<td>Prevents people beside you from easily reading your on‑screen private content</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 class="heading-3 ace-line old-record-id-LrotdfZMCoqPkQxOKL1cl23Jn9f"><strong>600 × 350 Display Resolution</strong></h3>
+<div class="ace-line ace-line old-record-id-NjwsdWt1VorRTDxe9VwcfdhunkJ">MemoMind One's underlying optical engine natively renders at 640 × 480, but the resolution actually displayed to the eye is <strong>600 × 350</strong>. It's a margin reserved for image alignment. Bonding the waveguide to the optical engine during assembly introduces small, unavoidable tolerances on each side. Then software compensates by independently adjusting each eye's image coordinates within that reserved margin until the combined image lines up correctly.</div>
+<div class="ace-line ace-line old-record-id-JFvmdel0KoJN43xIgehctfUlnjg">Pushing native resolution higher generally means a more demanding optical engine, more heat, and more bulk, none of which meaningfully improves a <a data-lark-is-custom="true" href="https://www.memo-mind.com/pages/memomind-one" title="The Most Natural AI Display Glasses, MemoMind One">MemoMind One</a> display built to be your natural and comfortable all-day wear.</div>
+<h3 class="heading-3 ace-line old-record-id-KeNHdYKxpoarFyxGf7Hct04MnNt"><strong>Up to 2000 Nits In-eye Brightness</strong></h3>
+<div class="ace-line ace-line old-record-id-SQQEdqI7UozVwZx0LFoc0jYnnFd">For a pair of smart glasses, a display bright enough to hold up against direct sunlight stays legible without forcing you to shade the lens or stop to read it, while one that isn't quietly becomes unreadable exactly when you need it most, like checking a direction mid-walk.</div>
+<div class="ace-line ace-line old-record-id-GUUhdJZWvo7E6YxrZAKcytpSnnb" style="text-align: start;">The MemoMind One offers a peak brightness of <strong>2,000 nits</strong> and supports dynamic brightness adjustment. For extremely bright outdoor environments, the MemoMind One comes with a dedicated clip-on sunglass accessory. <strong>Customers who pay a pre-order deposit now will receive a free pair.</strong>
+</div>
+<div class="ace-line ace-line old-record-id-GUUhdJZWvo7E6YxrZAKcytpSnnb" style="text-align: start;"><a href="https://www.kickstarter.com/projects/1963472698/memomind-one-the-most-natural-ai-display-glasses?ref=974x89" title="Reserve now to get a free pair of clip-on sunglasses"><strong><img src="https://cdn.shopify.com/s/files/1/0656/0173/2721/files/memomind_one_ks.webp?v=1784533911" alt="Reserve now to get a free pair of clip-on sunglasses" style="float: none;"></strong></a></div>
+<div data-page-id="GPP5dsPpzoGfTQxmVqXckh1Rn5U" data-lark-html-role="root" data-docx-has-block-data="true">
+<div data-page-id="GPP5dsPpzoGfTQxmVqXckh1Rn5U" data-lark-html-role="root" data-docx-has-block-data="true">
+<h3 class="heading-3 ace-line old-record-id-OdfhdrwYiolDOfxszxncMvW4nSh">25° Field of View</h3>
+<div class="ace-line ace-line old-record-id-ReTWdd4PDopYLlxzRaEcHOSTnbd">
+<a href="https://www.tozostore.com/blogs/news/how-field-of-view-affects-the-smart-glasses-experience" title="How Field of View Affects the Smart Glasses Experience" rel="noopener" target="_blank">Field of view (FOV)</a> is the angular size of the area where a display can show content — in practical terms, how much of your vision the digital layer occupies.</div>
+<div class="ace-line ace-line old-record-id-EapLd1wJWoVO56xFn0ccMI2lnrc">A wider FOV can fit more information on screen at once, but it also means more of your natural vision is covered by digital content, which raises the risk of the display feeling intrusive or blocking things you'd otherwise want to see clearly.</div>
+<div class="ace-line ace-line old-record-id-QL7bdKCkCoMQaLxT4SEcUyI9nLh">MemoMind One uses a <strong>25° FOV</strong>, roughly equivalent to holding a smartphone 10 centimetres in front of your eyes. It helps text and icons look sharper than the raw 600 × 350 figure suggests. It also keeps the display sized for what it's actually meant to show within easy glance range, without interfering with walking or talking to someone in front of you.</div>
+<h3 class="heading-3 ace-line old-record-id-F99Ld7vPqodkboxs33zc0vxUnPg">Optical Engine</h3>
+<div class="ace-line ace-line old-record-id-KD9WdbHaBoA1CoxXG5lc1Aeqn5d">The MemoMind One utilizes a Micro-LED engine as its image source, whose each pixel emits its own light, eliminating the need for the separate backlighting found in LCD panels. This allows the engine to be compact and energy-efficient enough to be housed within the temple of the AI glasses.</div>
+<div class="ace-line ace-line old-record-id-D6TLdCdEMogPYaxdX3Hcgy9Snzh">Images are then transmitted onto the transparent lens via the MemoMind One’s <a href="https://www.memo-mind.com/blogs/tech-hub" title="See technology behind MemoMind One AI glasses">2D diffractive waveguide.</a> The waveguide optics are specifically optimized for particular pixels and colors, resulting in minimal light leakage and ensuring that the display remains essentially private to the wearer.</div>
+<div class="ace-line ace-line old-record-id-Gp1pdFwMCo71vgxAHIzctktrnOe">Also, need to notice that images on the MemoMind One appear primarily in green; this choice leverages the <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/lightandcolor/humanvisionintro" title="Human Vision and Color Perception" rel="noopener" target="_blank">human eye's peak sensitivity to wavelengths</a> around 555 nanometers—the same reason green has been the default color for aviation HUDs since the era of early fluorescent displays, as it ensures clear visibility at lower power levels.</div>
+<div class="ace-line ace-line old-record-id-U17xdPFYLoCiJBxUneJc4Edcnch"><br></div>
+<div style="font-size: 18px;" class="ace-line ace-line old-record-id-SdJEdZIvZoDzvZxCGxRcvCuunTe"><strong><em>Great smart glasses usually balance resolution, brightness, optics, comfort, and privacy.</em></strong></div>
+</div>
+</div>
+</div>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://www.memo-mind.com/blogs/tech-hub/memomind-one-battery-test</id>
+    <published>2026-07-14T23:47:00-07:00</published>
+    <updated>2026-08-22T05:18:54-07:00</updated>
+    <link rel="alternate" type="text/html" href="https://www.memo-mind.com/blogs/tech-hub/memomind-one-battery-test"/>
+    <title>MemoMind One Battery Test: Runtime, Power Consumption &amp; Charging Speed</title>
+    <author>
+      <name>MEMOMIND Tech</name>
+    </author>
+    <summary type="html">
+      <![CDATA[<div data-page-id="KXZldzWi9oVOBUxiFy7c3gWdnre" data-lark-html-role="root" data-docx-has-block-data="false">
+<div class="old-record-id-TzHQdcQT4oVUk6xLkUccBnNxnng">How long can AI glasses really last when translation, navigation, calls, and background long Memory are all running? This hands-on MemoMind One battery test measures real-world runtime, compares power draw across major features, and shows exactly how fast the glasses recharge from empty to full.</div>
+</div><p><a class="read-more" href="https://www.memo-mind.com/blogs/tech-hub/memomind-one-battery-test">More</a></p>]]>
+    </summary>
+    <content type="html">
+      <![CDATA[<style>
+.faq-article details summary {
+    cursor: pointer;
+    padding: 16px 0;
+    border-bottom: 1px solid #EAEAEA;
+    list-style: none;
+    position: relative;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .faq-article details summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    color: #999;
+  }
+  .faq-article details[open] summary::after {
+    content: "−";
+    color: #D4AF37;
+  }
+  .faq-answer {
+    padding: 10px 0 20px;
+    border-bottom: 1px solid #EAEAEA;
+  }
+  </style>
+<div>
+<div class="ace-line ace-line old-record-id-IYH7dTy1SoJvdqxQVTaccH1knCh">
+<meta charset="utf-8">
+<div>
+<div class="ace-line ace-line old-record-id-RpoEdjbfkoZXWHxaVzUc8Q9InKg" style="font-size: 12px;"><em>Last updated: July 15, 2026</em></div>
+<div class="ace-line ace-line old-record-id-IYH7dTy1SoJvdqxQVTaccH1knCh" style="font-size: 12px;">
+<em>Disclosure: This article is based on internal engineering testing of </em><em>a </em><em><strong>MemoMind One</strong></em><em> (</em><em><strong>PVT</strong></em><em>). Results reflect our testing methodology </em><em>and hardware at the time of evaluation. Retail devices and individual usage patterns may produce different results.</em>
+</div>
+<div class="ace-line ace-line old-record-id-KKOsdQ3pvo71iGxtS7UcjCRbnPm"><br></div>
+<div class="ace-line ace-line old-record-id-UCAndMi7loPPhBxaB6ocX3fDnse">Throughout a typical day, you might ask an AI question, check directions, join a call, listen to music, record a meeting, or simply leave the glasses quietly working in the background. Every feature consumes power differently, so one headline number rarely tells the full story.</div>
+<div class="ace-line ace-line old-record-id-HoGldsohFotsI1xGJzjc3mZjnFc">Rather than publishing only a battery specification, this article shows how <a title="AI glasses without a camera. Prescription-ready, all day." href="https://www.memo-mind.com/">MemoMind One</a> performs during mixed everyday use—and how we measured it.</div>
+<h2 class="heading-2 ace-line old-record-id-CvVOd1Nyvon3cRxRxUBcIItlnIc">Runtime Test: 17 Hours With AI Memory Never Turned Off</h2>
+<h3 class="heading-3 ace-line old-record-id-Yb8FdpCbdoTubBxb3zXc4Bxpnsd">Test Method and Result</h3>
+<div class="ace-line ace-line old-record-id-ECbxd0L6cozspkxiXnVcc2UPntg">Most battery claims come from repeating one task until the device dies — "continuous music playback," for example. That's a clean number, but it's not how anyone actually wears the glasses.</div>
+<div class="ace-line ace-line old-record-id-WO0PdZasgodIOExl325c9bnlnzh">Instead, we kept the <strong><a title="Meet MemoMind One's Memo+ service" href="https://www.memo-mind.com/blogs/in-the-moment/ai-glasses-memory-feature-memomind-one-memo-plus">Memory</a></strong><strong> </strong>feature on — a MemoMind One function that can be manually toggled on or off to continuously record moments and conversations throughout the day— active for the entire test, and layered real tasks on top of it.</div>
+<div class="ace-line ace-line old-record-id-X0vbduSBtoOF1wxcHrmciNV1nvb">We split the run into <strong>four consecutive 4-hour rounds with no charging or power-cycling in between</strong>, then summed up the time spent in each mode.</div>
+<div class="ace-line ace-line old-record-id-X0vbduSBtoOF1wxcHrmciNV1nvb">The results show that the MemoMind One can operate for 17 hours on a single full charge. The detail worth noting is that <strong>the</strong> <strong>"standby" state also kept Memory enabled continuously </strong>in this test, meaning continuous background memorizing of your day for the entire 17 hours if you want.</div>
+<div class="image-uploaded gallery old-record-id-Ho0JdBOEyoqEvkxVqemcK435nJh" style="text-align: start;"><img alt="17-hour memomind one battery test" src="https://cdn.shopify.com/s/files/1/0656/0173/2721/files/runtime-test.webp?v=1784087581" style="margin-bottom: 16px; float: none;"></div>
+<h3 class="heading-3 ace-line old-record-id-PjEbdWSvKonI04xaPPXctcotntg">What We Get From the Test</h3>
+<div class="ace-line ace-line old-record-id-QgMLdUZueoXDxBx3rM4cBm5Hn9b">The 17-hour number by itself doesn't mean much without context on what "all day" actually requires. We've written separately about what <a title="Wear MemoMind One AI Glasses All Day" href="https://www.memo-mind.com/blogs/tech-hub/can-you-wear-ai-glasses-all-day-memomind-one">all-day wear</a> actually demands from AI glasses — comfort, display usability, and battery life all have to hold up together, not just one of them in isolation.</div>
+<div class="ace-line ace-line old-record-id-Xd6GdBWMcomZJnxJWdscKdGRnpf">So, under mixed-use scenarios, the <a title="The Most Natural AI Display Glasses, MemoMind One" href="https://www.memo-mind.com/pages/memomind-one">MemoMind One AI glasses</a> provide sufficient coverage for the waking hours of most people—from 7:00 AM until midnight.</div>
+<h2 class="heading-2 ace-line old-record-id-MwRYdbZ0ioyFMMxh30ucWFIqnJU">Power Consumption: Where the Battery Budget Actually Goes</h2>
+<h3 class="heading-3 ace-line old-record-id-QMeUdi2w0oTGKhxoR5XcjcMjnhg">Test Method and Result</h3>
+<div class="ace-line ace-line old-record-id-Yui9dwRbVoRyIwxS7cjcs9aUnNd">Also, we measured power draw in isolation for each function, rather than relying on the combined runtime test alone. The process for each test case followed the same core steps:</div>
+<ol start="1" class="list-number1">
+<li class="ace-line ace-line old-record-id-ZgBRdpIwpo9J75x0aDQcs3SCnyf">Use the <strong>MemoMind One (PVT) with its own battery</strong> for actual testing, no alternative power sources.</li>
+<li class="ace-line ace-line old-record-id-WwN2drD6GoXTXzxoElpcQqQnn2c">
+<div>
+<strong>Pair the unit with the companion app and disable wear-detection sensors</strong>, so the device stays active regardless of whether it detects being worn — this keeps every test case running the exact same feature state.</div>
+</li>
+<li class="ace-line ace-line old-record-id-NAVvd1GFboso2QxQs9KcGvjfnNd">
+<div>
+<strong>Set the specific condition under test</strong> (e.g., a fixed display brightness level, or a specific mode such as translation, navigation, or phone calls) and hold it steady.</div>
+</li>
+<li class="ace-line ace-line old-record-id-OMuWdo2VToD7UHxJlHAcbPWKnLc">
+<div><strong>Record power draws over a fixed 3-minute sampling window.</strong></div>
+</li>
+<li class="ace-line ace-line old-record-id-EIN7dxP4Qopxq1xYNX7c0sKqnDb">
+<div>Repeat each test case three times and<strong> take the average of the three readings as the reported result</strong>, to control for measurement noise.</div>
+</li>
+</ol>
+<div class="ace-line ace-line old-record-id-QNejd5b79op4gyxlIOpcg4wonOf">We ran this process across <strong>more than 40 discrete test cases</strong>, covering baseline states (powered off, transport mode, standby), every display brightness tier on both single-eye and dual-eye displays, and every major feature (translation, phone calls, navigation, and combinations of those features layered on top of background Memory recording).</div>
+<div style="text-align: start;" class="image-uploaded gallery old-record-id-L89SdSqnMonzAXxP5rfcqnUoncd"><img src="https://cdn.shopify.com/s/files/1/0656/0173/2721/files/power-consumption-test.webp?v=1784087900" alt="memomind one real power test and result"></div>
+<h3 class="heading-3 ace-line old-record-id-Qa5ZduyuMoWLVYxSBIYcvDkynmd">What We Get From the Test</h3>
+<div class="ace-line ace-line old-record-id-VDrRdO77So1Y3wx2FAWc7RFinEh">A few patterns stand out from that dataset. Baseline draw — powered off, in transport mode, or in standby without a paired app — sits close to negligible, which matters because a device that leaks power at rest has little chance at a credible all-day figure regardless of battery size. Display brightness scales in a fairly linear way with draw, which means brightness is a lever the wearer can control directly, separate from whatever the default setting is.</div>
+<h2 class="heading-2 ace-line old-record-id-QWEldEo4HodINSxTFnAcQS2gn4f">Charging Speed: 0% to 80% in 30 Minutes</h2>
+<h3 class="heading-3 ace-line old-record-id-XO19dUVs5oh01bx6WjMcGyIMnzf">Test Method and Result</h3>
+<div class="ace-line ace-line old-record-id-JB1kdVOZhoeWKxxwxJBcfh4pnme">Battery life matters, but so does how quickly you can get back to using the glasses.</div>
+<div class="ace-line ace-line old-record-id-VEBUdYDnhonmaQxcpL6cDetQnqe">To evaluate charging performance, we used <strong>three different power adapters</strong> to charge the MemoMind One, recording the battery level at fixed intervals throughout the entire charging cycle (from 0% to 100%). All three tests showed that the device could reach an 80% charge within 30 minutes.</div>
+<div style="text-align: start;" class="image-uploaded gallery old-record-id-VMsKdb6pBo1JKNxVkszcmOPznQ7"><img style="margin-bottom: 16px; float: none;" alt="memomind one charged to 80% in 30 mins" src="https://cdn.shopify.com/s/files/1/0656/0173/2721/files/charging-test.webp?v=1784086314"></div>
+<h3 class="heading-3 ace-line old-record-id-P5RqdrZvto255kxnmqRc0mbanug">What We Get From the Test</h3>
+<div class="ace-line ace-line old-record-id-QXMSd9AxQo6SzexOZa3cigsPn5f">At first glance, the charging curve appears relatively flat during the final 10%. That's intentional.</div>
+<div class="ace-line ace-line old-record-id-VRGfdis8VosZBTx0f2YcVNLOnMd">MemoMind One uses a faster charging rate through most of the battery's capacity, then gradually reduces charging current above roughly 90%. Like many modern rechargeable devices, slowing the final stage helps reduce heat and support long-term battery health.</div>
+<div class="ace-line ace-line old-record-id-Hs0vddgPnouuppxPV8AcnwEUnFg">Of course, charging to a full 100% is perfectly feasible; it simply requires an additional 30 minutes or so—roughly the time it takes to enjoy a cup of coffee.</div>
+<div class="ace-line ace-line old-record-id-Usg4dttPXoQu1vxo4yBcrQornEf">For everyday use, though, most people won't need to wait for a full charge. <strong>A quick 30-minute top-up brings the battery to 80%</strong>—enough to comfortably power the glasses through the majority of a typical day based on our mixed-use testing.</div>
+<h2 class="heading-2 ace-line old-record-id-FvZtd0eDUo59hvxtvcNcP1oKnEf">How Can This Test Help Before Choosing MemoMind One</h2>
+<div class="ace-line ace-line old-record-id-Krv1d08guoAzmcxFBDvcDnODncb">Battery life for AI glasses is always a balancing act.</div>
+<div class="ace-line ace-line old-record-id-MUxBdR7afoQ5oXxHty5cDwuGnod">Larger batteries add weight. More powerful processors consume more energy. Features such as displays, speakers, and continuous AI functions all compete for the same battery budget.</div>
+<div class="ace-line ace-line old-record-id-CJlDdtHAZoFo5wx6cFycuxa2nhf">Rather than optimizing for one benchmark, <a title="AI glasses without a camera. Prescription-ready, all day." href="https://www.memo-mind.com/">MemoMind One</a> was designed around everyday wear.</div>
+<div class="ace-line ace-line old-record-id-MVWed1mDIoScVaxZQRBcnx9vnMe">Our internal testing suggests that even with All-Day AI Memory running continuously, the glasses can comfortably last through a full day of mixed use. Just as importantly, a short 30-minute charge restores most of the battery, making it practical for daily use rather than occasional use.</div>
+<h2 class="heading-2">FAQs</h2>
+<div class="faq-article">
+<details>
+<summary>How do I charge MemoMind One?</summary>
+<div class="faq-answer">Instead of using a separate charging case, the MemoMind One charges via a compact, portable charger that clips directly onto the temple of your glasses. It comes with a bent C-to-C charging cable that allows for flexible connection orientation, ensuring a secure and reliable connection.</div>
+</details>
+<details>
+<summary>How long does the MemoMind One battery actually last?</summary>
+<div class="faq-answer">In our internal mixed-use test with background Memory active for the entire session, runtime measured 16+ hours across a combination of features.</div>
+</details>
+<details>
+<summary>How long does the battery itself last over time (cycle life)?</summary>
+<div class="faq-answer">Per spec, the battery is rated for 500+ full 0–100% charge cycles. In practice, most users don't fully deplete the battery before recharging — low-battery shutoffs kick in before a true 0%, and most people top up before hitting empty anyway. Based on that typical usage pattern, we expect the battery to retain 80%+ of its original capacity after roughly 2–3 years of daily charging.</div>
+</details>
+<details>
+<summary>What is the MemoMind One battery charging time? </summary>
+<div class="faq-answer">MemoMind One can charge to 80% capacity in 30 minutes, which is enough for most of a day's use. Charging from 90% to 100% is intentionally slower to help protect long-term battery health. Once fully charged, charging automatically stops to prevent unnecessary battery wear.</div>
+</details>
+</div>
+</div>
+</div>
+</div>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://www.memo-mind.com/blogs/tech-hub/can-you-wear-ai-glasses-all-day-memomind-one</id>
+    <published>2026-07-06T03:15:24-07:00</published>
+    <updated>2026-07-06T03:15:27-07:00</updated>
+    <link rel="alternate" type="text/html" href="https://www.memo-mind.com/blogs/tech-hub/can-you-wear-ai-glasses-all-day-memomind-one"/>
+    <title>Can You Actually Wear AI Glasses All Day? MemoMind One Answers</title>
+    <author>
+      <name>MEMOMIND Tech</name>
+    </author>
+    <summary type="html">
+      <![CDATA[<p>MemoMind One is engineered to disappear into your life—featuring a lightweight titanium-alloy frame, all-day battery, and seamless AI integration that works when you need it, and stays out of the way when you don’t.</p><p><a class="read-more" href="https://www.memo-mind.com/blogs/tech-hub/can-you-wear-ai-glasses-all-day-memomind-one">More</a></p>]]>
+    </summary>
+    <content type="html">
+      <![CDATA[<style>
+.faq-article details summary {
+    cursor: pointer;
+    padding: 16px 0;
+    border-bottom: 1px solid #EAEAEA;
+    list-style: none;
+    position: relative;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .faq-article details summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    color: #999;
+  }
+  .faq-article details[open] summary::after {
+    content: "−";
+    color: #D4AF37;
+  }
+  .faq-answer {
+    padding: 10px 0 20px;
+    border-bottom: 1px solid #EAEAEA;
+  }
+</style>
+<div data-docx-has-block-data="true" data-lark-html-role="root" data-page-id="Lf71dlLmlo8xWaxGZK3c1SY7nbg">
+<div class="ace-line ace-line old-record-id-Ws84dBY8coKBwGxDUTTcXWpYnUd">
+<meta charset="utf-8">
+<div data-docx-has-block-data="true" data-lark-html-role="root" data-page-id="Lf71dlLmlo8xWaxGZK3c1SY7nbg">
+<div class="ace-line ace-line old-record-id-Ws84dBY8coKBwGxDUTTcXWpYnUd">Can AI glasses actually stay comfortable, useful, and unobtrusive enough to wear all day?</div>
+<div class="ace-line ace-line old-record-id-PQd8dd9AmoK9n5x9wQgcLDvBnPb">For many products on the market today, that's still a challenge. <a title="AI glasses without a camera. Prescription-ready, all day." href="https://www.memo-mind.com/">MemoMind One</a> was designed to answer this question:<em><strong> whether people would genuinely want to wear it from morning to night</strong></em>.</div>
+<h2 class="heading-2 ace-line old-record-id-Xgq5dI2P4o4F4bx8gWPcYKyangb">Why "Everyday" Is the Hardest Test Any AI Glasses Can Face</h2>
+<div class="ace-line ace-line old-record-id-ZPZCdO7nqorNhrxp7BvcYnK2nNb">Wearables get judged in controlled conditions. They get worn in real ones.</div>
+<div class="ace-line ace-line old-record-id-KNmadcnZ6osgp0xESeMc3sxvnDe"><em>You're commuting. You're in back-to-back meetings. You're picking up your kid. You forget you're wearing technology — and then it works anyway.</em></div>
+<div class="ace-line ace-line old-record-id-Nvfwd31rOoYidZxQlZTc747Yn3b">
+<div data-docx-has-block-data="false" data-lark-html-role="root" data-page-id="Lf71dlLmlo8xWaxGZK3c1SY7nbg">
+<div class="ace-line ace-line old-record-id-LaJndmDVcof9aExdsH0cJzYgndf">That's the real test of an everyday AI wearable. Not specs in a vacuum. Not a showroom demo. The question is whether glasses disappear into your life or interrupt it.</div>
+<div class="ace-line ace-line old-record-id-AvpBd81ygoRE8RxOzMHcbR3Fnyh">Most AI glasses today still face three common challenges:</div>
+<div class="ace-line ace-line old-record-id-EKhqdjVQjoCWf6xVFeYcd7BcnGh">• They become uncomfortable during extended wear due to weight or ergonomics.</div>
+<div class="ace-line ace-line old-record-id-BsHPdzRO6oXDofxdNCLcUENwnug">• Their displays require trade-offs between visibility, comfort, and everyday wearability.</div>
+<div class="ace-line ace-line old-record-id-A9SFdVKW4ok9zHxiZdtcj4yPnfd">• Battery life often limits continuous all-day use.</div>
+</div>
+</div>
+<div class="ace-line ace-line old-record-id-KzsKdlyBqojKd2xkwk0caI1lnN5">
+<a title="The Most Natural AI Display Glasses, MemoMind One" href="https://www.memo-mind.com/pages/memomind-one">MemoMind One</a> is designed, from frame to firmware, to pass all three.</div>
+<h2 class="heading-2 ace-line old-record-id-Ch8JdzZV9ouKQHxjtqxcNbPvnjg">Full-Day Comfort: The Design Behind All-Day Wear</h2>
+<div class="ace-line ace-line old-record-id-XeUfdUKU5omnRHxD1tucJCp7nsc">Full-day comfort starts with a design that earns it. MemoMind One follows traditional eyewear ergonomic standards while integrating AI hardware in ways you won't feel:</div>
+<div class="ace-line ace-line old-record-id-WMOKds3vooXHG9xrJGncipYAnHh">
+<strong>MemoMind One's hinges</strong> pass over 10,000 open-and-close cycle tests, delivering stable long-term daily use free of wobble. Matched with beta-titanium arms, these wide-angle elastic hinges automatically conform to various head sizes and prevent pinching even after two hours of wear.</div>
+<div class="ace-line ace-line old-record-id-WVlmdta4zo11PXx2dLacvIaGn7e">
+<strong>Core components stacked behind the ear</strong> — low visible profile, optimal pressure distribution.</div>
+<div class="ace-line ace-line old-record-id-DEfedmSZ4orbaFxGUlPcVVa6nte">
+<strong>Magnesium-aluminum alloy frame </strong>— for the same volume, it is approximately 33% lighter than traditional aluminum alloys and about 60% lighter than titanium alloys. Widely used in aerospace and automotive lightweighting engineering, this alloy enables weight reduction while maintaining structural strength.</div>
+<div class="ace-line ace-line old-record-id-LpGDdCHFGoQXuox5anFcki5mnre">
+<strong>Beta-titanium temples</strong> — highly elastic, corrosion-resistant, and hypoallergenic for comfortable all-day wear. A premium material commonly found in high-end eyewear and aerospace applications.</div>
+<div class="ace-line ace-line old-record-id-Tq1Hd8Zhyo4CCGxJGuqc8s61n7e">Some AI glasses that use magnetic lens frames add bulk, create pressure points, and introduce dust and visual interference over time. <a rel="noopener" title="MemoMind is now live on Kickstarter." href="https://www.kickstarter.com/projects/1963472698/memomind-one-the-most-natural-ai-display-glasses/description" target="_blank">MemoMind One</a> uses a single-body bonding process that eliminates those tradeoffs.</div>
+<h2 class="heading-2 ace-line old-record-id-HhAKdcpPnoJdAQxUXoWcREbNnHh">Full-Day Display: A Screen You See, Not One Others Do</h2>
+<div class="ace-line ace-line old-record-id-Wa5Cd5WDtoq7HqxOjPTcfEE7nfb">
+<p>MemoMind One uses waveguide AR display technology with a 2D grating design—an advanced optical architecture that delivers a compact form factor and a clear viewing experience. Depending on the optical architecture, current AR glasses typically use either 1D or 2D diffraction grating waveguides, each involving different engineering trade-offs. MemoMind One adopts a different optical approach optimized for its product goals.<br><meta charset="utf-8"></p>
+<div data-docx-has-block-data="false" data-lark-html-role="root" data-page-id="Lf71dlLmlo8xWaxGZK3c1SY7nbg">
+<div class="ace-line ace-line old-record-id-EKhqdjVQjoCWf6xVFeYcd7BcnGh">• Only one visible grating zone on the lens.</div>
+<div class="ace-line ace-line old-record-id-BsHPdzRO6oXDofxdNCLcUENwnug">• 98% light transmittance makes the waveguide area nearly invisible to others.</div>
+<div class="ace-line ace-line old-record-id-A9SFdVKW4ok9zHxiZdtcj4yPnfd">• The grating sits above the central visual field — it doesn't compete with what you're actually looking at.</div>
+<div class="ace-line ace-line old-record-id-TA4SdXNkCouR9BxgcI9ckUNyndd">• Proprietary waveguide light path: display content is optically private — invisible from the front.</div>
+</div>
+</div>
+<div class="ace-line ace-line old-record-id-H2uJd9lD2oXMDcxpnxXcYgtRnNe">This design helps make AR information less visually noticeable in everyday environments such as offices, cafés, or public transportation.</div>
+<div class="simple-gold-table-container">
+<table style="width: 100%;" class="simple-gold-table">
+<thead>
+<tr>
+<th style="width: 31.4079%;">Feature</th>
+<th style="width: 24.9349%;">MemoMind One</th>
+<th style="width: 23.2601%;">Rokid</th>
+<th style="width: 19.3141%;">Inmo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="width: 31.4079%;">Display height adjustment</td>
+<td style="width: 24.9349%;"><span class="gold-check">✓</span></td>
+<td style="width: 23.2601%;"><span class="gray-cross">✗</span></td>
+<td style="width: 19.3141%;"><span class="gray-cross">✗</span></td>
+</tr>
+<tr>
+<td style="width: 31.4079%;">Display distance (1–5 m)</td>
+<td style="width: 24.9349%;"><span class="gold-check">✓</span></td>
+<td style="width: 23.2601%;"><span class="gray-cross">✗</span></td>
+<td style="width: 19.3141%;"><span class="gray-cross">✗</span></td>
+</tr>
+<tr>
+<td style="width: 31.4079%;">Brightness adjustment</td>
+<td style="width: 24.9349%;">Auto</td>
+<td style="width: 23.2601%;">Manual only</td>
+<td style="width: 19.3141%;">Manual only</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 class="heading-2 ace-line old-record-id-HLI2dd0xmouKvmxWTidcjVFRnNd">Full-Day AI: Ready Whenever You Need It</h2>
+<div class="ace-line ace-line old-record-id-AQPjd5R4aoeZkyxhLobcgNninid">For an AI wearable to be useful throughout the day, technology needs to fit naturally into existing routines.</div>
+<div class="ace-line ace-line old-record-id-JCoGdp6VQocuCMxVGrecWDVknVe">Rather than requiring constant interaction, MemoMind One focuses on reducing the number of times users need to reach for their phones.</div>
+<div class="ace-line ace-line old-record-id-MzhWdpJ4nouqUNxgnm4cmuU6nQd">
+<a href="https://www.memo-mind.com/blogs/in-the-moment/memomind-ai-glasses-4-real-life-moments" title="Learn more about MemoMind">Memo Memory</a> automatically converts spoken information into structured text memories throughout the day. Instead of relying on manual note-taking, users can revisit important conversations, ideas, reminders, and moments later through their personal memory library.</div>
+<div class="ace-line ace-line old-record-id-RdAQd2usaoS0RwxvEX1csMmHnlk">At the end of the day, <strong>AI-generated summaries</strong> help organize key events and insights.</div>
+<div class="ace-line ace-line old-record-id-EojRd3AunoePQFxfGKKcnMkRnlg">Besides, real-time translation, navigation guidance, captions, reminders, and schedule information are available directly through the glasses when needed, reducing interruptions and helping users stay focused on what they're doing.</div>
+<h2 class="heading-2 ace-line old-record-id-TVOSd7eojo5pIaxDadWcVzSsnQh">Full-Day Battery: 16+ Hours So You Don't Have to Think About It</h2>
+<div class="ace-line ace-line old-record-id-CwmfdHyzXoqKDuxwrGtcXzNFnVf">A pair of glasses you have to take off to charge isn't a pair of glasses you wear all day.</div>
+<div class="ace-line ace-line old-record-id-HmQOdvrItoMrPIxvjIYcx41Wnlc">
+<a href="https://www.memo-mind.com/pages/memomind-one" title="The Most Natural AI Display Glasses, MemoMind One">MemoMind One</a> is powered by a custom battery designed specifically for its compact form factor. Together with efficient hardware and software optimization, it provides up to <strong>16+hours of mixed use</strong> on a single charge.</div>
+<div class="ace-line ace-line old-record-id-CSbNdGg1NoHairxZjHDchF1knAg">From morning alarm to post-dinner conversation, these long-lasting AI glasses help minimize interruptions caused by charging throughout the day.</div>
+<div class="ace-line ace-line old-record-id-UBMxdK05HoW1jixhdXYchTZfnJe"><br></div>
+<h2 class="heading-2 ace-line old-record-id-NGGpdee9FoVc6TxCyHPcf2Fxnsh">FAQs</h2>
+<div class="faq-article">
+<!-- FAQ 1 -->
+<details>
+<summary>Can I Really Wear MemoMind One All Day?</summary>
+<div class="faq-answer">
+<p>MemoMind One was designed with all-day wear in mind. Instead of focusing only on AI features, it also addresses the practical challenges that often limit wearable devices, including comfort, battery life, display usability, and privacy. With a lightweight frame, balanced weight distribution, a private AR display, and 16+ hours of battery life, it is built to stay useful throughout a full day rather than only during short interactions.</p>
+</div>
+</details>
+<!-- FAQ 2 -->
+<details>
+<summary>What Makes MemoMind One Comfortable for Extended Wear?</summary>
+<div class="faq-answer">
+<p>Long-term comfort depends on more than overall weight. MemoMind One combines lightweight materials, flexible hinges, and a balanced hardware layout to reduce pressure during extended use. The frame uses magnesium-aluminum alloy and beta-titanium components, while key electronics are positioned behind the ears to help distribute weight more evenly. The result is a design intended to feel closer to traditional eyewear than a wearable gadget.</p>
+</div>
+</details>
+<!-- FAQ 3 -->
+<details>
+<summary>Will the Display Distract Me During Daily Activities?</summary>
+<div class="faq-answer">
+<p>The display is designed to provide information when needed without constantly competing for attention. MemoMind One places its AR display above the central field of vision, allowing users to remain focused on conversations, work, or their surroundings while still accessing translations, navigation, reminders, and other information at a glance. Because the display is not positioned directly in front of the wearer's primary line of sight, it is designed to feel less intrusive during everyday use.</p>
+</div>
+</details>
+</div>
+</div>
+</div>
+</div>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://www.memo-mind.com/blogs/tech-hub/do-we-need-ai-smart-glasses-in-2026</id>
+    <published>2026-06-15T00:08:12-07:00</published>
+    <updated>2026-07-31T01:47:40-07:00</updated>
+    <link rel="alternate" type="text/html" href="https://www.memo-mind.com/blogs/tech-hub/do-we-need-ai-smart-glasses-in-2026"/>
+    <title>Do We Really Need AI-Powered Smart Glasses in 2026?</title>
+    <author>
+      <name>MEMOMIND Tech</name>
+    </author>
+    <summary type="html">
+      <![CDATA[<p>From Meta and Apple to MemoMind One, this reality check breaks down how wearable AI cures smartphone fatigue and why the computing market is finally ready for a hands-free future.</p><p><a class="read-more" href="https://www.memo-mind.com/blogs/tech-hub/do-we-need-ai-smart-glasses-in-2026">More</a></p>]]>
+    </summary>
+    <content type="html">
+      <![CDATA[<div>
+<div class="ace-line ace-line old-record-id-KSXPdvNCwoumNdx2yZCc3cbUnrb">For most people today, AI glasses are not essential. Smartphones already provide instant access to information, communication, and AI-powered assistance.</div>
+<div class="ace-line ace-line old-record-id-R72AdenZOoVr9bxAK2ucJlf7nzb">Unlike smartphones, whose value is already well established, <a href="https://www.memo-mind.com/blogs/tech-hub/how-do-ai-glasses-work" title="How do ai glasses work? Inside the next-gen tech(2026)">AI glasses</a> occupy a more uncertain space. They promise hands-free access to information, real-time assistance, and more seamless interaction with AI, yet many people still wonder whether these benefits solve a genuine problem or simply add another layer of technology to everyday life.</div>
+<div class="ace-line ace-line old-record-id-Jnkod2thaoVm1KxojZocPxQqnyf">To understand whether AI-powered smart glasses are truly useful, it is important to look beyond product specifications and marketing claims. It requires examining<em><strong> how AI glasses have evolved, what problems they are actually trying to solve, who benefits most from them, and what challenges still stand in the way of wider adoption.</strong></em>
+</div>
+<h2 class="heading-2 ace-line old-record-id-BZ1qdzbUBoEUroxQUjkcuyOmnQu">Why Are AI Smart Glasses Becoming Popular Again?</h2>
+<div class="ace-line ace-line old-record-id-LXh7dbjDYoPvewxXqybcxLO4nJd">A decade ago, Google Glass struggled not just with battery and display limits, but with a bigger problem: no clear everyday use case, and a camera that made people uncomfortable in public.</div>
+<div class="ace-line ace-line old-record-id-GaGQdlRv5on6PixWbVacyXjmnlg">Today's AI glasses are entering a very different environment.</div>
+<div class="ace-line ace-line old-record-id-YpyWdu9xHoFi79xXg0TcGwJHnie">Instead of simply displaying information, AI glasses can increasingly interpret information and provide context-aware assistance in real time. This shift is already visible in products such as Ray-Ban Meta Smart Glasses, Snap Spectacles, and newer AI-native wearable devices, <a href="https://www.memo-mind.com/pages/memomind-one" title="AI glasses without a camera, prescription-ready, all day.">MemoMind One</a>.</div>
+<div class="ace-line ace-line old-record-id-HVX0dNCKgo56JwxwSuNcUHxUnCf">According to a recent industry analysis by <span>PYMNTS</span>, the integration of multimodal generative AI has fundamentally redefined the category, shifting smart glasses from mere screen-dependent 'display accessories' to context-aware 'intelligent companions' that users interact with naturally</div>
+<div class="ace-line ace-line old-record-id-V1PRdBtxAoJB51xJTfecoJmxnee">In many ways, consumers have already adapted to ambient computing. AI glasses are arriving at a time when users are far more comfortable interacting with technology through speech and context rather than screens and keyboards.</div>
+<h2 class="heading-2 ace-line old-record-id-YfhSdZuVSoDremx8Ll7cnvSOnfb">What Problem Do AI Smart Glasses Actually Solve?</h2>
+<div class="ace-line ace-line old-record-id-PydLdI2O8oycelx3bXjcakH6nlb">Most information is technically available on demand, but getting it still means a small chain of actions: notice a message, reach for your phone, unlock it, search, process, then mentally return to what you were doing. None of these steps is hard on its own — but together they add up to constant micro-interruptions. AI glasses don't provide new information; they try to remove that chain, embedding assistance like translation, captions, and navigation into the moment it's needed instead of a separate app you have to open.</div>
+<h2 class="heading-2 ace-line old-record-id-KnfWdlIfRoOvKoxLudvcDPuknf2">Who Benefits Most from AI-Powered Smart Glasses?</h2>
+<div class="ace-line ace-line old-record-id-Ss5GdQps3o0ZeSxZ5a0c93FVnHh">Beyond specific use cases, the relevance of AI glasses also depends on different types of users and how they interpret the value of always-available, context-aware assistance.</div>
+<h3 class="heading-3 ace-line old-record-id-K6uBdSx3moPv38xbqTnc5yqfnkf">Content Creators and Hands-Free Recording</h3>
+<div class="ace-line ace-line old-record-id-Gz3md9gMpomjchxnmnqcqbX3n2e">One of the strongest adoption groups is content creators. For them, AI glasses are less about convenience and more about perspective. First-person recording and hands-free capture enable POV-style storytelling that feels more natural than traditional smartphone filming. This is one of the reasons devices like the Ray-Ban Meta Smart Glasses have heavily leaned into everyday capture and social content use cases.</div>
+<h3 class="heading-3 ace-line old-record-id-NScddipgQoRn8OxRo1QcnyuvnFf">Users Looking to Reduce Screen Time</h3>
+<div class="ace-line ace-line old-record-id-CcisdbQE3obEFpxOcYwcemBynME">Another group includes users who already depend heavily on digital tools but are actively trying to reduce screen dependence. Early adopters often describe AI glasses as a way to move simple interactions—notifications, quick searches, and responses—away from the phone screen into audio or subtle in-lens experiences.</div>
+<div class="ace-line ace-line old-record-id-CcisdbQE3obEFpxOcYwcemBynME">In practice, this creates a lighter interaction layer that reduces the need for constant phone unlocking and app switching.</div>
+<h3 class="heading-3 ace-line old-record-id-HBe6d9NiKoN5Txx3Hl0cotqMndf">Individuals Seeking Accessibility and Independent Navigation</h3>
+<div class="ace-line ace-line old-record-id-CQjadWdLLozVlix7N9Ec5lGsn7c">
+<div>There is also a highly practical adoption case among users with accessibility needs. AI glasses are increasingly used for real-time assistance such as reading text aloud, recognizing objects, or navigating environments independently. Devices like Envision Glasses and <span><a href="https://www.wired.com/story/google-glass-reasonable-expectation-of-privacy/">MemoMind One</a></span> can also become assistive tools for daily independence.</div>
+</div>
+</div>
+<div>
+<h2 class="heading-2 ace-line old-record-id-URRidemeooCMnaxWzbgcvkp1nfd">What Are the Biggest Limitations of AI Glasses Today?</h2>
+<div class="ace-line ace-line old-record-id-WQYbdopXOoKgoCxyCBFcZEPDn5b">Despite these emerging use cases, AI glasses are still not a mainstream product in 2026, and the gap between potential and adoption remains significant.</div>
+<div class="ace-line ace-line old-record-id-Tmbiddhu3oD1suxIux4c4XGhn6c">Rather than a single limitation, this gap is shaped by multiple overlapping factors that affect how the category is perceived and adopted in everyday life.</div>
+<h3 class="heading-3 ace-line old-record-id-NP6jdsCHfoWcgnxjw2vcfZjSn11">Battery Life and Hardware Constraints</h3>
+<div class="ace-line ace-line old-record-id-PYdddFeFnogeL8xXhCgcz92bnff">Even as hardware continues to<span> </span>improve, long-duration comfort, <a href="https://www.memo-mind.com/blogs/tech-hub/memomind-one-battery-test" title="Memomind one battery test: Runtime, power consumption &amp; charging speed">battery efficiency</a>, and thermal management still influence whether users are willing to wear the device throughout the day.</div>
+<h3 class="heading-3 ace-line old-record-id-B8Omd9eUyo655WxFwVqcO6brnte">Privacy Concerns and Social Acceptance</h3>
+<div class="ace-line ace-line old-record-id-TIPDdOfmEocRSNx9jzTc2D1gnpd">Because AI glasses are always visible and potentially recording-enabled, they introduce a new layer of sensitivity around <a href="https://www.memo-mind.com/blogs/buyers-guide/how-memomind-one-protects-your-data" title="How memomind one protects your data？A privacy guide">privacy, awareness, and public acceptance</a>—concerns that are more social than technical in nature.</div>
+<h3 class="heading-3 ace-line old-record-id-AUqbdOaTXooGlpxCUOecqiNXnKc">The Challenge of Changing User Habits</h3>
+<div class="ace-line ace-line old-record-id-QzyvdVir6ohgZWxDvwWcpUeunrc">Most users already have established workflows built around smartphones, which makes any new device compete not just on capability, but on whether it meaningfully changes everyday behavior.</div>
+<div class="ace-line ace-line old-record-id-R146dggEmoTFWbxkjY9ciyGunxh">Taken together, these factors explain why AI glasses remain in a transitional stage: increasingly capable, but not yet universally necessary.</div>
+<h2 class="heading-2 ace-line old-record-id-E5G6d8R99oZhpKx7QsvcwGDlnZf">So, are AI Smart Glasses Worth It in 2026?</h2>
+<div class="ace-line ace-line old-record-id-MQDadkz0tokso3xE6sicwL9vnBb">The short answer is <strong>yes—but primarily if you are looking to streamline how you capture life, reduce your screen dependency, or require real-time ambient assistance.</strong> It is less about whether the technology works, and more about whether you are ready to change how you interact with information daily.</div>
+</div>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://www.memo-mind.com/blogs/tech-hub/how-do-ai-glasses-work</id>
+    <published>2026-06-08T21:15:15-07:00</published>
+    <updated>2026-08-22T06:12:29-07:00</updated>
+    <link rel="alternate" type="text/html" href="https://www.memo-mind.com/blogs/tech-hub/how-do-ai-glasses-work"/>
+    <title>How Do AI Glasses Work? Inside the Next-Gen Tech(2026)</title>
+    <author>
+      <name>MEMOMIND Tech</name>
+    </author>
+    <summary type="html">
+      <![CDATA[<p>Ever wondered how lightweight AI glasses deliver private audio, clear voice capture, and bright visual displays without looking bulky? Explore the hidden engineering that makes ambient computing a reality.</p><p><a class="read-more" href="https://www.memo-mind.com/blogs/tech-hub/how-do-ai-glasses-work">More</a></p>]]>
+    </summary>
+    <content type="html">
+      <![CDATA[<style>
+  /* 统一博客文章容器的字体和排版格式 */
+  .blog-article-container {
+    color: #222222;
+    line-height: 1.6;
+    font-size: 16px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  /* 精准控制所有段落的正文粗细与颜色 */
+  .blog-article-container .ace-line {
+    font-size: 16px;
+    font-weight: normal;
+    color: #222222;
+    margin-bottom: 16px;
+  }
+  /* H2 样式：前方有通宽横线，左侧更换为 Tech Hub 橙色竖线 */
+  .blog-article-container h2.heading-2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #222222;
+    margin-top: 52px;
+    margin-bottom: 20px;
+    padding-left: 12px;
+    border-left: 3px solid #E67E22;
+    border-bottom: none;
+    padding-bottom: 0;
+    position: relative;
+  }
+  .blog-article-container h2.heading-2::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #EAEAEA;
+    position: absolute;
+    top: -24px;
+    left: -12px;
+  }
+  /* H3 样式：前面有圆点 */
+  .blog-article-container h3.heading-3 {
+    font-size: 19px;
+    font-weight: 600;
+    color: #222222;
+    margin-top: 32px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+  }
+  .blog-article-container h3.heading-3::before {
+    content: "•";
+    color: #D4AF37;
+    font-size: 20px;
+    margin-right: 8px;
+    line-height: 1;
+  }
+  /* H4 样式优化 */
+  .blog-article-container h4.heading-4 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #222222;
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+  /* 列表样式优化 */
+  .blog-article-container ul.list-bullet1 {
+    margin-bottom: 16px;
+    padding-left: 20px;
+  }
+  .blog-article-container ul.list-bullet1 li {
+    margin-bottom: 8px;
+    font-weight: normal; 
+    color: #222222;     
+  }
+  .blog-article-container ul.list-bullet1 li div {
+    display: inline;
+  }
+  /* 图片和注释 */
+  .blog-article-container .image-uploaded img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-top: 12px;
+  }
+  .blog-article-container em {
+    font-size: 14px;
+    color: #666666;
+    display: block;
+    margin-top: 6px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  /* 链接颜色全面回归蓝色 */
+  .blog-article-container a {
+    color: #0066CC!important;
+    text-decoration: underline;
+  }
+  /* ==========================================
+     修好的 FAQ 手风琴专属样式（问题=H3，回答=正文）
+     ========================================== */
+  /* 1. 强行隐藏所有浏览器的原生小箭头 */
+  .blog-article-container details summary::-webkit-details-marker {
+    display: none !important;
+  }
+  .blog-article-container details summary {
+    list-style: none !important;
+    outline: none !important;
+  }
+  /* 2. FAQ 问题：复刻 H3 规格 */
+  .blog-article-container details summary {
+    font-size: 19px !important;
+    font-weight: 600 !important;
+    color: #222222 !important;
+    cursor: pointer !important;
+display: block !important;          /* 从 flex 改为 block，确保文字严格靠左 */
+  text-align: left !important;         /* 强制左对齐 */
+  padding: 16px 30px 16px 0 !important; /* 右边留出 30px 空间给加号，左边为 0 不缩进 */
+    border-bottom: 1px solid #EAEAEA !important;
+    position: relative !important;
+  }
+  /* 3. 补回漏掉的金色小圆点 */
+  .blog-article-container details summary::before {
+    color: #D4AF37 !important;
+    font-size: 20px !important;
+    margin-right: 8px !important;
+    line-height: 1 !important;
+  }
+  /* 4. 在最右侧生成“+”号 */
+  .blog-article-container details summary::after {
+    content: "+" !important;
+    font-size: 22px !important;
+    color: #999999 !important;
+position: absolute !important;       /* 改为绝对定位 */
+  right: 0 !important;                 /* 紧贴最右侧 */
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  }
+  /* 5. 展开（Open）状态下，右侧符号变成“−”号 */
+  .blog-article-container details[open] summary::after {
+    content: "−" !important;
+    color: #D4AF37 !important;
+  }
+  /* 6. FAQ 回答：复刻标准正文规格 */
+  .blog-article-container details .faq-answer {
+    font-size: 16px !important;
+    font-weight: normal !important;
+    color: #222222 !important;
+    line-height: 1.6 !important;
+    padding: 12px 0 20px 18px !important; /* 18px 左缩进对齐文字 */
+    border-bottom: 1px solid #EAEAEA !important;
+  }
+  /* 7. 展开时去掉中间的重叠线 */
+  .blog-article-container details[open] summary {
+    border-bottom: none !important;
+  }
+</style>
+<div class="blog-article-container">
+<div class="ace-line ace-line old-record-id-VdvwdKUuNoNf32xZlkIca9NqnHe">Unlike bulky early smart glasses or fully immersive AR headsets, modern AI eyewear is designed to look and feel closer to ordinary glasses while quietly integrating digital assistance into everyday life.</div>
+<div class="ace-line ace-line old-record-id-Cwfed1aIpoOav8xhCMNcW1Jcnjd">Using a combination of microphones, motion sensors, miniature displays, open-ear audio systems, and AI-powered language processing, these wearable devices can provide navigation, translation, notifications, and voice-based assistance without requiring constant interaction with a smartphone screen.</div>
+<div class="ace-line ace-line old-record-id-KrOZd8v7aoZHGlx3JgTcqkZDn5g">This shift reflects a broader industry movement toward <a href="https://ittech-pulse.com/blogs-articles/living-in-the-background-the-rise-of-ambient-computing-and-the-future-of-seamless-technology/">ambient computing</a> — a design philosophy focused on making technology feel less intrusive and more naturally integrated into human activity.</div>
+<div class="ace-line ace-line old-record-id-LhkIdzka5obsOxx7bmgckMXenPf">But making computing feel almost invisible requires an enormous amount of engineering hidden inside a lightweight eyewear frame. <strong>So how do AI glasses actually work?</strong>
+</div>
+<h2 class="heading-2 ace-line old-record-id-M9tbdnKqxoS3DNxgHMBcxBulnPb">How Do AI Glasses Hear You?</h2>
+<div class="ace-line ace-line old-record-id-KSZ9dBDQhom7tixiLe8cZOkhngg">AI glasses hear users through multi-microphone arrays combined with beamforming and environmental noise suppression technologies. Because wearable devices sit farther from the mouth than smartphones, they must capture speech clearly while filtering traffic noise, nearby conversations, wind, and other environmental interference.</div>
+<h3 class="heading-3 ace-line old-record-id-EWH7deQc7otVskxYunRckqklnmh">Microphone Arrays and Voice Capture</h3>
+<div class="ace-line ace-line old-record-id-ENDZd2GU0oRjckxpTFqcyI3Mnbc">Modern AI glasses typically use multiple microphones positioned along the temple arms of the frame. These microphone arrays continuously analyze incoming sound waves to separate the wearer’s voice from surrounding environmental audio.</div>
+<div class="ace-line ace-line old-record-id-VZpfdw5gooJHqUxc230cm7iQnCd">Beyond simple voice commands, the system also captures contextual audio used for <a href="https://www.memo-mind.com/blogs/in-the-moment/memomind-ai-glasses-4-real-life-moments">features</a> like:</div>
+<h4 class="heading-4 ace-line old-record-id-TyHHdTj2VomZ4BxxBRqc5GBWnfe">Contextual Audio Capture Capabilities</h4>
+<ul class="list-bullet1" start="1">
+<li class="ace-line ace-line old-record-id-XNhkddBz6oy7RDx8Ughc7tZanjf">
+<div>AI assistants</div>
+</li>
+<li class="ace-line ace-line old-record-id-CIrfdyXyOo2V1FxFXkHcoTw4n7c">
+<div>Real-time translation capturing</div>
+</li>
+<li class="ace-line ace-line old-record-id-ZNigdw4xOoj65zxDCX6cfaoGn5g">
+<div>Live transcription feeds</div>
+</li>
+<li class="ace-line ace-line old-record-id-MvfhdhJnhoCb2Ox6UWqclKjfnUc">
+<div>On-the-go conversation captioning</div>
+</li>
+</ul>
+<h3 class="heading-3 ace-line old-record-id-O8VgdX6XfoJ5PcxzPvHcVdOsnVe">Beamforming and Noise Suppression</h3>
+<div class="ace-line ace-line old-record-id-SJitdbgKBo4WqZx4Xerc6qLunMc">To improve voice clarity, many AI glasses rely on beamforming and <a href="https://www.oleapai.com/pages/a-deep-dive-into-environmental-noise-cancellation-enc-and-how-its-revolutionizing-audio-clarity?srsltid=AfmBOooWdafAOI913rBDCDLuNAlQjEqgDyMHam1dulvJSkjCelDeDpSH">Environmental Noise Suppression (often called Environmental Noise Cancellation)</a>. Beamforming works by measuring the microscopic timing differences between when sound reaches each microphone. Using those timing variations, the system creates a directional listening zone focused around the speaker while suppressing unrelated background sounds.</div>
+<div class="ace-line ace-line old-record-id-DfEidaXnToIUfNx0IxKcWUJjnPj">Environmental noise suppression further filters wind, traffic, and crowd interference before the audio reaches the AI system. Without these technologies, voice-controlled wearables would struggle in noisy public environments like airports, cafes, or train stations.</div>
+<h4 class="heading-4 ace-line old-record-id-XrcNd81f0o7Emhx1XglchGvZnAb">Featured Tech: MemoMind One Hardware Audio</h4>
+<div class="ace-line ace-line old-record-id-PAQpdYcv6omVLyx9hnYc00o2nhd">AI glasses, such as the <strong><a href="https://www.memo-mind.com/pages/memomind-one">MemoMind One</a></strong>, have three high-sensitivity microphones embedded within the ultra-slim temples to form a microphone array that performs portions of directional voice isolation locally on-device using low-latency DSP processing rather than relying entirely on cloud-based cleanup.<em></em>
+</div>
+<h2 class="heading-2 ace-line old-record-id-CENydND40oxkobxRPuJcfeY5n1c">How Do AI Glasses Deliver Audio Without Earbuds?</h2>
+<div class="ace-line ace-line old-record-id-NtZEddgTZooLn4xHUL8c7KA1nkb">AI glasses deliver audio using open-ear acoustic systems positioned just above the ear canal. Unlike traditional earbuds that isolate users from the surrounding environment, open-ear systems allow wearable devices to provide private audio feedback while preserving awareness of conversations, traffic, and nearby activity.</div>
+<h3 class="heading-3 ace-line old-record-id-YeDZd4VGRoTixuxapPDct8qbnff">Open-Ear Audio Systems</h3>
+<div class="ace-line ace-line old-record-id-DBVZdKFs6oAfmkxsz8Mc52lnnpg">Most modern smart glasses place miniature directional speakers inside the temple arms of the frame. These speakers project sound downward toward the ear without fully sealing the ear canal.</div>
+<div class="ace-line ace-line old-record-id-R8VzdvDo7ojW9zx9nhucetqDnih">This design helps users remain socially and spatially aware while still hearing navigation prompts, phone calls, AI responses, and translation audio. Open-ear acoustic systems have become increasingly common across lightweight AI eyewear because they balance accessibility, comfort, and environmental awareness.</div>
+<h3 class="heading-3 ace-line old-record-id-LJSMdr0JsoAjf5xLy1Pc7R35nDe">The Reality of Sound Leakage in Open-Ear Audio</h3>
+<div class="ace-line ace-line old-record-id-KMszdiRVEoINDGxNeZWcraOWnbg">However, because open-ear speakers sit outside the ear, controlling sound leakage is one of the largest engineering challenges in wearable audio. Whether it is the relatively mature Ray-Ban Meta or AI glasses from Even Reality or other brands, any device utilizing an open-ear architecture cannot completely eliminate sound leakage—and this is precisely the area where manufacturers across the AI eyewear industry are striving to make improvements.</div>
+<h2 class="heading-2 ace-line old-record-id-UxdcdBEOpos3Dux73lac9kmTnbf">How Do AI Glasses Display Information：MicroLED and Waveguides</h2>
+<div class="ace-line ace-line old-record-id-ZvBtdDX5joHsfnxFLFbcLZ6lnPe">AI glasses display information using miniature projection systems and optical waveguide technology embedded inside transparent lenses. The challenge is not simply displaying images. It is projecting readable digital content while keeping the glasses lightweight, visually discreet, and usable outdoors under sunlight.</div>
+<h3 class="heading-3 ace-line old-record-id-RUqedlvlkoHoAzxBvuQctZs8nTf">MicroLED and MicroOLED Projection Systems</h3>
+<div class="ace-line ace-line old-record-id-D7YidHi6AoiNfnx1066cJkPTnqb">Modern AI glasses increasingly explore compact micro-display technologies such as MicroLED and MicroOLED systems. These miniature projectors are small enough to fit inside the frame while generating high-brightness visuals capable of remaining visible outdoors.</div>
+<h4 class="heading-4 ace-line old-record-id-WuWidDkMqoZif4xuLSEcuTiKn8c">Legacy LCD Approaches</h4>
+<ul class="list-bullet1" start="1">
+<li class="ace-line ace-line old-record-id-SIW5dBJnDosY3MxsDi9cmeOgnFd">
+<div>Thicker mechanical structure</div>
+</li>
+<li class="ace-line ace-line old-record-id-EiaJdgZDGouFe2x0CvGcLRJ8nFb">
+<div>Higher battery power consumption</div>
+</li>
+<li class="ace-line ace-line old-record-id-CbSedCbvoovQNxxoEY2cIZ86nSf">
+<div>Limited brightness under sunlight</div>
+</li>
+</ul>
+<h4 class="heading-4 ace-line old-record-id-L7pqdbYu0okD5rx27TPcqpc5nlo">Micro-Display Tech Benefits</h4>
+<ul class="list-bullet1" start="1">
+<li class="ace-line ace-line old-record-id-MFSrdkywWoYJSSxdFKZc8Oxynng">
+<div>Higher brightness efficiency</div>
+</li>
+<li class="ace-line ace-line old-record-id-HFzGdujG9owGpjxvPeOc0N9AnIb">
+<div>Lower overall power consumption</div>
+</li>
+<li class="ace-line ace-line old-record-id-YHvYd0IVIoDZufxGCYLcc0Ltnsc">
+<div>Significantly smaller optical footprints</div>
+</li>
+</ul>
+<h3 class="heading-3 ace-line old-record-id-DwJYdgS2QoKK3Hxhr2XcZDEQnN5">Optical Waveguides and Transparent Displays</h3>
+<div class="ace-line ace-line old-record-id-U6RNdQNTbo88d9xGqVdccpi4nI7">To move projected light from the frame into the user’s eyes, AI glasses use optical waveguides integrated into the lens. Earlier smart glasses often relied on thicker prism-based optical systems that made devices appear bulky or visibly mechanical.</div>
+<div class="ace-line ace-line old-record-id-JJlPdIOjYorYl2xwIQUc21w5ntd">Modern wearable displays increasingly use diffractive optical waveguides with microscopic grating structures that guide light across the lens while maintaining a more ordinary eyewear appearance. These systems help create thinner lenses, wider viewing zones, and more discreet display integration.</div>
+<h3 class="heading-3 ace-line old-record-id-XYbHdRIm7oDhYfxNIHtc402onie">Why Outdoor Visibility Is Difficult</h3>
+<div class="ace-line ace-line old-record-id-ROB2dPlPGoLGvpxlzbacAGannAe">Outdoor readability remains one of the largest limitations in wearable display design. Under direct sunlight, low-brightness projection systems can easily become washed out, forcing users to shade the lens or move into darker environments just to read basic information. Achieving both high brightness and lightweight optical structures simultaneously remains one of the most difficult engineering trade-offs in consumer AR eyewear.</div>
+<h3 class="heading-3 ace-line old-record-id-OQt3dwtQVo46Rdx4GQ8csQqUnag">One Example of High-Brightness Waveguide Design</h3>
+<div class="ace-line ace-line old-record-id-RNzwdUkKGo2U31xihrecpsRbnoe">Some wearable systems attempt to address this challenge using higher-efficiency projection engines combined with thinner diffractive waveguide architectures. One example is the <a href="https://www.memo-mind.com/pages/memomind-one">MemoMind One</a>, which combines a diffractive waveguide system with a high-efficiency MicroLED projector generating in-eye brightness up to 2,000 nits.</div>
+<div class="ace-line ace-line old-record-id-L44LdbavoounS2xNcr0ckUgDncf">To ensure the eyewear remains sleek and visually indistinguishable from ordinary glasses alongside this brightness, the display architecture utilizes a single-zone 2D grating structure. While it doesn't directly increase light efficiency, this integrated 2D design offers a massive aesthetic and visual advantage: it drastically shrinks the grating footprint, making the display elements much smaller and virtually invisible to outsiders. At the same time, it successfully reduces visible optical artifacts and ghosting for a cleaner, crisper viewing experience.<em></em>
+</div>
+<h2 class="heading-2">FAQs</h2>
+<details>
+<summary>Why are smart glasses difficult to wear all day?</summary>
+<div class="faq-answer">Long-term comfort remains one of the biggest challenges in AI eyewear. Early smart glasses often felt front-heavy, creating pressure on the nose and heat buildup during extended wear. To improve comfort, modern AI glasses increasingly use lightweight materials, thinner optical systems, and rear battery placement to create better weight balance. Some wearable systems, including the MemoMind One, also use magnesium-aluminum alloy frames and distributed battery designs to reduce fatigue during all-day use.</div>
+</details>
+<details>
+<summary>Why do some AI glasses remove cameras?</summary>
+<div class="faq-answer">Some AI glasses intentionally remove outward-facing cameras to reduce privacy concerns and improve social acceptance. Although cameras enable features like object recognition and spatial mapping, they can also make people uncomfortable in public environments. Camera-free designs reduce hardware complexity, thermal load, and surveillance concerns. Some devices, including the MemoMind One, instead focus on audio-driven AI interaction combined with privacy-focused local processing.</div>
+</details>
+<details>
+<summary>Are camera-free AI glasses better for privacy?</summary>
+<div class="faq-answer">For many users, camera-free AI glasses feel more socially acceptable because they avoid visible recording hardware. Instead of relying on visual data collection, these systems prioritize voice interaction, motion sensing, and contextual AI assistance. The trade-off is that camera-free devices cannot perform advanced computer vision tasks like document scanning or real-time spatial mapping.</div>
+</details>
+</div>
+<p> </p>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://www.memo-mind.com/blogs/tech-hub/how-and-why-ai-glasses-differ-from-other-ai-wearables</id>
+    <published>2026-05-22T01:15:54-07:00</published>
+    <updated>2026-07-24T01:34:34-07:00</updated>
+    <link rel="alternate" type="text/html" href="https://www.memo-mind.com/blogs/tech-hub/how-and-why-ai-glasses-differ-from-other-ai-wearables"/>
+    <title>AI Glasses vs Other AI Wearables: What&apos;s the Difference?</title>
+    <author>
+      <name>MEMOMIND Tech</name>
+    </author>
+    <summary type="html">
+      <![CDATA[<p>AI glasses aren't just another wearable. Learn how they differ from smartwatches, AI rings, earbuds, and other AI wearables—and why contextual AI is changing everyday computing.</p><p><a class="read-more" href="https://www.memo-mind.com/blogs/tech-hub/how-and-why-ai-glasses-differ-from-other-ai-wearables">More</a></p>]]>
+    </summary>
+    <content type="html">
+      <![CDATA[<style>
+.faq-article details summary {
+    cursor: pointer;
+    padding: 16px 0;
+    border-bottom: 1px solid #EAEAEA;
+    list-style: none;
+    position: relative;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .faq-article details summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    color: #999;
+  }
+  .faq-article details\[open\] summary::after {
+    content: "−";
+    color: #D4AF37;
+  }
+  .faq-answer {
+    padding: 10px 0 20px;
+    border-bottom: 1px solid #EAEAEA;
+  }
+</style>
+<div data-docx-has-block-data="true" data-lark-html-role="root" data-page-id="JmUtdShWvoUfeGxGyaLchy2onre">
+<div class="ace-line ace-line old-record-id-Qh3Rd9zaQoYsqpxrmejcAC59nEd">AI wearables—devices that combine advanced sensors with cloud or edge intelligence—have evolved rapidly over the past decade. ZDNET highlights that the market for these intelligent tools is on track to <u><a rel="noopener" title="Why the AI wearable market is set to grow by 10x - and it's not just new gadgets" href="https://www.zdnet.com/article/ai-health-wearables-are-headed-toward-phenomenal-growth-per-report/" data-lark-is-custom="true" target="_blank">increase by 10 times by 2033</a></u>, reflecting solid industry growth. Even so, the more important shift is not scale—but direction.</div>
+<div class="ace-line ace-line old-record-id-A5jTdVSfIoNWCNxGTihc0bRNnre">Today’s common AI wearables, including smartwatches, rings, and smart jewelry, are exceptionally good at translating biological signals—such as sleep, heart rate, stress, and blood oxygen levels—into personalized health insights.</div>
+<div class="ace-line ace-line old-record-id-CR9pd1inKoRig3xoxqzcv55YnzT">They are all built to answer one fundamental question: <em><strong>What is happening inside your body?</strong></em>
+</div>
+<div class="ace-line ace-line old-record-id-TdsqdkQYro2OdDxKZwScsoBhnwg">Yet people’s demands are evolving. What if users expect AI to perceive the surrounding world, see things from their perspective, and deliver instant responses in real time? This is exactly where AI glasses deliver unique value.</div>
+<h2 class="heading-2 ace-line old-record-id-UNMDdoNZsoPr3VxhlGFchGp1n1d">Inward vs. Outward AI Wearables</h2>
+<div class="ace-line ace-line old-record-id-DbkTd8WZDo2BnPxhgrrcC8olnYc">People tend to regard new AI wearables as mere iterative hardware upgrades. In fact, the industry is witnessing a core shift: from inward-oriented physical sensing to outward-oriented environmental perception, which reshapes people’s ways of living, working, and social interaction.</div>
+<div class="ace-line ace-line old-record-id-ZyzGd0eJZoqu4lx63KqcMYNUnic">This evolution does not mean modern AI glasses are here to replace or oppose your existing devices. Instead, it is about a complementary ecosystem where different hardware serves different dimensions of our lives.</div>
+<h3 class="heading-3 ace-line old-record-id-EOg8d1vGko8fMRxW7MjcCmtUnvd">Inward-facing AI wearables focus on your inner state</h3>
+<div class="old-record-id-KVm5dMaiXoPQEXxjvojcqDAEnbc" data-type="sheet">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<div class="mm-table-card">
+<table class="mm-table">
+<colgroup>
+<col width="197">
+<col width="287">
+<col width="343">
+</colgroup>
+<thead>
+<tr height="27">
+<th>AI Wearable</th>
+<th>How It Works</th>
+<th>Primary Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr height="46">
+<td>Smartwatches &amp; Smart Rings</td>
+<td>Continuously collect biometric data in the background with minimal user interaction.</td>
+<td>Build long-term insights into health, fitness, recovery, and stress.</td>
+</tr>
+<tr height="46">
+<td>AI Headbands</td>
+<td>Monitor brainwave activity during dedicated sessions such as sleep or focus training.</td>
+<td>Improve cognitive performance, meditation, or sleep quality.</td>
+</tr>
+<tr height="46">
+<td>AI Patches &amp; Medical Wearables</td>
+<td>Continuously monitor physiological signals over extended periods.</td>
+<td>Support long-term health monitoring and clinical care.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ace-line ace-line old-record-id-FHO2dRpzdoRyhWxqvWJcfOEnnrd">These inward-sensing devices are low-obtrusive and data-driven, but users still need to open an app or check their phone screens to digest and apply the collected information.</div>
+<h3 class="heading-3 ace-line old-record-id-BdE2dA4rZo2hclxXgpYc1arenIf">Outward-facing AI wearables unlock a new way to interact with the world</h3>
+<div class="ace-line ace-line old-record-id-VHgOdtfxZo8M4AxcxjdcCPDhnsb">Instead of tracking your body, devices like AI glasses act as active, contextual interpreters of your environment. They look outward, shifting the AI’s role from retrospective tracking to real-time interaction.</div>
+<div class="ace-line ace-line old-record-id-EjPQdxmj8ooEwjx95mecpn7Ynqd">They don't ask <em><strong>"how is your heart rate?"</strong></em> Instead, they answer <em><strong>"what is happening in front of you right now, and how can we handle it together?"</strong></em>
+</div>
+<div class="ace-line ace-line old-record-id-DN4Ndy92xozkEUxUOu0cqeWKnib">This shift doesn’t counter the wearables AI mentioned above—it elevates them, introducing a fluid lifestyle where you can finally <u><a title="MemoMind AI Teleprompter" href="https://www.memo-mind.com/blogs/in-the-moment/speak-without-notes-with-memomind-ai-teleprompter" data-lark-is-custom="true">look up, speak, and stay present</a></u>, and let AI navigate the digital noise for you.</div>
+</div>
+<p><img alt="smartwatch_vs_memomind_ai_glasses" src="https://cdn.shopify.com/s/files/1/0656/0173/2721/files/smartwatch_vs_ai_glasses.png?v=1779357841"></p>
+<div data-docx-has-block-data="false" data-lark-html-role="root" data-page-id="JmUtdShWvoUfeGxGyaLchy2onre">
+<h2 class="heading-2 ace-line old-record-id-IU2Qd863Yo9JXDxrkJZcGaaWnMg">What Makes Smart Eyewear Different</h2>
+<div class="ace-line ace-line old-record-id-BAExdxhD8oxnBexrkA0ctRNqnfS">The defining advantage of AI glasses is not that they pack more features—it’s that they alter the very geometry of digital interaction. While smartphones force us to constantly look down and retreat into a screen, AI glasses change the paradigm by introducing two distinct, non-overlapping capabilities.</div>
+<h3 class="heading-3 ace-line old-record-id-E2Pdd2VlLoFejuxlR82cyNpEnke">Line-of-Sight Contextual Intelligence</h3>
+<div class="ace-line ace-line old-record-id-JtiQdPixroOYb5xIwCncjtBpnJb">AI glasses transform AI from a device you have to consult into an intuitive, real-time companion that understands your world as you experience it.</div>
+<h3 class="heading-3 ace-line old-record-id-Rp7zdaulaoLnsFxgSJacW5r8n4e">Frictionless Reality Integration</h3>
+<div class="ace-line ace-line old-record-id-LhKhdLgDMoXHYlxJL5ockuLvntg">They bring digital capability directly into daily workflows without breaking your flow.</div>
+<div class="ace-line ace-line old-record-id-WYyBdBbTuonQhxxRIFqcZPRhn2b">In practice, this means accessing essential tools entirely hands-free and glance-based: glancing at a menu in a foreign city for an instant translation, viewing quick prompt guidelines during a presentation, or catching subtle navigation cues while walking to a meeting—all without ever reaching for a phone or breaking eye contact with the people around you.</div>
+<div class="ace-line ace-line old-record-id-JFKNdyMtNoFaEcxExpfc9zfXnQb">This kind of smart eyewear may actually be<a title="https://www.memo-mind.com/blogs/tech-hub/do-we-need-ai-smart-glasses-in-2026" href="https://www.memo-mind.com/blogs/tech-hub/do-we-need-ai-smart-glasses-in-2026" data-lark-is-custom="true"> what we need in 2026</a>.</div>
+<h2 class="heading-2 ace-line old-record-id-JAXWdHSL9o892UxQUmhclfNsnQb">What the Ideal AI Glasses Should Look Like</h2>
+<div class="ace-line ace-line old-record-id-Ua1Kdr0O6o44zExw4f0clEjQnbf">For AI glasses to become everyday devices, they need to solve real problems without creating new ones.</div>
+<div class="ace-line ace-line old-record-id-UQ1cdrXEuo6tXoxfKZVc1NoYn1e">An ideal pair should be:</div>
+<ul class="list-bullet1" start="1">
+<li data-list="bullet" class="ace-line ace-line old-record-id-ImDcdOpahoDGkVxZln3c4uuBnNg">
+<div>Lightweight enough for all-day wear.</div>
+</li>
+<li data-list="bullet" class="ace-line ace-line old-record-id-APMSdZAMQoXeRyxsRKtcyiypnYe">
+<div>Comfortable with prescription lenses.</div>
+</li>
+<li data-list="bullet" class="ace-line ace-line old-record-id-UiLHd7Reyo4hi5xYGLTc3Pivncg">
+<div>Quiet enough to use in public.</div>
+</li>
+<li data-list="bullet" class="ace-line ace-line old-record-id-ItFodaHrhoPpQ2xxPHWc07iEnXg">
+<div>Privacy-conscious by design.</div>
+</li>
+<li data-list="bullet" class="ace-line ace-line old-record-id-BKYcdE7c5oR1W8xILDockGkTn7b">
+<div>Capable of providing useful information without becoming distracting.</div>
+</li>
+</ul>
+<div class="ace-line ace-line old-record-id-PtxDdt9xTowVdnxO9bpcED8OnWd">Instead of demanding your attention, AI should work quietly in the background and appear only when it's genuinely helpful.</div>
+<h2 class="heading-2 ace-line old-record-id-KBMndlcwjo07awxvWPbcgu0InYe">How MemoMind One Is Designed</h2>
+<div class="ace-line ace-line old-record-id-JKc7digdRosI4Kxw0VEcbT2Ln1f">Instead of forcing users into socially uncomfortable behaviors, <u><a title="AI glasses without a camera. Prescription-ready, all day." href="https://www.memo-mind.com/" data-lark-is-custom="true">MemoMind One AI Glasses</a></u> introduce a quiet, zero-friction workflow tailored for deep, sustained focus.</div>
+<div class="ace-line ace-line old-record-id-HvwzdXzCHoi5UGxVkHpcXAt7n0b">Instead of relying on constant voice interaction, MemoMind supports<a title="Speak to Memo AI and get your hands-free intelligence" href="https://www.memo-mind.com/blogs/in-the-moment/memomind-ai-hands-free-intelligence" data-lark-is-custom="true"> Proactive AI</a>, allowing relevant information to appear automatically based on conversation context. Users can also navigate key functions with simple gestures, reducing the need to speak aloud in public.</div>
+<div class="ace-line ace-line old-record-id-NINKd5Q44oId2HxeiECczErznUN">Privacy is another priority. Rather than including outward-facing cameras, MemoMind adopts a <a title="How MemoMind One Protects Your Data" href="https://www.memo-mind.com/blogs/buyers-guide/how-memomind-one-protects-your-data" data-lark-is-custom="true">camera-free design</a> that helps users feel more comfortable in professional and social environments while also reducing weight and improving battery efficiency.</div>
+<div class="ace-line ace-line old-record-id-WYyzdWUPZoggidxRxs0cU3EtnLc">Combined with its lightweight frame, private audio mode, and <a title="MemoMind One Smart Glasses Display Resolution, Brightness, FOV &amp; More" href="https://www.memo-mind.com/blogs/tech-hub/memomind-one-display-resolution-brightness" data-lark-is-custom="true">heads-up display</a>, MemoMind focuses on making AI feel like a natural extension of everyday eyewear—not another gadget competing for your attention.</div>
+<div class="ace-line ace-line old-record-id-YvjEdVugFol9jZxdEPbcAtCGnLb">Understanding the hardware architecture (which we detailed above) is key to why <strong>MemoMind One</strong> excels in audio and AI responsiveness compared to other industry players. So, if you are currently evaluating your options between the MemoMind One and other AI glasses brands, you can read some comparison articles between the MemoMind One and <u><a href="https://www.memo-mind.com/blogs/buyers-guide/how-to-choose-ai-glasses-that-fit-you" data-lark-is-custom="true">Even Reality G2</a></u> and <u><a href="https://www.memo-mind.com/blogs/buyers-guide/meta-display-vs-memomind-one" data-lark-is-custom="true">Meta Display</a></u>.</div>
+</div>
+<p> </p>
+<h2 class="heading-2">FAQs</h2>
+<div class="faq-article">
+<details>
+<summary>Are AI glasses better than smartwatches?</summary>
+<div class="faq-answer">Not necessarily. Smartwatches are better for continuous health tracking, while AI glasses excel at providing real-time information based on your surroundings. They serve different purposes and work well together.</div>
+</details>
+<details>
+<summary>Can AI glasses replace smartphones?</summary>
+<div class="faq-answer">Not today. Most AI glasses complement smartphones by making common tasks faster and more hands-free, rather than replacing them entirely.</div>
+</details>
+<details>
+<summary>Why are AI glasses becoming more popular?</summary>
+<div class="faq-answer">Advances in AI, lightweight displays, battery technology, and on-device processing have made AI glasses more practical for everyday use, especially for productivity, travel, communication, and hands-free assistance.</div>
+</details>
+<details>
+<summary>What makes MemoMind different from other AI glasses?</summary>
+<div class="faq-answer">MemoMind focuses on quiet, everyday usability with a camera-free design, proactive AI assistance, lightweight construction, and privacy-first interaction, making it suitable for users who want AI support without drawing attention.</div>
+</details>
+</div>
+<p><!-- FAQ Page JSON-LD 结构化数据 --> <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity":[
+    {
+      "@type": "Question",
+      "name": "Are AI glasses better than smartwatches?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not necessarily. Smartwatches are better for continuous health tracking, while AI glasses excel at providing real-time information based on your surroundings. They serve different purposes and work well together."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can AI glasses replace smartphones?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not today. Most AI glasses complement smartphones by making common tasks faster and more hands-free, rather than replacing them entirely."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why are AI glasses becoming more popular?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Advances in AI, lightweight displays, battery technology, and on-device processing have made AI glasses more practical for everyday use, especially for productivity, travel, communication, and hands-free assistance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What makes MemoMind different from other AI glasses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MemoMind focuses on quiet, everyday usability with a camera-free design, proactive AI assistance, lightweight construction, and privacy-first interaction, making it suitable for users who want AI support without drawing attention."
+      }
+    }
+  ]
+}
+</script></p>
+</div>]]>
+    </content>
+  </entry>
+</feed>

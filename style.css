@@ -1,0 +1,13 @@
+/*
+Theme Name: MemoMind Clone Native
+Theme URI: https://www.memo-mind.com/
+Author: OpenAI conversion for site owner
+Description: Native WordPress compatibility theme generated from the supplied MemoMind mirror. Preserves original DOM/CSS/JS and maps Shopify storefront behavior to WordPress/WooCommerce where possible.
+Version: 1.0.0
+Requires at least: 6.2
+Requires PHP: 8.0
+Text Domain: memomind-clone
+*/
+html{scroll-behavior:smooth}
+.admin-bar body{--mm-adminbar:32px}
+@media(max-width:782px){.admin-bar body{--mm-adminbar:46px}}
