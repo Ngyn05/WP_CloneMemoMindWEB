@@ -3,6 +3,8 @@ if (!defined('ABSPATH')) exit;
 
 define('MM_THEME_VERSION','1.0.0');
 require_once get_template_directory().'/inc/blog-admin.php';
+require_once get_template_directory().'/inc/product-admin.php';
+require_once get_template_directory().'/inc/floating-contact.php';
 
 add_action('after_setup_theme', function(){
   add_theme_support('title-tag');
@@ -10,6 +12,12 @@ add_action('after_setup_theme', function(){
   add_theme_support('html5', ['search-form','gallery','caption','style','script']);
   add_theme_support('woocommerce');
   register_nav_menus(['primary'=>__('Primary Menu','memomind-clone'),'footer'=>__('Footer Menu','memomind-clone')]);
+});
+
+add_action('init', function(){
+  if (get_option('woocommerce_coming_soon') === 'yes') {
+    update_option('woocommerce_coming_soon', 'no');
+  }
 });
 
 function mm_routes(){
@@ -56,6 +64,10 @@ function mm_render_snapshot($file){
   $html=file_get_contents($path);
   if(function_exists('mm_blog_apply_post_to_snapshot')){
     $html=mm_blog_apply_post_to_snapshot($html,$file);
+    if($html===false) return false;
+  }
+  if(function_exists('mm_product_apply_to_snapshot')){
+    $html=mm_product_apply_to_snapshot($html,$file);
     if($html===false) return false;
   }
   $asset=trailingslashit(get_template_directory_uri()).'assets';
@@ -199,28 +211,31 @@ function mm_render_snapshot($file){
   $support_footer=<<<'HTML'
 <footer class="mm-site-footer">
   <div class="mm-site-footer__top">
-    <a class="mm-site-footer__brand" href="__MM_HOME__/" aria-label="MemoMind - Trang chủ">MEMOMIND <span>VN</span></a>
+    <a class="mm-site-footer__brand" href="__MM_HOME__/" aria-label="MemoMind - Trang chủ">MEMOMIND <span><svg viewBox="0 0 30 20" width="22" height="14.6" style="border-radius:2.5px;flex-shrink:0;box-shadow:0 0 2px rgba(0,0,0,0.5);" aria-hidden="true"><rect width="30" height="20" fill="#da251d"/><polygon points="15,3 16.8,8.2 22.3,8.2 17.8,11.5 19.5,16.8 15,13.5 10.5,16.8 12.2,11.5 7.7,8.2 13.2,8.2" fill="#ff0"/></svg>VN</span></a>
     <p>Kính AI thông minh cho cuộc sống hiện đại</p>
   </div>
   <div class="mm-site-footer__divider"></div>
   <h2>HỖ TRỢ KHÁCH HÀNG</h2>
   <div class="mm-site-footer__grid">
     <article class="mm-site-footer__card">
-      <div class="mm-site-footer__card-head"><span class="mm-site-footer__icon" aria-hidden="true">⌂</span><span class="mm-site-footer__badge">MIỀN BẮC</span></div>
+      <div class="mm-site-footer__card-head"><span class="mm-site-footer__icon" aria-hidden="true">🏛️</span><span class="mm-site-footer__badge">MIỀN BẮC</span></div>
       <h3>HỖ TRỢ KHÁCH HÀNG MIỀN BẮC</h3>
       <p class="mm-site-footer__address"><span aria-hidden="true">⌖</span> 226 Đường Láng, Phường Thịnh Quang, Quận Đống Đa, Hà Nội</p>
       <a class="mm-site-footer__phone" href="tel:02473053268"><span aria-hidden="true">☎</span> 024.7305.3268</a>
     </article>
     <article class="mm-site-footer__card">
-      <div class="mm-site-footer__card-head"><span class="mm-site-footer__icon" aria-hidden="true">▦</span><span class="mm-site-footer__badge">MIỀN NAM</span></div>
+      <div class="mm-site-footer__card-head"><span class="mm-site-footer__icon" aria-hidden="true">🏢</span><span class="mm-site-footer__badge">MIỀN NAM</span></div>
       <h3>HỖ TRỢ KHÁCH HÀNG MIỀN NAM</h3>
       <p class="mm-site-footer__address"><span aria-hidden="true">⌖</span> 137 Hòa Hưng, Phường Hòa Hưng, TP. Hồ Chí Minh</p>
       <a class="mm-site-footer__phone" href="tel:02873053268"><span aria-hidden="true">☎</span> 028.7305.3268</a>
     </article>
     <article class="mm-site-footer__card mm-site-footer__card--primary">
-      <div class="mm-site-footer__card-head"><span class="mm-site-footer__icon" aria-hidden="true">♬</span><span class="mm-site-footer__badge">TƯ VẤN 24/7</span></div>
-      <h3>HỖ TRỢ TRỰC TUYẾN</h3>
-      <a class="mm-site-footer__contact" href="mailto:contact@memomind.vn">contact@memomind.vn</a>
+      <div class="mm-site-footer__card-head"><span class="mm-site-footer__icon" aria-hidden="true">☎</span><span class="mm-site-footer__badge">HOTLINE TỔNG ĐÀI</span></div>
+      <h3>TƯ VẤN & HỖ TRỢ TOÀN QUỐC</h3>
+      <a class="mm-site-footer__contact" href="tel:1900638400">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>1900.63.8400</span>
+      </a>
       <p>Hỗ trợ và tư vấn khách hàng mọi lúc, mọi nơi.</p>
     </article>
   </div>
@@ -231,7 +246,45 @@ function mm_render_snapshot($file){
   </nav>
 </footer>
 <style id="mm-site-footer-style">
-.memomind-footer__subscribe,.memomind-footer__panel:has(.memomind-footer__panel-subscribe){display:none!important}.memomind-footer__desktop-grid{grid-template-columns:1fr 1fr 1fr 1.4fr!important}.memomind-footer__contact{grid-column:auto!important}.mm-site-footer{box-sizing:border-box;background:#222;color:#fff;padding:30px clamp(22px,4vw,64px) 12px;font-family:Manrope,Arial,sans-serif}.mm-site-footer *{box-sizing:border-box}.mm-site-footer__top{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:64px}.mm-site-footer__brand{color:#fff;text-decoration:none;font-size:31px;font-weight:600;letter-spacing:5px}.mm-site-footer__brand span{display:inline-block;margin-left:8px;padding:5px 10px;border:1px solid #666;border-radius:8px;background:#303030;color:#ddd;font-size:17px;letter-spacing:1px;vertical-align:4px}.mm-site-footer__top p{margin:0;color:#aaa;font-size:17px}.mm-site-footer__divider{height:1px;background:#3d3d3d;margin:0 0 52px}.mm-site-footer h2{margin:0 0 42px;font-size:24px}.mm-site-footer__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}.mm-site-footer__card{min-height:305px;padding:30px;border:1px solid #484848;border-radius:17px;background:#292929}.mm-site-footer__card--primary{border-color:#5a5a5a;background:#2c2c2c}.mm-site-footer__card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.mm-site-footer__icon{display:grid;place-items:center;width:54px;height:54px;border:1px solid #666;border-radius:13px;background:#333;color:#eee;font-size:23px}.mm-site-footer__badge{padding:7px 13px;border:1px solid #606060;border-radius:999px;background:#333;color:#ddd;font-size:13px;font-weight:700}.mm-site-footer__card h3{margin:0 0 14px;font-size:20px}.mm-site-footer__card p{min-height:52px;margin:0;color:#bbb;font-size:15px;line-height:1.65}.mm-site-footer__address{display:flex;gap:10px}.mm-site-footer__address span{flex:0 0 auto;color:#ddd;font-size:18px}.mm-site-footer__phone{display:block;margin-top:21px;padding-top:20px;border-top:1px solid #444;color:#fff;text-decoration:none;font-size:21px;font-weight:700}.mm-site-footer__phone span{margin-right:9px;color:#aaa}.mm-site-footer__contact{display:block;margin:14px 0 28px;padding:17px 18px;border:1px solid #666;border-radius:999px;background:#f5f5f5;color:#171717;text-align:center;text-decoration:none;font-size:18px;font-weight:700}.mm-site-footer__card--primary p{min-height:0;text-align:center}.mm-site-footer__links{display:flex;align-items:center;justify-content:center;gap:32px;padding:28px 0 0}.mm-site-footer__links a{color:#aaa;text-decoration:none;font-size:15px}.mm-site-footer__links a:hover{color:#fff}.mm-site-footer__links span{width:1px;height:18px;background:#4a4a4a}@media(max-width:900px){.mm-site-footer__grid{grid-template-columns:1fr}.mm-site-footer__card{min-height:0}.mm-site-footer__top{align-items:flex-start;flex-direction:column}.mm-site-footer__divider{margin-top:20px;margin-bottom:36px}.mm-site-footer__links{flex-wrap:wrap;gap:14px 20px}}@media(max-width:520px){.mm-site-footer{padding:28px 16px 12px}.mm-site-footer__brand{font-size:24px}.mm-site-footer__top p{font-size:14px}.mm-site-footer h2{font-size:21px;margin-bottom:26px}.mm-site-footer__grid{gap:16px}.mm-site-footer__card{padding:22px}.mm-site-footer__links span{display:none}.mm-site-footer__links{align-items:flex-start;flex-direction:column}}
+.memomind-footer__subscribe,.memomind-footer__panel:has(.memomind-footer__panel-subscribe){display:none!important}.memomind-footer__desktop-grid{grid-template-columns:1fr 1fr 1fr 1.4fr!important}.memomind-footer__contact-panel{grid-column:auto!important}.mm-site-footer{box-sizing:border-box;background:#222;color:#fff;padding:30px clamp(22px,4vw,64px) 12px;font-family:Manrope,Arial,sans-serif}.mm-site-footer *{box-sizing:border-box}.mm-site-footer__top{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:64px}.mm-site-footer__brand{display:inline-flex;align-items:center;color:#fff;text-decoration:none;font-size:31px;font-weight:600;letter-spacing:5px}.mm-site-footer__brand span{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:4px 10px;border:1px solid #555;border-radius:8px;background:#2e2e2e;color:#eee;font-size:15px;font-weight:700;letter-spacing:1px;vertical-align:middle}.mm-site-footer__top p{margin:0;color:#aaa;font-size:17px}.mm-site-footer__divider{height:1px;background:#3d3d3d;margin:0 0 52px}.mm-site-footer h2{margin:0 0 42px;font-size:24px}.mm-site-footer__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}.mm-site-footer__card{min-height:305px;padding:30px;border:1px solid #484848;border-radius:17px;background:#292929}.mm-site-footer__card--primary{border-color:#5a5a5a;background:#2c2c2c}.mm-site-footer__card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.mm-site-footer__icon{display:grid;place-items:center;width:54px;height:54px;border:1px solid #666;border-radius:13px;background:#333;color:#eee;font-size:23px}.mm-site-footer__badge{padding:7px 13px;border:1px solid #606060;border-radius:999px;background:#333;color:#ddd;font-size:13px;font-weight:700}.mm-site-footer__card h3{margin:0 0 14px;font-size:20px}.mm-site-footer__card p{min-height:52px;margin:0;color:#bbb;font-size:15px;line-height:1.65}.mm-site-footer__address{display:flex;gap:10px}.mm-site-footer__address span{flex:0 0 auto;color:#ddd;font-size:18px}.mm-site-footer__phone{display:block;margin-top:21px;padding-top:20px;border-top:1px solid #444;color:#fff;text-decoration:none;font-size:21px;font-weight:700}.mm-site-footer__phone span{margin-right:9px;color:#aaa}.mm-site-footer__contact{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0 28px;padding:15px 22px;border-radius:999px;background:linear-gradient(135deg,#1b6ef3 0%,#0852d4 100%);color:#ffffff;text-align:center;text-decoration:none;font-size:19px;font-weight:800;letter-spacing:.5px;box-shadow:0 6px 20px rgba(27,110,243,.35);transition:transform .2s,box-shadow .2s;border:none}.mm-site-footer__contact:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(27,110,243,.5);color:#ffffff}.mm-site-footer__card--primary p{min-height:0;text-align:center}.mm-site-footer__links{display:flex;align-items:center;justify-content:center;gap:32px;padding:28px 0 0}.mm-site-footer__links a{color:#aaa;text-decoration:none;font-size:15px}.mm-site-footer__links a:hover{color:#fff}.mm-site-footer__links span{width:1px;height:18px;background:#4a4a4a}@media(max-width:900px){.mm-site-footer__grid{grid-template-columns:1fr}.mm-site-footer__card{min-height:0}.mm-site-footer__top{align-items:flex-start;flex-direction:column}.mm-site-footer__divider{margin-top:20px;margin-bottom:36px}.mm-site-footer__links{flex-wrap:wrap;gap:14px 20px}}@media(max-width:520px){.mm-site-footer{padding:28px 16px 12px}.mm-site-footer__brand{font-size:24px}.mm-site-footer__top p{font-size:14px}.mm-site-footer h2{font-size:21px;margin-bottom:26px}.mm-site-footer__grid{gap:16px}.mm-site-footer__card{padding:22px}.mm-site-footer__links span{display:none}.mm-site-footer__links{align-items:flex-start;flex-direction:column}}
+</style>
+<style id="mm-global-hide-prices">
+/* Global hide all prices across the website */
+.mrn__price,
+.mrn__price-main,
+.mrn__price-original,
+.mrn__saving,
+.mrn__saving-value,
+.home-purchase-showcase__price,
+.home-purchase-showcase__price-box,
+.home-purchase-showcase__current-price,
+.home-purchase-showcase__compare-price,
+.home-purchase-showcase__price-label,
+.home-purchase-showcase__price-value,
+.glass-deposit-sale__price,
+.glass-deposit-sale__compare-price,
+.memomind-article__product-price-row,
+.memomind-article__product-price,
+.memomind-article__product-compare-price,
+.pre-glass-sku-product .pre-glass-sku-product__price-row,
+.pre-glass-sku-product .pre-glass-sku-product-switch-card__pricing,
+.pre-glass-sku-product .pre-glass-sku-product-switch-card__line,
+.pre-glass-sku-product .pre-glass-sku-variant-option__price,
+.pre-glass-sku-product .pre-glass-sku-option-card__lens-price,
+.pre-glass-sku-product [id*="total-price"],
+.price,
+.amount,
+.woocommerce-Price-amount,
+.woocommerce-Price-currencySymbol,
+[data-base-price-cents],
+.woocommerce-site-visibility-badge,
+.woocommerce-store-coming-soon-notice,
+#woocommerce-site-visibility-badge,
+.components-notice-banner,
+.site-visibility-badge,
+.woocommerce-site-visibility-notice{
+  display:none!important
+}
 </style>
 HTML;
   $support_footer=str_replace('__MM_HOME__',esc_url(home_url()),$support_footer);
@@ -243,9 +296,10 @@ HTML;
   // Normalize the two Shopify-only destinations that appear throughout the
   // snapshots. This also works when WordPress is installed in a subdirectory.
   $html=preg_replace('#href=(["\'])(?:\./|\.\./)*index\.htm\1#i','href=$1'.esc_url(home_url('/')).'$1',$html);
-  // Shopping bag now acts as a product-catalog shortcut; cart UI is disabled.
-  $html=preg_replace('#href=(["\'])/cart/?\1#i','href=$1'.esc_url(home_url('/collections/all/')).'$1',$html);
-  $html=preg_replace('/\s+aria-controls=(["\'])cart-drawer\1/i','',$html);
+  // Replace stray header cart link/dot with clean Vietnam flag icon
+  $vn_flag='<li class="header__vn-flag-item" style="display:inline-flex;align-items:center;margin-left:10px;"><svg viewBox="0 0 30 20" width="24" height="16" style="border-radius:3px;flex-shrink:0;display:block;box-shadow:0 1px 3px rgba(0,0,0,0.25);" aria-label="Việt Nam"><rect width="30" height="20" fill="#da251d"/><polygon points="15,3 16.8,8.2 22.3,8.2 17.8,11.5 19.5,16.8 15,13.5 10.5,16.8 12.2,11.5 7.7,8.2 13.2,8.2" fill="#ff0"/></svg></li>';
+  $html=preg_replace('#<li\b[^>]*class=["\'][^"\']*header__cart-link[^"\']*["\'][^>]*>.*?</li>#is', $vn_flag, $html);
+  $html=preg_replace('#<section\b[^>]*class=(["\'])[^"\']*shopify-section--cart-drawer[^"\']*\1[^>]*>.*?</section>#is','',$html);
   // Public pages use clean root-level slugs instead of Shopify's /pages/ prefix.
   $html=preg_replace_callback(
     '#href=(["\'])/pages/([^"\']+)/?\1#i',
@@ -256,6 +310,13 @@ HTML;
   $html=preg_replace('#href=(["\'])https?://support\.memo-mind\.com/hc/en-gb/?\1#i','href=$1'.esc_url(home_url('/support/')).'$1',$html);
   // WordPress search query should populate the cloned search input.
   if (isset($_GET['s'])) $html=str_replace('name="s"', 'name="s" value="'.esc_attr(wp_unslash($_GET['s'])).'"', $html);
+  // Strip any Coming soon mode notice banner
+  $html = preg_replace('#<div\b[^>]*class=["\'][^"\']*(?:woocommerce-site-visibility|store-coming-soon|site-visibility)[^"\']*["\'][^>]*>.*?</div>#is', '', $html);
+  // Inject floating contact widget & office modal
+  if (function_exists('mm_get_floating_contact_markup')) {
+    $floating_widget = mm_get_floating_contact_markup();
+    $html = preg_replace('#</body>#i', $floating_widget . '</body>', $html, 1);
+  }
   nocache_headers();
   echo $html;
   return true;
@@ -332,6 +393,11 @@ add_action('template_redirect', function(){
     wp_safe_redirect(home_url('/collections/all/'),301);
     exit;
   }
+  // Checkout is handled directly through the AJAX consultation popup.
+  if($route==='/checkout/') {
+    wp_safe_redirect(home_url('/collections/all/'),302);
+    exit;
+  }
   // Redirect legacy Shopify page URLs to clean WordPress-style root slugs.
   if (str_starts_with($route,'/pages/')) {
     $clean_route='/'.trim(substr($route,strlen('/pages/')),'/').'/';
@@ -345,11 +411,12 @@ add_action('template_redirect', function(){
     exit;
   }
   $routes=mm_routes();
+  if(function_exists('mm_product_render_dynamic_route') && mm_product_render_dynamic_route($route)) exit;
   if(function_exists('mm_blog_render_dynamic_route') && mm_blog_render_dynamic_route($route)) exit;
   if(str_starts_with($route,'/support/')) { mm_render_snapshot('@support'); exit; }
   $legacy_page_route='/pages/'.trim($route,'/').'/';
   if($route!=='/' && isset($routes[$legacy_page_route])) { mm_render_snapshot($routes[$legacy_page_route]); exit; }
-  // WooCommerce native endpoints win only for checkout/account. The supplied cloned cart page remains the visual shell.
+  // Keep WooCommerce account and order confirmation endpoints functional.
   if (preg_match('#^/(checkout|my-account)(/|$)#',$route) && class_exists('WooCommerce')) return;
   if (isset($routes[$route]) && mm_render_snapshot($routes[$route])) exit;
   // tolerate missing trailing or captured .html links
@@ -389,17 +456,20 @@ add_action('admin_post_nopriv_mm_newsletter','mm_handle_newsletter');
 add_action('admin_post_mm_newsletter','mm_handle_newsletter');
 
 // Shopify-compatible cart API bridge used by the original product JS.
-add_action('init', function(){
+add_action('wp_loaded', function(){
   $path=parse_url($_SERVER['REQUEST_URI'] ?? '',PHP_URL_PATH);
   if(!in_array($path,['/cart/add.js','/cart.js','/cart/update.js','/cart/change.js','/cart/clear.js'],true)) return;
   if(!class_exists('WooCommerce')) { status_header(501); wp_send_json(['status'=>501,'description'=>'WooCommerce is required for cart actions']); }
   if(function_exists('wc_load_cart')) wc_load_cart();
   if($path==='/cart/add.js'){
     $id=absint($_POST['id'] ?? 0); $qty=max(1,absint($_POST['quantity'] ?? 1));
-    $map=get_option('mm_shopify_variant_map',[]); $pid=isset($map[$id])?absint($map[$id]):0;
-    if(!$pid){ status_header(422); wp_send_json(['status'=>422,'description'=>'Variant is not mapped to a WooCommerce product']); }
-    $key=WC()->cart->add_to_cart($pid,$qty); if(!$key){status_header(422);wp_send_json(['status'=>422,'description'=>'Unable to add item']);}
-    $p=wc_get_product($pid); wp_send_json(['id'=>$id,'quantity'=>$qty,'title'=>$p?$p->get_name():'MemoMind One','key'=>$key]);
+    $map=get_option('mm_shopify_variant_map',[]); $mapped_id=isset($map[$id])?absint($map[$id]):0;
+    if(!$mapped_id){ status_header(422); wp_send_json(['status'=>422,'description'=>'Variant is not mapped to a WooCommerce product']); }
+    $mapped=wc_get_product($mapped_id); $pid=$mapped && $mapped->is_type('variation') ? $mapped->get_parent_id() : $mapped_id;
+    $variation_id=$mapped && $mapped->is_type('variation') ? $mapped_id : 0;
+    $attributes=$variation_id ? $mapped->get_variation_attributes() : [];
+    $key=WC()->cart->add_to_cart($pid,$qty,$variation_id,$attributes); if(!$key){status_header(422);wp_send_json(['status'=>422,'description'=>'Unable to add item']);}
+    wp_send_json(['id'=>$id,'quantity'=>$qty,'title'=>$mapped?$mapped->get_name():'MemoMind One','key'=>$key]);
   }
   if($path==='/cart/clear.js'){ WC()->cart->empty_cart(); wp_send_json(mm_cart_payload()); }
   if($path==='/cart.js'){ wp_send_json(mm_cart_payload()); }
@@ -412,7 +482,7 @@ add_action('init', function(){
     $updates=$_POST['updates'] ?? []; if(is_array($updates)){ foreach($updates as $k=>$q){ WC()->cart->set_quantity(sanitize_text_field($k),max(0,absint($q)),false); } WC()->cart->calculate_totals(); }
     wp_send_json(mm_cart_payload());
   }
-}, -1);
+}, 20);
 
 function mm_cart_payload(){
   $items=[]; foreach(WC()->cart->get_cart() as $key=>$ci){ $p=$ci['data']; $items[]=['key'=>$key,'quantity'=>$ci['quantity'],'title'=>$p->get_name(),'price'=>(int)round((float)$p->get_price()*100),'url'=>get_permalink($p->get_id())]; }

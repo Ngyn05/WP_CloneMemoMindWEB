@@ -22,8 +22,11 @@ function mm_blog_snapshot_data($route,$view){
     $content=preg_replace('#<(style|script|template)\b[^>]*>.*?</\1>#is','',$m[1]);
     $data['content']=str_replace('__MM_ASSET__',trailingslashit(get_template_directory_uri()).'assets',trim($content));
   }
-  if(preg_match('#<meta\b[^>]*name=["\']description["\'][^>]*content=["\'](.*?)["\']#is',$raw,$m) || preg_match('#<meta\b[^>]*content=["\'](.*?)["\'][^>]*name=["\']description["\']#is',$raw,$m))
-    $data['excerpt']=html_entity_decode($m[1],ENT_QUOTES|ENT_HTML5,'UTF-8');
+  $meta_dom=new DOMDocument();
+  libxml_use_internal_errors(true); $meta_dom->loadHTML('<?xml encoding="utf-8" ?>'.$raw); libxml_clear_errors();
+  $meta_xpath=new DOMXPath($meta_dom);
+  $description_nodes=$meta_xpath->query('//meta[translate(@name,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz")="description"]/@content');
+  if($description_nodes->length) $data['excerpt']=trim($description_nodes->item(0)->nodeValue);
   if(preg_match('#<img\b[^>]*class=["\'][^"\']*memomind-article__cover[^"\']*["\'][^>]*src=["\']([^"\']+)["\']#is',$raw,$m) || preg_match('#<img\b[^>]*src=["\']([^"\']+)["\'][^>]*class=["\'][^"\']*memomind-article__cover#is',$raw,$m))
     $data['cover']=$m[1];
   if(preg_match('/"datePublished"\s*:\s*"([^"]+)"/i',$raw,$m)) $data['date']=$m[1];
@@ -164,8 +167,8 @@ function mm_blog_apply_index_posts($html){
     $terms=get_the_category($post->ID);
     $category=$terms ? $terms[0]->name : 'Tin tức';
     $image=get_the_post_thumbnail_url($post->ID,'large');
-    $excerpt=get_the_excerpt($post);
-    if(!$excerpt) $excerpt=wp_trim_words(wp_strip_all_tags($post->post_content),28,'…');
+    $excerpt=trim((string)$post->post_excerpt);
+    if(!$excerpt || preg_match('/width\s*=\s*device-width|<meta|maximum-scale|<title/i',$excerpt)) $excerpt=wp_trim_words(wp_strip_all_tags($post->post_content),28,'…');
     $hidden=$index>=8 ? ' hidden=""' : '';
     $cards.='<a class="memomind-blog-index__post-card" data-memomind-blog-post="" data-published="'.esc_attr(get_post_timestamp($post)).'"'.$hidden.' href="'.esc_url($route).'">';
     if($image) $cards.='<div class="memomind-blog-index__post-media"><img alt="'.esc_attr(get_the_title($post)).'" loading="lazy" src="'.esc_url($image).'" /></div>';
@@ -200,6 +203,19 @@ add_action('save_post_post','mm_blog_bind_post',20,2);
 add_action('set_object_terms',function($object_id,$terms,$tt_ids,$taxonomy){
   if($taxonomy==='category' && get_post_type($object_id)==='post') mm_blog_bind_post($object_id);
 },20,4);
+
+add_action('wp_loaded',function(){
+  if((int)get_option('mm_blog_excerpt_cleanup_version',0)>=1) return;
+  $ids=get_posts(['post_type'=>'post','post_status'=>'any','posts_per_page'=>-1,'fields'=>'ids','meta_key'=>'_mm_blog_route']);
+  foreach($ids as $id){
+    $excerpt=(string)get_post_field('post_excerpt',$id);
+    if($excerpt==='' || preg_match('/width\s*=\s*device-width|<meta|maximum-scale|<title/i',$excerpt)){
+      $clean=wp_trim_words(wp_strip_all_tags((string)get_post_field('post_content',$id)),35,'…');
+      wp_update_post(['ID'=>$id,'post_excerpt'=>$clean]);
+    }
+  }
+  update_option('mm_blog_excerpt_cleanup_version',1,false);
+},40);
 
 function mm_blog_render_dynamic_route($route){
   if(!mm_blog_route_parts($route)) return false;
