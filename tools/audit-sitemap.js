@@ -22,6 +22,7 @@ function get(url, redirects = 0) {
 }
 
 const locations = (xml) => [...xml.matchAll(/<loc>(.*?)<\/loc>/gi)].map((match) => match[1].trim().replaceAll('&amp;', '&'));
+const pageLocations = (xml) => [...xml.matchAll(/<url>\s*<loc>(.*?)<\/loc>[\s\S]*?<\/url>/gi)].map((match) => match[1].trim().replaceAll('&amp;', '&'));
 const attr = (tag, name) => tag.match(new RegExp(`\\b${name}=["']([^"']*)["']`, 'i'))?.[1] || '';
 
 (async () => {
@@ -33,7 +34,9 @@ const attr = (tag, name) => tag.match(new RegExp(`\\b${name}=["']([^"']*)["']`, 
   for (const child of children) {
     const response = await get(child);
     if (response.status !== 200) { failures.push([child, 'SITEMAP_HTTP', response.status]); continue; }
-    urls.push(...locations(response.body));
+    // Only audit page-level <url><loc>. Image <loc> elements are assets, not
+    // canonical sitemap entries, and previously inflated counts/timeouts.
+    urls.push(...pageLocations(response.body));
   }
   for (const url of [...new Set(urls)]) {
     const response = await get(url);

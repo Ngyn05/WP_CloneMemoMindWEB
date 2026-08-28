@@ -20,12 +20,11 @@ add_action('init', function(){
   }
 });
 
-// Production-safe crawl rules. WordPress appends the active sitemap URL, so
-// this remains correct when the site is moved from Local to its public host.
+// Production-safe crawl rules. Use Yoast's sitemap index as the single source.
 add_filter('robots_txt',function($output,$public){
   if(!$public) return "User-agent: *\nDisallow: /\n";
-  return "User-agent: *\nAllow: /\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\nDisallow: /cart/\nDisallow: /checkout/\nDisallow: /my-account/\nDisallow: /search/\n\nUser-agent: OAI-SearchBot\nAllow: /\nDisallow: /cart/\nDisallow: /checkout/\nDisallow: /my-account/\nDisallow: /search/\n\nUser-agent: GPTBot\nDisallow: /\n\nSitemap: ".home_url('/wp-sitemap.xml')."\n";
-},20,2);
+  return "User-agent: *\nAllow: /\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\nDisallow: /cart/\nDisallow: /checkout/\nDisallow: /my-account/\nDisallow: /search/\n\nUser-agent: OAI-SearchBot\nAllow: /\nDisallow: /cart/\nDisallow: /checkout/\nDisallow: /my-account/\nDisallow: /search/\n\nUser-agent: GPTBot\nDisallow: /\n\nSitemap: ".home_url('/sitemap_index.xml')."\n";
+},PHP_INT_MAX,2);
 
 add_filter('wp_robots',function($robots){
   $private_route=is_search()
@@ -61,12 +60,19 @@ remove_action('wp_head','wp_generator');
 // Keep them out of Yoast sitemaps because they redirect or intentionally carry
 // noindex, and sitemap entries must be canonical indexable URLs only.
 add_filter('wpseo_exclude_from_sitemap_by_post_ids',function($ids){
-  foreach(['cart','checkout','my-account'] as $slug){
+  foreach(['shop','cart','checkout','my-account','policies','data-sharing-opt-out'] as $slug){
     $page=get_page_by_path($slug,OBJECT,'page');
     if($page instanceof WP_Post) $ids[]=(int)$page->ID;
   }
   return array_values(array_unique(array_map('intval',$ids)));
 });
+
+// This is a single-author storefront and currently has no meaningful product
+// taxonomy landing pages. Keep thin admin/uncategorized archives out of Yoast.
+add_filter('wpseo_sitemap_exclude_author',static fn($users)=>[]);
+add_filter('wpseo_sitemap_exclude_taxonomy',static function($excluded,$taxonomy){
+  return $taxonomy==='product_cat' ? true : $excluded;
+},10,2);
 
 function mm_routes(){
   static $routes=null;
@@ -128,14 +134,84 @@ function mm_snapshot_description($html,$file){
   return 'Thông tin sản phẩm, hướng dẫn và hỗ trợ khách hàng MemoMind tại Việt Nam.';
 }
 
+function mm_seo_trim_title($title,$limit=42){
+  $title=trim(wp_strip_all_tags((string)$title));
+  if(mb_strlen($title)<= $limit) return $title;
+  if(str_contains($title,':')){
+    $lead=trim(strstr($title,':',true));
+    if(mb_strlen($lead)>=18 && mb_strlen($lead)<=52) $title=$lead;
+  }
+  $question=mb_strpos($title,'?');
+  if($question!==false && $question<52) $title=mb_substr($title,0,$question+1);
+  if(mb_strlen($title)<= $limit) return $title;
+  $cut=mb_substr($title,0,$limit+1);
+  $space=mb_strrpos($cut,' ');
+  return rtrim($space!==false ? mb_substr($cut,0,$space) : mb_substr($cut,0,$limit),' ,;:|-');
+}
+
+function mm_seo_trim_description($description,$limit=160){
+  $description=trim(preg_replace('/\s+/u',' ',wp_strip_all_tags((string)$description)));
+  if(mb_strlen($description)<= $limit) return $description;
+  $cut=mb_substr($description,0,$limit+1);
+  $space=mb_strrpos($cut,' ');
+  return rtrim($space!==false ? mb_substr($cut,0,$space) : mb_substr($cut,0,$limit),' ,;:|-').'.';
+}
+
+function mm_seo_title_for_route($route,$base_title=''){
+  if($route==='/') return 'MemoMind Việt Nam | Kính AI thông minh không camera';
+  $base=trim(wp_strip_all_tags((string)$base_title));
+  $special=[
+    '/about-us/'=>'Giới thiệu thương hiệu kính AI',
+    '/contact/'=>'Liên hệ và hỗ trợ khách hàng',
+    '/faqs/'=>'Câu hỏi thường gặp về kính AI',
+    '/memomind-blog/'=>'Blog kính AI và công nghệ',
+    '/products/memomind-one-standard/'=>'Kính AI MemoMind One Tiêu chuẩn',
+    '/products/memomind-one-custom/'=>'Kính AI MemoMind One Tùy chỉnh',
+    '/collections/all/'=>'Các mẫu kính AI MemoMind One',
+    '/support/'=>'Trung tâm hỗ trợ khách hàng',
+    '/policies/privacy-policy/'=>'Chính sách bảo mật',
+    '/policies/terms-of-service/'=>'Điều khoản dịch vụ',
+    '/blogs/tech-hub/memomind-one-sound-leakage-test/'=>'MemoMind One có bị rò âm không?',
+    '/blogs/tech-hub/memomind-one-display-resolution-brightness/'=>'Màn hình MemoMind One: Độ sáng và FOV',
+    '/blogs/tech-hub/memomind-one-battery-test/'=>'Pin MemoMind One: Thời lượng và sạc',
+    '/blogs/tech-hub/how-do-memomind-smart-audio-glasses-hear-you-clearly/'=>'Âm thanh open-ear trên MemoMind One',
+    '/blogs/tech-hub/how-do-ai-glasses-work/'=>'Kính AI hoạt động như thế nào?',
+    '/blogs/tech-hub/how-and-why-ai-glasses-differ-from-other-ai-wearables/'=>'Kính AI khác thiết bị AI đeo thế nào?',
+  ];
+  $base=$special[$route] ?? $base;
+  if($base==='') $base='Thông tin MemoMind';
+  return mm_seo_trim_title($base).' | MemoMind Việt Nam';
+}
+
 function mm_enhance_snapshot_seo($html,$file){
   $route=mm_current_route();
   $canonical=home_url($route);
   $site=untrailingslashit(home_url('/'));
   $asset=trailingslashit(get_template_directory_uri()).'assets';
-  $description=str_starts_with($route,'/support/')
-    ? 'Thông tin hỗ trợ, bảo hành, vận chuyển, thanh toán và giải đáp về sản phẩm MemoMind One tại Việt Nam.'
-    : mm_snapshot_description($html,$file);
+  $route_descriptions=[
+    '/'=>'Khám phá kính AI MemoMind One không camera với màn hình hai mắt, âm thanh open-ear và trợ lý AI. Tư vấn sản phẩm và hỗ trợ khách hàng tại Việt Nam.',
+    '/about-us/'=>'Tìm hiểu về MemoMind Việt Nam, định hướng phát triển kính AI không camera và trải nghiệm công nghệ tự nhiên, riêng tư cho người dùng hằng ngày.',
+    '/contact/'=>'Liên hệ MemoMind Việt Nam để được tư vấn kính AI MemoMind One, hỗ trợ sản phẩm, đơn hàng, bảo hành và các nhu cầu hợp tác.',
+    '/faqs/'=>'Giải đáp câu hỏi thường gặp về kính AI MemoMind One, tính năng, gọng kính, tròng kính có độ, đặt hàng, giao hàng và chính sách hỗ trợ.',
+    '/memomind-blog/'=>'Kiến thức, hướng dẫn, đánh giá và tin tức về kính AI MemoMind One, công nghệ hiển thị, âm thanh, pin và trải nghiệm sử dụng thực tế.',
+    '/products/memomind-one-standard/'=>'Tìm hiểu kính AI MemoMind One Tiêu chuẩn: thiết kế không camera, màn hình hai mắt, âm thanh open-ear và tùy chọn tròng kính phù hợp nhu cầu.',
+    '/products/memomind-one-custom/'=>'Khám phá kính AI MemoMind One Tùy chỉnh với nhiều lựa chọn gọng và màu sắc, màn hình hai mắt, âm thanh open-ear cùng thiết kế không camera.',
+    '/policies/privacy-policy/'=>'Chính sách bảo mật MemoMind Việt Nam: cách thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của khách hàng khi dùng website và dịch vụ.',
+    '/policies/terms-of-service/'=>'Điều khoản sử dụng website, sản phẩm và dịch vụ MemoMind dành cho khách hàng tại Việt Nam, bao gồm quyền, trách nhiệm và giới hạn áp dụng.',
+  ];
+  $description=$route_descriptions[$route]
+    ?? (str_starts_with($route,'/support/')
+      ? 'Thông tin hỗ trợ, bảo hành, vận chuyển, thanh toán và giải đáp về sản phẩm MemoMind One tại Việt Nam.'
+      : mm_snapshot_description($html,$file));
+  $description=mm_seo_trim_description($description);
+  $current_title='';
+  if(preg_match('#<title\b[^>]*>(.*?)</title>#is',$html,$title_match)){
+    $current_title=html_entity_decode(trim(wp_strip_all_tags($title_match[1])),ENT_QUOTES|ENT_HTML5,'UTF-8');
+  }
+  $seo_title=mm_seo_title_for_route($route,$current_title);
+  $html=preg_replace('#<title\b[^>]*>.*?</title>#is','<title>'.esc_html($seo_title).'</title>',$html,1);
+  $html=mm_html_upsert_meta($html,'property','og:title',$seo_title);
+  $html=mm_html_upsert_meta($html,'name','twitter:title',$seo_title);
 
   // This long-form article uses one page-level H1; its four chapter headings
   // were imported as additional H1 elements and must remain H2 semantically.
@@ -625,12 +701,16 @@ add_action('template_redirect', function(){
     wp_safe_redirect(home_url('/collections/all/'),301);
     exit;
   }
+  if($route==='/shop/') {
+    wp_safe_redirect(home_url('/collections/all/'),301);
+    exit;
+  }
   // Checkout is handled directly through the AJAX consultation popup.
   if($route==='/checkout/') {
     wp_safe_redirect(home_url('/collections/all/'),302);
     exit;
   }
-  if($route==='/data-sharing-opt-out/' || $route==='/pages/data-sharing-opt-out/'){
+  if($route==='/policies/' || $route==='/data-sharing-opt-out/' || $route==='/pages/data-sharing-opt-out/'){
     wp_safe_redirect(home_url('/policies/privacy-policy/'),301);
     exit;
   }
@@ -734,16 +814,144 @@ function mm_import_screen(){
 }
 function mm_run_import(){
   $routes=mm_routes(); $created=0;
+  foreach([
+    'shop'=>'Cửa hàng','cart'=>'Giỏ hàng','checkout'=>'Thanh toán','my-account'=>'Tài khoản',
+  ] as $slug=>$title){
+    $utility=get_page_by_path($slug,OBJECT,'page');
+    if($utility instanceof WP_Post && $utility->post_title!==$title){
+      wp_update_post(['ID'=>$utility->ID,'post_title'=>$title]);
+    }
+  }
+  $page_titles=[
+    'about-us'=>'Giới thiệu MemoMind',
+    'ces-2026'=>'MemoMind tại CES 2026',
+    'community'=>'Cộng đồng MemoMind',
+    'contact'=>'Liên hệ MemoMind',
+    'cookie-policy'=>'Chính sách cookie',
+    'data-sharing-opt-out'=>'Quyền riêng tư dữ liệu',
+    'faqs'=>'Câu hỏi thường gặp',
+    'memomind-blog'=>'Blog MemoMind',
+    'memomind-one'=>'Kính AI MemoMind One',
+    'mwc-2026'=>'MemoMind tại MWC 2026',
+  ];
   foreach($routes as $route=>$view){
     if($route==='/' || str_starts_with($route,'/fr/') || $route==='/fr/' || str_starts_with($route,'/products/') || str_starts_with($route,'/blogs/') || str_starts_with($route,'/collections/') || str_starts_with($route,'/policies/') || in_array($route,['/cart/','/search/'],true)) continue;
     if(!str_starts_with($route,'/pages/')) continue;
     $slug=trim(substr($route,7),'/'); if(!$slug) continue;
-    if(!get_page_by_path($slug)) { wp_insert_post(['post_type'=>'page','post_status'=>'publish','post_title'=>ucwords(str_replace('-',' ',$slug)),'post_name'=>$slug]); $created++; }
+    if($slug==='data-sharing-opt-out') continue;
+    $title=$page_titles[$slug] ?? ucwords(str_replace('-',' ',$slug));
+    $existing=get_page_by_path($slug,OBJECT,'page');
+    if(!$existing) {
+      wp_insert_post(['post_type'=>'page','post_status'=>'publish','post_title'=>$title,'post_name'=>$slug]);
+      $created++;
+    } elseif($existing->post_title!==$title) {
+      wp_update_post(['ID'=>$existing->ID,'post_title'=>$title]);
+    }
+  }
+  // Routes rendered directly by the theme still need native Page records so
+  // they are visible in wp-admin and can participate correctly in sitemaps.
+  $ensure_page=static function($slug,$title,$parent=0) use (&$created){
+    $path=$parent ? get_post_field('post_name',$parent).'/'.$slug : $slug;
+    $existing=get_page_by_path($path,OBJECT,'page');
+    if($existing instanceof WP_Post) return (int)$existing->ID;
+    $id=wp_insert_post([
+      'post_type'=>'page','post_status'=>'publish','post_title'=>$title,
+      'post_name'=>$slug,'post_parent'=>(int)$parent,
+    ]);
+    if(!is_wp_error($id) && $id){ $created++; return (int)$id; }
+    return 0;
+  };
+  $home_id=$ensure_page('trang-chu','Trang chủ');
+  if($home_id){
+    update_option('show_on_front','page');
+    update_option('page_on_front',$home_id);
+  }
+  $policies_id=$ensure_page('policies','Chính sách');
+  if($policies_id){
+    $ensure_page('privacy-policy','Chính sách bảo mật',$policies_id);
+    $ensure_page('terms-of-service','Điều khoản dịch vụ',$policies_id);
+  }
+  $support_id=$ensure_page('support','Trung tâm hỗ trợ');
+  if($support_id){
+    foreach([
+      'cac-kieu-gong-memomind-one'=>'Các kiểu gọng MemoMind One',
+      'gong-phu-hop-nguoi-dau-lon'=>'Chọn gọng cho người có vòng đầu lớn',
+      'chon-mau-gong'=>'Các màu gọng MemoMind One',
+      'theo-doi-don-hang'=>'Theo dõi đơn hàng',
+      'chinh-sach-doi-tra'=>'Chính sách đổi trả',
+      'thanh-toan-khong-thanh-cong'=>'Hỗ trợ thanh toán',
+      'chinh-sach-bao-hanh'=>'Chính sách bảo hành',
+      'van-chuyen-giao-hang'=>'Chính sách vận chuyển và giao hàng',
+      'phuong-thuc-thanh-toan'=>'Phương thức thanh toán',
+    ] as $slug=>$title) $ensure_page($slug,$title,$support_id);
   }
   // Import complete snapshot data into native, editable WordPress posts.
   if(function_exists('mm_import_blog_posts')) $created+=mm_import_blog_posts($routes);
   if(class_exists('WooCommerce')) mm_create_products();
+  mm_sync_yoast_seo_fields();
   flush_rewrite_rules(); return 'Import complete. Created '.$created.' WordPress content records.';
+}
+
+function mm_focus_keyphrase($title,$route=''){
+  $special=[
+    '/'=>'kính AI MemoMind Việt Nam',
+    '/about-us/'=>'giới thiệu MemoMind Việt Nam',
+    '/contact/'=>'liên hệ MemoMind Việt Nam',
+    '/faqs/'=>'câu hỏi về kính AI MemoMind',
+    '/memomind-blog/'=>'blog kính AI',
+    '/products/memomind-one-standard/'=>'kính AI MemoMind One Tiêu chuẩn',
+    '/products/memomind-one-custom/'=>'kính AI MemoMind One Tùy chỉnh',
+    '/policies/privacy-policy/'=>'chính sách bảo mật MemoMind',
+    '/policies/terms-of-service/'=>'điều khoản dịch vụ MemoMind',
+    '/support/'=>'hỗ trợ MemoMind One',
+  ];
+  if(isset($special[$route])) return $special[$route];
+  $clean=preg_replace('/[^\p{L}\p{N}\s+.-]+/u',' ',wp_strip_all_tags((string)$title));
+  $words=preg_split('/\s+/u',trim($clean),-1,PREG_SPLIT_NO_EMPTY);
+  return implode(' ',array_slice($words,0,8));
+}
+
+function mm_seo_description_for_post($post,$route){
+  $fixed=[
+    '/'=>'Khám phá kính AI MemoMind One không camera với màn hình hai mắt, âm thanh open-ear và trợ lý AI. Tư vấn sản phẩm và hỗ trợ khách hàng tại Việt Nam.',
+    '/about-us/'=>'Tìm hiểu về MemoMind Việt Nam, định hướng phát triển kính AI không camera và trải nghiệm công nghệ tự nhiên, riêng tư cho người dùng hằng ngày.',
+    '/contact/'=>'Liên hệ MemoMind Việt Nam để được tư vấn kính AI MemoMind One, hỗ trợ sản phẩm, đơn hàng, bảo hành và các nhu cầu hợp tác.',
+    '/faqs/'=>'Giải đáp câu hỏi thường gặp về kính AI MemoMind One, tính năng, gọng kính, tròng kính có độ, đặt hàng, giao hàng và chính sách hỗ trợ.',
+    '/memomind-blog/'=>'Kiến thức, hướng dẫn, đánh giá và tin tức mới về kính AI MemoMind One, công nghệ hiển thị, âm thanh, pin và trải nghiệm sử dụng thực tế.',
+    '/products/memomind-one-standard/'=>'Tìm hiểu kính AI MemoMind One Tiêu chuẩn: thiết kế không camera, màn hình hai mắt, âm thanh open-ear và tùy chọn tròng kính phù hợp nhu cầu.',
+    '/products/memomind-one-custom/'=>'Khám phá kính AI MemoMind One Tùy chỉnh với nhiều lựa chọn gọng và màu sắc, màn hình hai mắt, âm thanh open-ear cùng thiết kế không camera.',
+    '/policies/privacy-policy/'=>'Chính sách bảo mật MemoMind Việt Nam: cách thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của khách hàng khi dùng website và dịch vụ.',
+    '/policies/terms-of-service/'=>'Điều khoản sử dụng website, sản phẩm và dịch vụ MemoMind dành cho khách hàng tại Việt Nam, bao gồm quyền, trách nhiệm và giới hạn áp dụng.',
+    '/support/'=>'Trung tâm hỗ trợ MemoMind One về sản phẩm, đơn hàng, bảo hành, đổi trả, vận chuyển và thanh toán dành cho khách hàng tại Việt Nam.',
+  ];
+  if(isset($fixed[$route])) return $fixed[$route];
+  $excerpt=trim(wp_strip_all_tags((string)$post->post_excerpt));
+  if($excerpt!=='') return mb_substr($excerpt,0,160);
+  if(str_starts_with($route,'/support/')){
+    return 'Xem '.mb_strtolower($post->post_title).' và hướng dẫn hỗ trợ MemoMind One dành cho khách hàng tại Việt Nam. Liên hệ MemoMind nếu bạn cần tư vấn thêm.';
+  }
+  return 'Thông tin về '.$post->post_title.' từ MemoMind Việt Nam. Khám phá nội dung chi tiết, hướng dẫn liên quan và liên hệ đội ngũ MemoMind khi cần hỗ trợ.';
+}
+
+function mm_sync_yoast_seo_fields(){
+  $posts=get_posts([
+    'post_type'=>['page','post','product'],'post_status'=>'publish','posts_per_page'=>-1,
+  ]);
+  $front_id=(int)get_option('page_on_front');
+  foreach($posts as $post){
+    if($post->ID===$front_id) $route='/';
+    elseif($post->post_type==='post') $route=(string)get_post_meta($post->ID,'_mm_blog_route',true);
+    elseif($post->post_type==='product') $route=(string)get_post_meta($post->ID,'_mm_product_route',true);
+    else $route='/'.trim(get_page_uri($post->ID),'/').'/';
+    if($route==='//') $route='/';
+    $seo_title=mm_seo_title_for_route($route,$post->post_title);
+    $description=mm_seo_trim_description(mm_seo_description_for_post($post,$route));
+    $keyphrase=mm_focus_keyphrase($post->post_title,$route);
+    update_post_meta($post->ID,'_yoast_wpseo_title',$seo_title);
+    update_post_meta($post->ID,'_yoast_wpseo_metadesc',$description);
+    update_post_meta($post->ID,'_yoast_wpseo_focuskw',$keyphrase);
+  }
+  update_option('mm_yoast_seo_last_sync',current_time('mysql'));
 }
 function mm_create_products(){
   $map=get_option('mm_shopify_variant_map',[]); if(!is_array($map))$map=[];
