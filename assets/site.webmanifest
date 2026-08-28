@@ -1,0 +1,21 @@
+{
+  "name": "MemoMind Việt Nam",
+  "short_name": "MemoMind",
+  "description": "Kính AI MemoMind và hỗ trợ khách hàng tại Việt Nam.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ede5da",
+  "theme_color": "#ede5da",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

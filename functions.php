@@ -20,6 +20,54 @@ add_action('init', function(){
   }
 });
 
+// Production-safe crawl rules. WordPress appends the active sitemap URL, so
+// this remains correct when the site is moved from Local to its public host.
+add_filter('robots_txt',function($output,$public){
+  if(!$public) return "User-agent: *\nDisallow: /\n";
+  return "User-agent: *\nAllow: /\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\nDisallow: /cart/\nDisallow: /checkout/\nDisallow: /my-account/\nDisallow: /search/\n\nUser-agent: OAI-SearchBot\nAllow: /\nDisallow: /cart/\nDisallow: /checkout/\nDisallow: /my-account/\nDisallow: /search/\n\nUser-agent: GPTBot\nDisallow: /\n\nSitemap: ".home_url('/wp-sitemap.xml')."\n";
+},20,2);
+
+add_filter('wp_robots',function($robots){
+  $private_route=is_search()
+    || (function_exists('is_cart') && is_cart())
+    || (function_exists('is_checkout') && is_checkout())
+    || (function_exists('is_account_page') && is_account_page());
+  if($private_route){
+    $robots['noindex']=true;
+    unset($robots['index']);
+  }else{
+    $robots['index']=true;
+    $robots['follow']=true;
+    $robots['max-image-preview']='large';
+    $robots['max-snippet']=-1;
+    $robots['max-video-preview']=-1;
+  }
+  return $robots;
+});
+
+add_action('send_headers',function(){
+  if(headers_sent()) return;
+  header('X-Content-Type-Options: nosniff');
+  header('Referrer-Policy: strict-origin-when-cross-origin');
+  header('X-Frame-Options: SAMEORIGIN');
+  // The Kivi virtual try-on runs in a cross-origin iframe and requires camera
+  // delegation from the top-level document. Keep unrelated sensors disabled.
+  header('Permissions-Policy: camera=(self "https://meta.kivisense.com"), geolocation=(), payment=(self)');
+  if(is_ssl()) header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+});
+remove_action('wp_head','wp_generator');
+
+// Cart, checkout and account URLs are utility endpoints, not landing pages.
+// Keep them out of Yoast sitemaps because they redirect or intentionally carry
+// noindex, and sitemap entries must be canonical indexable URLs only.
+add_filter('wpseo_exclude_from_sitemap_by_post_ids',function($ids){
+  foreach(['cart','checkout','my-account'] as $slug){
+    $page=get_page_by_path($slug,OBJECT,'page');
+    if($page instanceof WP_Post) $ids[]=(int)$page->ID;
+  }
+  return array_values(array_unique(array_map('intval',$ids)));
+});
+
 function mm_routes(){
   static $routes=null;
   if ($routes===null){
@@ -51,6 +99,145 @@ function mm_snapshot_wp_head(){
   return preg_replace('#<title\b[^>]*>.*?</title>\s*#is','',$head);
 }
 
+function mm_html_upsert_meta($html,$attribute,$key,$content){
+  $tag='<meta '.$attribute.'="'.esc_attr($key).'" content="'.esc_attr($content).'">';
+  $pattern='#<meta\b(?=[^>]*\b'.preg_quote($attribute,'#').'=["\']'.preg_quote($key,'#').'["\'])[^>]*>#i';
+  return preg_match($pattern,$html)
+    ? preg_replace($pattern,$tag,$html,1)
+    : preg_replace('#</head>#i',$tag."\n</head>",$html,1);
+}
+
+function mm_snapshot_description($html,$file){
+  if(preg_match('#<meta\b(?=[^>]*\bname=["\']description["\'])[^>]*>#i',$html,$meta)
+    && preg_match('#\bcontent=(["\'])(.*?)\1#is',$meta[0],$match)){
+    $description=trim(wp_strip_all_tags(html_entity_decode($match[2],ENT_QUOTES|ENT_HTML5,'UTF-8')));
+    if($description!=='') return $description;
+  }
+  $fallbacks=[
+    'blogs__buyers-guide.html'=>'Hướng dẫn chọn và so sánh kính AI MemoMind One, từ thiết kế, kính thuốc đến quyền riêng tư và trải nghiệm sử dụng thực tế.',
+    'blogs__in-the-moment.html'=>'Khám phá cách kính AI MemoMind One hỗ trợ ghi nhớ, dịch thuật, phụ đề, công việc và những tình huống thường ngày.',
+    'blogs__news.html'=>'Tin tức mới nhất về MemoMind One, hoạt động sản phẩm, sự kiện công nghệ và các cập nhật từ MemoMind.',
+    'blogs__tech-hub.html'=>'Kiến thức chuyên sâu về kính AI, màn hình, âm thanh, pin, hiệu năng và công nghệ trên MemoMind One.',
+    'policies__privacy-policy.html'=>'Chính sách bảo mật của MemoMind: cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu của khách hàng.',
+    'policies__terms-of-service.html'=>'Điều khoản sử dụng website, sản phẩm và dịch vụ MemoMind dành cho khách hàng tại Việt Nam.',
+  ];
+  if(isset($fallbacks[$file])) return $fallbacks[$file];
+  if(preg_match('#<title\b[^>]*>(.*?)</title>#is',$html,$match)){
+    return trim(wp_strip_all_tags($match[1])).' — Thông tin chính thức từ MemoMind Việt Nam.';
+  }
+  return 'Thông tin sản phẩm, hướng dẫn và hỗ trợ khách hàng MemoMind tại Việt Nam.';
+}
+
+function mm_enhance_snapshot_seo($html,$file){
+  $route=mm_current_route();
+  $canonical=home_url($route);
+  $site=untrailingslashit(home_url('/'));
+  $asset=trailingslashit(get_template_directory_uri()).'assets';
+  $description=str_starts_with($route,'/support/')
+    ? 'Thông tin hỗ trợ, bảo hành, vận chuyển, thanh toán và giải đáp về sản phẩm MemoMind One tại Việt Nam.'
+    : mm_snapshot_description($html,$file);
+
+  // This long-form article uses one page-level H1; its four chapter headings
+  // were imported as additional H1 elements and must remain H2 semantically.
+  if($file==='blogs__in-the-moment__memomind-ai-glasses-4-real-life-moments.html'){
+    $html=preg_replace_callback(
+      '#<h1\b([^>]*\bclass=["\'][^"\']*\bpost-title\b[^"\']*["\'][^>]*)>(.*?)</h1>#is',
+      static fn($match)=>'<h2'.$match[1].'>'.$match[2].'</h2>',
+      $html
+    );
+  }
+
+  // Move mirrored first-party URLs to the actual Vietnamese site. Assets use
+  // the local mirror, while page/schema URLs use the canonical WordPress host.
+  $html=str_replace(
+    ['https://www.memo-mind.com/cdn/','http://www.memo-mind.com/cdn/','https:\/\/www.memo-mind.com\/cdn\/','http:\/\/www.memo-mind.com\/cdn\/'],
+    [$asset.'/cdn/',$asset.'/cdn/',str_replace('/','\\/',$asset.'/cdn/'),str_replace('/','\\/',$asset.'/cdn/')],
+    $html
+  );
+  $html=str_replace(
+    ['https://www.memo-mind.com','http://www.memo-mind.com','https:\/\/www.memo-mind.com','http:\/\/www.memo-mind.com'],
+    [$site,$site,str_replace('/','\\/',$site),str_replace('/','\\/',$site)],
+    $html
+  );
+
+  $canonical_tag='<link rel="canonical" href="'.esc_url($canonical).'">';
+  $html=preg_match('#<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>#i',$html)
+    ? preg_replace('#<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>#i',$canonical_tag,$html,1)
+    : preg_replace('#</head>#i',$canonical_tag."\n</head>",$html,1);
+
+  $indexable=!in_array($route,['/search/','/cart/','/checkout/','/my-account/','/pages/data-sharing-opt-out/'],true);
+  $robots=$indexable
+    ? 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
+    : 'noindex, follow, max-image-preview:large';
+  $html=mm_html_upsert_meta($html,'name','description',$description);
+  $html=mm_html_upsert_meta($html,'name','robots',$robots);
+  $html=mm_html_upsert_meta($html,'property','og:description',$description);
+  $html=mm_html_upsert_meta($html,'property','og:url',$canonical);
+  $html=mm_html_upsert_meta($html,'property','og:site_name','MemoMind Việt Nam');
+  $html=mm_html_upsert_meta($html,'property','og:locale','vi_VN');
+  $html=mm_html_upsert_meta($html,'name','twitter:description',$description);
+  $html=mm_html_upsert_meta($html,'name','twitter:card','summary_large_image');
+
+  // One stable favicon declaration. The bundled SVG is square and crawlable;
+  // do not advertise the SVG duplicate as an Apple PNG.
+  $favicon=esc_url($asset.'/cdn/shop/files/MemoMind_Website_icon_efebfcc3-e8b6-4bb4-ae22-20568ee93b54.svg');
+  $html=preg_replace('#<link\b(?=[^>]*\brel=["\'](?:shortcut icon|icon|apple-touch-icon)["\'])[^>]*>\s*#i','',$html);
+  $icons='<link rel="icon" href="'.$favicon.'" type="image/svg+xml" sizes="any">'
+    .'<link rel="apple-touch-icon" href="'.esc_url($asset.'/apple-touch-icon.png').'" sizes="180x180">'
+    .'<link rel="manifest" href="'.esc_url($asset.'/site.webmanifest').'">'
+    .'<meta name="theme-color" content="#ede5da">';
+  $html=preg_replace('#</head>#i',$icons."\n</head>",$html,1);
+
+  if($route==='/'){
+    // Replace the imported global identity graph with one consistent graph for
+    // the Vietnamese storefront. Legal name and tax ID stay omitted until the
+    // owner supplies verified legal data.
+    $html=preg_replace('#<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*\[\s*\{\s*["\']@context["\'][\s\S]*?</script>#i','',$html,1);
+    $graph=[
+      '@context'=>'https://schema.org',
+      '@graph'=>[
+        [
+          '@type'=>'WebSite','@id'=>$site.'/#website','url'=>$site.'/','name'=>'MemoMind Việt Nam',
+          'alternateName'=>['MemoMind','MEMOMIND VN'],'publisher'=>['@id'=>$site.'/#organization'],
+        ],
+        [
+          '@type'=>'OnlineStore','@id'=>$site.'/#organization','name'=>'MemoMind Việt Nam','url'=>$site.'/',
+          'logo'=>['@type'=>'ImageObject','url'=>$favicon],
+          'description'=>'Đơn vị cung cấp kính AI MemoMind và hỗ trợ khách hàng tại Việt Nam.',
+          'telephone'=>'+841900638400','email'=>'contact@memomind.vn',
+          'address'=>[
+            ['@type'=>'PostalAddress','streetAddress'=>'226 Đường Láng, Phường Thịnh Quang, Quận Đống Đa','addressLocality'=>'Hà Nội','addressCountry'=>'VN'],
+            ['@type'=>'PostalAddress','streetAddress'=>'137 Hòa Hưng, Phường Hòa Hưng','addressLocality'=>'Thành phố Hồ Chí Minh','addressCountry'=>'VN'],
+          ],
+          'contactPoint'=>['@type'=>'ContactPoint','contactType'=>'customer service','telephone'=>'+841900638400','email'=>'contact@memomind.vn','availableLanguage'=>['vi','en']],
+          'sameAs'=>['https://www.instagram.com/memomind.official/','https://www.youtube.com/@MemoMind.official'],
+        ],
+      ],
+    ];
+    $json='<script type="application/ld+json" id="mm-site-identity-schema">'.wp_json_encode($graph,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES).'</script>';
+    $html=preg_replace('#</head>#i',$json."\n</head>",$html,1);
+  }
+
+  if(str_starts_with($route,'/products/')){
+    // Imported Shopify offers contained USD campaign deposits and translated
+    // schema type names. Prices are intentionally hidden on this consultation
+    // storefront, so publishing an Offer would contradict the visible page.
+    $html=preg_replace('#<meta\b(?=[^>]*\bproperty=["\']product:(?:price:amount|price:currency|availability)["\'])[^>]*>\s*#i','',$html);
+    $html=preg_replace('#<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*\{(?=[^{}]*["\']@context["\'])[^<]*["\']@type["\']\s*:\s*["\']ProductGroup["\'][^<]*</script>#i','',$html,1);
+    $is_custom=str_contains($file,'custom');
+    $product=[
+      '@context'=>'https://schema.org','@type'=>'ProductGroup','@id'=>$canonical.'#product',
+      'name'=>$is_custom?'MemoMind One Custom':'MemoMind One Standard','url'=>$canonical,
+      'description'=>$description,'brand'=>['@type'=>'Brand','name'=>'MemoMind'],
+      'category'=>'Kính thông minh AI','productGroupID'=>$is_custom?'MM-ONE-CUSTOM':'MM-ONE-STANDARD',
+    ];
+    if(preg_match('#<meta\b(?=[^>]*\bproperty=["\']og:image["\'])[^>]*\bcontent=(["\'])(.*?)\1#i',$html,$match)) $product['image']=html_entity_decode($match[2],ENT_QUOTES|ENT_HTML5,'UTF-8');
+    $json='<script type="application/ld+json" id="mm-product-schema">'.wp_json_encode($product,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES).'</script>';
+    $html=preg_replace('#</head>#i',$json."\n</head>",$html,1);
+  }
+  return $html;
+}
+
 function mm_render_snapshot($file){
   $is_support=$file==='@support';
   $path=get_template_directory().'/views/'.($is_support?'pages__about-us.html':$file);
@@ -62,6 +249,18 @@ function mm_render_snapshot($file){
   if($wp_query instanceof WP_Query) $wp_query->is_404=false;
   status_header(200);
   $html=file_get_contents($path);
+  // Remove Shopify-account/payment bootstraps that do not apply to the native
+  // WordPress storefront. Their dynamic module graph is not part of the mirror
+  // and otherwise creates repeated local 404s and unnecessary main-thread work.
+  $html=preg_replace('#<script\b[^>]*(?:id=["\'](?:shop-js-analytics|captcha-bootstrap)["\']|src=["\'][^"\']*(?:shop-js/modules|shopify_pay|origin_trials|load_feature)[^"\']*["\'])[^>]*>.*?</script>\s*#is','',$html);
+  $html=preg_replace('#<script\b[^>]*>[^<]*(?:shop-js/modules|featureAssets\[["\']shop-js["\']\])[^<]*</script>\s*#is','',$html);
+  $html=preg_replace('#<script\b[^>]*(?:data-source-attribution=["\']shopify\.dynamic_checkout[^"\']*["\']|id=["\']shopify-features["\']|src=["\'][^"\']*checkouts/internal/[^"\']*["\'])[^>]*>.*?</script>\s*#is','',$html);
+  $html=preg_replace('#<meta\b[^>]*name=["\']shopify-checkout-api-token["\'][^>]*>\s*#i','',$html);
+  $html=preg_replace('#<(?:link|style)\b[^>]*id=["\']shopify-accelerated-checkout[^"\']*["\'][^>]*>(?:.*?</style>)?\s*#is','',$html);
+  // Search is disabled for this single-language storefront. Removing the
+  // orphaned Shopify drawer also prevents PredictiveSearch from connecting to
+  // a missing trigger and throwing on every page load.
+  $html=preg_replace('#<section\b[^>]*class=["\'][^"\']*shopify-section--search-drawer[^"\']*["\'][^>]*>.*?</section>\s*#is','',$html,1);
   if(function_exists('mm_blog_apply_post_to_snapshot')){
     $html=mm_blog_apply_post_to_snapshot($html,$file);
     if($html===false) return false;
@@ -139,7 +338,20 @@ function mm_render_snapshot($file){
   );
   $html=str_replace('"Back on Kickstarter"','"Mua ngay"',$html);
   if($is_support){
-    $html=preg_replace('#<title\b[^>]*>.*?</title>#is','<title>Trung tâm hỗ trợ MemoMind</title>',$html,1);
+    $support_titles=[
+      'cac-kieu-gong-memomind-one'=>'Các kiểu gọng MemoMind One',
+      'gong-phu-hop-nguoi-dau-lon'=>'Chọn gọng MemoMind cho người có vòng đầu lớn',
+      'chon-mau-gong'=>'Các màu gọng MemoMind One',
+      'theo-doi-don-hang'=>'Theo dõi đơn hàng MemoMind',
+      'chinh-sach-doi-tra'=>'Chính sách đổi trả MemoMind',
+      'thanh-toan-khong-thanh-cong'=>'Hỗ trợ thanh toán MemoMind',
+      'chinh-sach-bao-hanh'=>'Chính sách bảo hành MemoMind One',
+      'van-chuyen-giao-hang'=>'Chính sách vận chuyển MemoMind',
+      'phuong-thuc-thanh-toan'=>'Phương thức thanh toán MemoMind',
+    ];
+    $support_slug=trim(substr(mm_current_route(),strlen('/support/')),'/');
+    $support_title=$support_titles[$support_slug] ?? 'Trung tâm hỗ trợ MemoMind';
+    $html=preg_replace('#<title\b[^>]*>.*?</title>#is','<title>'.esc_html($support_title).' | MemoMind Việt Nam</title>',$html,1);
     $html=preg_replace('#<main\b[^>]*>.*?</main>#is','<main class="anchor" id="main">'.mm_support_content().'</main>',$html,1);
   }
   // Support content is injected after the first normalization pass.
@@ -188,6 +400,7 @@ function mm_render_snapshot($file){
   // Reuse the full local Manrope files already bundled with the mirror and keep
   // the original family names so layout/CSS selectors remain unchanged.
   $font_fix='<style id="mm-vietnamese-font-fix">'
+    .'html,body{max-width:100%;overflow-x:clip}'
     .'.header__account-link,.header__search-link,.menu-drawer__footer-item:has(a[href*="/my-account/"]),.menu-drawer__footer-item:has(a[href="/account"]),a[href="/account"],a[href*="/my-account/"],a[href*="/search/"]{display:none!important}'
     .'@font-face{font-family:Manrope;src:url("'.$asset.'/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk79FO_F.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}'
     .'@font-face{font-family:Manrope;src:url("'.$asset.'/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk79FO_F.ttf") format("truetype");font-style:normal;font-weight:500;font-display:swap}'
@@ -240,13 +453,19 @@ function mm_render_snapshot($file){
     </article>
   </div>
   <nav class="mm-site-footer__links" aria-label="Liên kết cuối trang">
-    <a href="__MM_HOME__/products/memomind-one-standard/">Sản phẩm chính hãng</a><span></span>
-    <a href="__MM_HOME__/support/">Hỗ trợ tận tâm</a><span></span>
-    <a href="__MM_HOME__/policies/privacy-policy/">Chính sách bảo mật</a>
+    <a href="__MM_HOME__/about-us/">Giới thiệu</a><span></span>
+    <a href="__MM_HOME__/contact/">Liên hệ</a><span></span>
+    <a href="__MM_HOME__/support/chinh-sach-bao-hanh/">Bảo hành</a><span></span>
+    <a href="__MM_HOME__/support/chinh-sach-doi-tra/">Đổi trả &amp; hoàn tiền</a><span></span>
+    <a href="__MM_HOME__/support/van-chuyen-giao-hang/">Vận chuyển</a><span></span>
+    <a href="__MM_HOME__/support/phuong-thuc-thanh-toan/">Thanh toán</a><span></span>
+    <a href="__MM_HOME__/policies/privacy-policy/">Bảo mật</a><span></span>
+    <a href="__MM_HOME__/policies/terms-of-service/">Điều khoản</a>
   </nav>
+  <div class="mm-site-footer__legal"><p>Email: <a href="mailto:contact@memomind.vn">contact@memomind.vn</a> · Giờ hỗ trợ: Thứ Hai–Chủ Nhật, 9:00–18:00</p><p>© 2026 MemoMind Việt Nam. Thông tin sản phẩm có thể được cập nhật.</p></div>
 </footer>
 <style id="mm-site-footer-style">
-.memomind-footer__subscribe,.memomind-footer__panel:has(.memomind-footer__panel-subscribe){display:none!important}.memomind-footer__desktop-grid{grid-template-columns:1fr 1fr 1fr 1.4fr!important}.memomind-footer__contact-panel{grid-column:auto!important}.mm-site-footer{box-sizing:border-box;background:#222;color:#fff;padding:30px clamp(22px,4vw,64px) 12px;font-family:Manrope,Arial,sans-serif}.mm-site-footer *{box-sizing:border-box}.mm-site-footer__top{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:64px}.mm-site-footer__brand{display:inline-flex;align-items:center;color:#fff;text-decoration:none;font-size:31px;font-weight:600;letter-spacing:5px}.mm-site-footer__brand span{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:4px 10px;border:1px solid #555;border-radius:8px;background:#2e2e2e;color:#eee;font-size:15px;font-weight:700;letter-spacing:1px;vertical-align:middle}.mm-site-footer__top p{margin:0;color:#aaa;font-size:17px}.mm-site-footer__divider{height:1px;background:#3d3d3d;margin:0 0 52px}.mm-site-footer h2{margin:0 0 42px;font-size:24px}.mm-site-footer__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}.mm-site-footer__card{min-height:305px;padding:30px;border:1px solid #484848;border-radius:17px;background:#292929}.mm-site-footer__card--primary{border-color:#5a5a5a;background:#2c2c2c}.mm-site-footer__card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.mm-site-footer__icon{display:grid;place-items:center;width:54px;height:54px;border:1px solid #666;border-radius:13px;background:#333;color:#eee;font-size:23px}.mm-site-footer__badge{padding:7px 13px;border:1px solid #606060;border-radius:999px;background:#333;color:#ddd;font-size:13px;font-weight:700}.mm-site-footer__card h3{margin:0 0 14px;font-size:20px}.mm-site-footer__card p{min-height:52px;margin:0;color:#bbb;font-size:15px;line-height:1.65}.mm-site-footer__address{display:flex;gap:10px}.mm-site-footer__address span{flex:0 0 auto;color:#ddd;font-size:18px}.mm-site-footer__phone{display:block;margin-top:21px;padding-top:20px;border-top:1px solid #444;color:#fff;text-decoration:none;font-size:21px;font-weight:700}.mm-site-footer__phone span{margin-right:9px;color:#aaa}.mm-site-footer__contact{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0 28px;padding:15px 22px;border-radius:999px;background:linear-gradient(135deg,#1b6ef3 0%,#0852d4 100%);color:#ffffff;text-align:center;text-decoration:none;font-size:19px;font-weight:800;letter-spacing:.5px;box-shadow:0 6px 20px rgba(27,110,243,.35);transition:transform .2s,box-shadow .2s;border:none}.mm-site-footer__contact:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(27,110,243,.5);color:#ffffff}.mm-site-footer__card--primary p{min-height:0;text-align:center}.mm-site-footer__links{display:flex;align-items:center;justify-content:center;gap:32px;padding:28px 0 0}.mm-site-footer__links a{color:#aaa;text-decoration:none;font-size:15px}.mm-site-footer__links a:hover{color:#fff}.mm-site-footer__links span{width:1px;height:18px;background:#4a4a4a}@media(max-width:900px){.mm-site-footer__grid{grid-template-columns:1fr}.mm-site-footer__card{min-height:0}.mm-site-footer__top{align-items:flex-start;flex-direction:column}.mm-site-footer__divider{margin-top:20px;margin-bottom:36px}.mm-site-footer__links{flex-wrap:wrap;gap:14px 20px}}@media(max-width:520px){.mm-site-footer{padding:28px 16px 12px}.mm-site-footer__brand{font-size:24px}.mm-site-footer__top p{font-size:14px}.mm-site-footer h2{font-size:21px;margin-bottom:26px}.mm-site-footer__grid{gap:16px}.mm-site-footer__card{padding:22px}.mm-site-footer__links span{display:none}.mm-site-footer__links{align-items:flex-start;flex-direction:column}}
+.memomind-footer__subscribe,.memomind-footer__panel:has(.memomind-footer__panel-subscribe){display:none!important}.memomind-footer__desktop-grid{grid-template-columns:1fr 1fr 1fr 1.4fr!important}.memomind-footer__contact-panel{grid-column:auto!important}.mm-site-footer{box-sizing:border-box;background:#222;color:#fff;padding:30px clamp(22px,4vw,64px) 12px;font-family:Manrope,Arial,sans-serif}.mm-site-footer *{box-sizing:border-box}.mm-site-footer__top{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:64px}.mm-site-footer__brand{display:inline-flex;align-items:center;color:#fff;text-decoration:none;font-size:31px;font-weight:600;letter-spacing:5px}.mm-site-footer__brand span{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:4px 10px;border:1px solid #555;border-radius:8px;background:#2e2e2e;color:#eee;font-size:15px;font-weight:700;letter-spacing:1px;vertical-align:middle}.mm-site-footer__top p{margin:0;color:#aaa;font-size:17px}.mm-site-footer__divider{height:1px;background:#3d3d3d;margin:0 0 52px}.mm-site-footer h2{margin:0 0 42px;font-size:24px}.mm-site-footer__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}.mm-site-footer__card{min-height:305px;padding:30px;border:1px solid #484848;border-radius:17px;background:#292929}.mm-site-footer__card--primary{border-color:#5a5a5a;background:#2c2c2c}.mm-site-footer__card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.mm-site-footer__icon{display:grid;place-items:center;width:54px;height:54px;border:1px solid #666;border-radius:13px;background:#333;color:#eee;font-size:23px}.mm-site-footer__badge{padding:7px 13px;border:1px solid #606060;border-radius:999px;background:#333;color:#ddd;font-size:13px;font-weight:700}.mm-site-footer__card h3{margin:0 0 14px;font-size:20px}.mm-site-footer__card p{min-height:52px;margin:0;color:#bbb;font-size:15px;line-height:1.65}.mm-site-footer__address{display:flex;gap:10px}.mm-site-footer__address span{flex:0 0 auto;color:#ddd;font-size:18px}.mm-site-footer__phone{display:block;margin-top:21px;padding-top:20px;border-top:1px solid #444;color:#fff;text-decoration:none;font-size:21px;font-weight:700}.mm-site-footer__phone span{margin-right:9px;color:#aaa}.mm-site-footer__contact{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0 28px;padding:15px 22px;border-radius:999px;background:linear-gradient(135deg,#1b6ef3 0%,#0852d4 100%);color:#ffffff;text-align:center;text-decoration:none;font-size:19px;font-weight:800;letter-spacing:.5px;box-shadow:0 6px 20px rgba(27,110,243,.35);transition:transform .2s,box-shadow .2s;border:none}.mm-site-footer__contact:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(27,110,243,.5);color:#ffffff}.mm-site-footer__card--primary p{min-height:0;text-align:center}.mm-site-footer__links{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px 24px;padding:28px 0 0}.mm-site-footer__links a{color:#aaa;text-decoration:none;font-size:15px}.mm-site-footer__links a:hover{color:#fff}.mm-site-footer__links span{width:1px;height:18px;background:#4a4a4a}.mm-site-footer__legal{margin-top:24px;padding-top:20px;border-top:1px solid #3d3d3d;text-align:center;color:#888;font-size:13px;line-height:1.6}.mm-site-footer__legal p{margin:4px 0}.mm-site-footer__legal a{color:#aaa}@media(max-width:900px){.mm-site-footer__grid{grid-template-columns:1fr}.mm-site-footer__card{min-height:0}.mm-site-footer__top{align-items:flex-start;flex-direction:column}.mm-site-footer__divider{margin-top:20px;margin-bottom:36px}.mm-site-footer__links{flex-wrap:wrap;gap:14px 20px}}@media(max-width:520px){.mm-site-footer{padding:28px 16px 12px}.mm-site-footer__brand{font-size:24px}.mm-site-footer__top p{font-size:14px}.mm-site-footer h2{font-size:21px;margin-bottom:26px}.mm-site-footer__grid{gap:16px}.mm-site-footer__card{padding:22px}.mm-site-footer__links span{display:none}.mm-site-footer__links{align-items:flex-start;flex-direction:column}}
 </style>
 <style id="mm-global-hide-prices">
 /* Global hide all prices across the website */
@@ -317,6 +536,7 @@ HTML;
     $floating_widget = mm_get_floating_contact_markup();
     $html = preg_replace('#</body>#i', $floating_widget . '</body>', $html, 1);
   }
+  $html=mm_enhance_snapshot_seo($html,$file);
   nocache_headers();
   echo $html;
   return true;
@@ -348,12 +568,24 @@ function mm_support_content(){
       'Tại sao thanh toán của tôi không thực hiện được?',
       '<p>Hãy kiểm tra lại thông tin thanh toán, số dư hoặc hạn mức, địa chỉ thanh toán và xác thực từ ngân hàng. Nếu giao dịch vẫn thất bại, thử phương thức khác hoặc liên hệ ngân hàng phát hành thẻ và đội ngũ hỗ trợ MemoMind.</p>'
     ],
+    'chinh-sach-bao-hanh'=>[
+      'Chính sách bảo hành MemoMind One',
+      '<p>MemoMind tiếp nhận yêu cầu bảo hành đối với lỗi kỹ thuật hoặc lỗi sản xuất trong thời hạn được xác nhận trên đơn hàng. Khách hàng cần cung cấp mã đơn, thông tin liên hệ và mô tả tình trạng sản phẩm.</p><h3>Quy trình hỗ trợ</h3><p>Liên hệ hotline 1900.63.8400 hoặc email contact@memomind.vn để được kiểm tra điều kiện áp dụng và hướng dẫn gửi sản phẩm. Thời hạn và phạm vi bảo hành cụ thể được xác nhận khi tư vấn đơn hàng.</p>'
+    ],
+    'van-chuyen-giao-hang'=>[
+      'Chính sách vận chuyển và giao hàng',
+      '<p>MemoMind hỗ trợ giao hàng tại Việt Nam. Thời gian và phí giao hàng phụ thuộc địa chỉ nhận, tình trạng sản phẩm và phương thức vận chuyển được xác nhận khi chốt đơn.</p><h3>Theo dõi đơn hàng</h3><p>Sau khi đơn được bàn giao cho đơn vị vận chuyển, khách hàng sẽ nhận thông tin theo dõi qua thông tin liên hệ đã cung cấp.</p>'
+    ],
+    'phuong-thuc-thanh-toan'=>[
+      'Phương thức thanh toán',
+      '<p>Phương thức, số tiền và hướng dẫn thanh toán được nhân viên MemoMind xác nhận trực tiếp với khách hàng trước khi xử lý đơn. Không chuyển tiền vào tài khoản không được xác nhận qua kênh liên hệ chính thức.</p><h3>Cần hỗ trợ?</h3><p>Liên hệ hotline 1900.63.8400 hoặc email contact@memomind.vn để kiểm tra thông tin thanh toán của đơn hàng.</p>'
+    ],
   ];
   $support_slug=trim(substr(mm_current_route(),strlen('/support/')),'/');
   if($support_slug!=='' && isset($support_articles[$support_slug])){
     [$title,$body]=$support_articles[$support_slug];
     $home=esc_url(home_url('/support/'));
-    return '<style>.mm-support-article{font-family:Manrope,Arial,sans-serif;max-width:900px;margin:0 auto;padding:80px 24px 120px;color:#111}.mm-support-article__back{display:inline-block;margin-bottom:42px;color:#555;text-decoration:none}.mm-support-article h1{font-size:clamp(34px,5vw,56px);line-height:1.15;margin:0 0 36px}.mm-support-article h3{font-size:22px;margin:32px 0 10px}.mm-support-article p{font-size:18px;line-height:1.75;color:#444}.mm-support-article__contact{margin-top:54px;padding-top:28px;border-top:1px solid #ddd}</style><article class="mm-support-article"><a class="mm-support-article__back" href="'.$home.'">← Trung tâm hỗ trợ</a><h1>'.esc_html($title).'</h1>'.$body.'<p class="mm-support-article__contact">Bạn vẫn cần hỗ trợ? Email: <a href="mailto:Support@memo-mind.com">Support@memo-mind.com</a></p></article>';
+    return '<style>.mm-support-article{font-family:Manrope,Arial,sans-serif;max-width:900px;margin:0 auto;padding:80px 24px 120px;color:#111}.mm-support-article__back{display:inline-block;margin-bottom:42px;color:#555;text-decoration:none}.mm-support-article h1{font-size:clamp(34px,5vw,56px);line-height:1.15;margin:0 0 36px}.mm-support-article h3{font-size:22px;margin:32px 0 10px}.mm-support-article p{font-size:18px;line-height:1.75;color:#444}.mm-support-article__contact{margin-top:54px;padding-top:28px;border-top:1px solid #ddd}</style><article class="mm-support-article"><a class="mm-support-article__back" href="'.$home.'">← Trung tâm hỗ trợ</a><h1>'.esc_html($title).'</h1>'.$body.'<p class="mm-support-article__contact">Bạn vẫn cần hỗ trợ? Email: <a href="mailto:contact@memomind.vn">contact@memomind.vn</a></p></article>';
   }
   $markup=<<<'HTML'
 <style>
@@ -362,7 +594,7 @@ body:has(.mm-support)>.shopify-section-group-header-group,body:has(.mm-support) 
 </style>
 <section class="mm-support">
  <nav class="mm-support__nav"><a class="mm-support__logo" href="__MM_HOME__/">MEMOMIND</a><div class="mm-support__menu"><a href="__MM_HOME__/">Trang chủ</a><a href="__MM_HOME__/pages/memomind-one/">MemoMind One</a><a href="__MM_HOME__/pages/about-us/">Về chúng tôi</a></div></nav>
- <div class="mm-support__hero"><div class="mm-support__eyebrow">MemoMind</div><h1>Chào mừng đến với<br>Trung tâm hỗ trợ MemoMind</h1><p class="mm-support__lead">Tìm câu trả lời về sản phẩm MemoMind, đơn hàng, giao hàng, đổi trả và thanh toán.</p><form class="mm-support__search" action="https://support.memo-mind.com/hc/en-gb/search" method="get"><input aria-label="Tìm kiếm hỗ trợ" name="query" placeholder="Tìm kiếm" type="search"><button type="submit">Tìm kiếm</button></form></div>
+ <div class="mm-support__hero"><div class="mm-support__eyebrow">MemoMind</div><h1>Chào mừng đến với<br>Trung tâm hỗ trợ MemoMind</h1><p class="mm-support__lead">Tìm câu trả lời về sản phẩm MemoMind, đơn hàng, giao hàng, đổi trả và thanh toán.</p></div>
  <div class="mm-support__body"><h2>Tìm hỗ trợ bạn cần</h2><div class="mm-support__grid">
   <a class="mm-support__card" href="__MM_HOME__/support/cac-kieu-gong-memomind-one/"><span class="mm-support__icon">◎</span><h3>Hỗ trợ sản phẩm</h3><p>Nhận hỗ trợ về tính năng sản phẩm, thiết lập và các vấn đề kỹ thuật.</p></a>
   <a class="mm-support__card" href="__MM_HOME__/support/theo-doi-don-hang/"><span class="mm-support__icon">◇</span><h3>Vận chuyển &amp; giao hàng</h3><p>Theo dõi đơn hàng và cập nhật tình trạng vận chuyển, giao hàng.</p></a>
@@ -371,7 +603,7 @@ body:has(.mm-support)>.shopify-section-group-header-group,body:has(.mm-support) 
   <a class="mm-support__card" href="__MM_HOME__/support/thanh-toan-khong-thanh-cong/"><span class="mm-support__icon">$</span><h3>Thanh toán &amp; hóa đơn</h3><p>Tìm thông tin về thanh toán, lập hóa đơn và chứng từ.</p></a>
  </div><section class="mm-support__popular"><h2>Câu hỏi phổ biến</h2><div class="mm-support__links">
   <a href="__MM_HOME__/support/cac-kieu-gong-memomind-one/">MemoMind One có bao nhiêu kiểu dáng khác nhau?</a><a href="__MM_HOME__/support/theo-doi-don-hang/">Làm thế nào để theo dõi trạng thái đơn hàng?</a><a href="__MM_HOME__/support/gong-phu-hop-nguoi-dau-lon/">Loại gọng nào phù hợp hơn với người có vòng đầu lớn?</a><a href="__MM_HOME__/support/chinh-sach-doi-tra/">Chính sách đổi trả của MemoMind như thế nào?</a><a href="__MM_HOME__/support/chon-mau-gong/">Tôi có thể chọn màu gọng không?</a><a href="__MM_HOME__/support/thanh-toan-khong-thanh-cong/">Tại sao thanh toán của tôi không thực hiện được?</a>
- </div></section><div class="mm-support__contact"><div><h2>Vẫn cần hỗ trợ?</h2><p>Hỗ trợ khách hàng &amp; hỗ trợ kỹ thuật · Thứ Hai–Chủ Nhật, 9:00–18:00 CT</p></div><a href="mailto:Support@memo-mind.com">Liên hệ hỗ trợ</a></div></div>
+ </div></section><div class="mm-support__contact"><div><h2>Vẫn cần hỗ trợ?</h2><p>Hỗ trợ khách hàng &amp; hỗ trợ kỹ thuật · Thứ Hai–Chủ Nhật, 9:00–18:00 (giờ Việt Nam)</p></div><a href="mailto:contact@memomind.vn">Liên hệ hỗ trợ</a></div></div>
 </section>
 HTML;
   return str_replace(
@@ -396,6 +628,10 @@ add_action('template_redirect', function(){
   // Checkout is handled directly through the AJAX consultation popup.
   if($route==='/checkout/') {
     wp_safe_redirect(home_url('/collections/all/'),302);
+    exit;
+  }
+  if($route==='/data-sharing-opt-out/' || $route==='/pages/data-sharing-opt-out/'){
+    wp_safe_redirect(home_url('/policies/privacy-policy/'),301);
     exit;
   }
   // Redirect legacy Shopify page URLs to clean WordPress-style root slugs.
