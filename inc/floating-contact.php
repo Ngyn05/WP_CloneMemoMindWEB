@@ -746,7 +746,6 @@ function mm_get_floating_contact_markup() {
             document.body.style.overflow = 'hidden';
           }
         }
-        }
 
         function closeOfficeModal() {
           if (officeModal) {
@@ -754,7 +753,6 @@ function mm_get_floating_contact_markup() {
             officeModal.setAttribute('inert', '');
             document.body.style.overflow = '';
           }
-        }
         }
 
         if (openOfficeBtn) {
