@@ -387,6 +387,8 @@ CSS;
     if(submitBtn) submitBtn.disabled = false;
     if(submitText) submitText.textContent = 'Mua hàng';
     modal.classList.add('is-open');
+    modal.removeAttribute('hidden');
+    modal.removeAttribute('inert');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('mm-consult-open');
   };
@@ -394,6 +396,8 @@ CSS;
   const closeModal = () => {
     if(!modal) return;
     modal.classList.remove('is-open');
+    modal.setAttribute('hidden', '');
+    modal.setAttribute('inert', '');
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('mm-consult-open');
   };

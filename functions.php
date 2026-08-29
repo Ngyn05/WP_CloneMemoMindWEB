@@ -538,7 +538,7 @@ function mm_render_snapshot($file){
     <a href="__MM_HOME__/policies/privacy-policy/">Bảo mật</a><span></span>
     <a href="__MM_HOME__/policies/terms-of-service/">Điều khoản</a>
   </nav>
-  <div class="mm-site-footer__legal"><p>Email: <a href="mailto:contact@memomind.vn">contact@memomind.vn</a> · Giờ hỗ trợ: Thứ Hai–Chủ Nhật, 9:00–18:00</p><p>© 2026 MemoMind Việt Nam. Thông tin sản phẩm có thể được cập nhật.</p></div>
+  <div class="mm-site-footer__legal"><p>Email: <a href="mailto:contact@memomind.vn">contact@memomind.vn</a> · Giờ hỗ trợ: Thứ Hai–Chủ Nhật, 9:00–18:00 (Giờ Việt Nam - GMT+7)</p><p>© 2026 MemoMind Việt Nam. Thông tin sản phẩm có thể được cập nhật.</p></div>
 </footer>
 <style id="mm-site-footer-style">
 .memomind-footer__subscribe,.memomind-footer__panel:has(.memomind-footer__panel-subscribe){display:none!important}.memomind-footer__desktop-grid{grid-template-columns:1fr 1fr 1fr 1.4fr!important}.memomind-footer__contact-panel{grid-column:auto!important}.mm-site-footer{box-sizing:border-box;background:#222;color:#fff;padding:30px clamp(22px,4vw,64px) 12px;font-family:Manrope,Arial,sans-serif}.mm-site-footer *{box-sizing:border-box}.mm-site-footer__top{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:64px}.mm-site-footer__brand{display:inline-flex;align-items:center;color:#fff;text-decoration:none;font-size:31px;font-weight:600;letter-spacing:5px}.mm-site-footer__brand span{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:4px 10px;border:1px solid #555;border-radius:8px;background:#2e2e2e;color:#eee;font-size:15px;font-weight:700;letter-spacing:1px;vertical-align:middle}.mm-site-footer__top p{margin:0;color:#aaa;font-size:17px}.mm-site-footer__divider{height:1px;background:#3d3d3d;margin:0 0 52px}.mm-site-footer h2{margin:0 0 42px;font-size:24px}.mm-site-footer__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}.mm-site-footer__card{min-height:305px;padding:30px;border:1px solid #484848;border-radius:17px;background:#292929}.mm-site-footer__card--primary{border-color:#5a5a5a;background:#2c2c2c}.mm-site-footer__card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.mm-site-footer__icon{display:grid;place-items:center;width:54px;height:54px;border:1px solid #666;border-radius:13px;background:#333;color:#eee;font-size:23px}.mm-site-footer__badge{padding:7px 13px;border:1px solid #606060;border-radius:999px;background:#333;color:#ddd;font-size:13px;font-weight:700}.mm-site-footer__card h3{margin:0 0 14px;font-size:20px}.mm-site-footer__card p{min-height:52px;margin:0;color:#bbb;font-size:15px;line-height:1.65}.mm-site-footer__address{display:flex;gap:10px}.mm-site-footer__address span{flex:0 0 auto;color:#ddd;font-size:18px}.mm-site-footer__phone{display:block;margin-top:21px;padding-top:20px;border-top:1px solid #444;color:#fff;text-decoration:none;font-size:21px;font-weight:700}.mm-site-footer__phone span{margin-right:9px;color:#aaa}.mm-site-footer__contact{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0 28px;padding:15px 22px;border-radius:999px;background:linear-gradient(135deg,#1b6ef3 0%,#0852d4 100%);color:#ffffff;text-align:center;text-decoration:none;font-size:19px;font-weight:800;letter-spacing:.5px;box-shadow:0 6px 20px rgba(27,110,243,.35);transition:transform .2s,box-shadow .2s;border:none}.mm-site-footer__contact:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(27,110,243,.5);color:#ffffff}.mm-site-footer__card--primary p{min-height:0;text-align:center}.mm-site-footer__links{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px 24px;padding:28px 0 0}.mm-site-footer__links a{color:#aaa;text-decoration:none;font-size:15px}.mm-site-footer__links a:hover{color:#fff}.mm-site-footer__links span{width:1px;height:18px;background:#4a4a4a}.mm-site-footer__legal{margin-top:24px;padding-top:20px;border-top:1px solid #3d3d3d;text-align:center;color:#888;font-size:13px;line-height:1.6}.mm-site-footer__legal p{margin:4px 0}.mm-site-footer__legal a{color:#aaa}@media(max-width:900px){.mm-site-footer__grid{grid-template-columns:1fr}.mm-site-footer__card{min-height:0}.mm-site-footer__top{align-items:flex-start;flex-direction:column}.mm-site-footer__divider{margin-top:20px;margin-bottom:36px}.mm-site-footer__links{flex-wrap:wrap;gap:14px 20px}}@media(max-width:520px){.mm-site-footer{padding:28px 16px 12px}.mm-site-footer__brand{font-size:24px}.mm-site-footer__top p{font-size:14px}.mm-site-footer h2{font-size:21px;margin-bottom:26px}.mm-site-footer__grid{gap:16px}.mm-site-footer__card{padding:22px}.mm-site-footer__links span{display:none}.mm-site-footer__links{align-items:flex-start;flex-direction:column}}
@@ -558,6 +558,10 @@ function mm_render_snapshot($file){
 .home-purchase-showcase__price-value,
 .glass-deposit-sale__price,
 .glass-deposit-sale__compare-price,
+.glass-deposit-sale__original-price,
+.glass-deposit-sale__save,
+.glass-deposit-sale__card-price-wrap,
+.mrn__price-from,
 .memomind-article__product-price-row,
 .memomind-article__product-price,
 .memomind-article__product-compare-price,
@@ -583,11 +587,11 @@ function mm_render_snapshot($file){
 </style>
 HTML;
   $support_footer=str_replace('__MM_HOME__',esc_url(home_url()),$support_footer);
-  if(str_contains($html,'<!-- BEGIN sections: footer-group -->')){
-    $html=str_replace('<!-- BEGIN sections: footer-group -->',$support_footer.'<!-- BEGIN sections: footer-group -->',$html);
-  } else {
-    $html=preg_replace('#</body>#i',$support_footer.'</body>',$html,1);
-  }
+  // Remove original Shopify footer group to prevent duplicate footer, newsletter and DOM elements
+  $html=preg_replace('#<!-- BEGIN sections: footer-group -->.*?<!-- END sections: footer-group -->\s*#is','',$html);
+  $html=preg_replace('#<section\b[^>]*class=["\'][^"\']*shopify-section-group-footer-group[^"\']*["\'][^>]*>.*?</section>\s*#is','',$html);
+  $html=preg_replace('#<footer\b[^>]*class=["\'][^"\']*footer\b[^"\']*["\'][^>]*>.*?</footer>\s*#is','',$html);
+  $html=preg_replace('#</body>#i',$support_footer."\n</body>",$html,1);
   // Normalize the two Shopify-only destinations that appear throughout the
   // snapshots. This also works when WordPress is installed in a subdirectory.
   $html=preg_replace('#href=(["\'])(?:\./|\.\./)*index\.htm\1#i','href=$1'.esc_url(home_url('/')).'$1',$html);

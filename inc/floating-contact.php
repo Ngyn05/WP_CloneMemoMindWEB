@@ -82,7 +82,7 @@ function mm_get_floating_contact_markup() {
     </div>
 
     <!-- Office System Modal -->
-    <div id="mm-office-modal" class="mm-office-modal" role="dialog" aria-modal="true" aria-labelledby="mm-office-modal-title" hidden>
+    <div id="mm-office-modal" class="mm-office-modal" role="dialog" aria-modal="true" aria-labelledby="mm-office-modal-title" hidden inert>
       <div class="mm-office-modal__backdrop" id="mm-office-modal-backdrop"></div>
       <div class="mm-office-modal__dialog">
         <!-- Modal Header -->
@@ -137,7 +137,7 @@ function mm_get_floating_contact_markup() {
                   <span class="mm-office-card__icon" aria-hidden="true">🕒</span>
                   <div class="mm-office-card__item-text">
                     <strong>Giờ làm việc</strong>
-                    <p>7:00 – 21:00 · Tất cả các ngày trong tuần</p>
+                    <p>7:00 – 21:00 · Tất cả các ngày trong tuần (GMT+7)</p>
                   </div>
                 </li>
               </ul>
@@ -178,7 +178,7 @@ function mm_get_floating_contact_markup() {
                   <span class="mm-office-card__icon" aria-hidden="true">🕒</span>
                   <div class="mm-office-card__item-text">
                     <strong>Giờ làm việc</strong>
-                    <p>8:00 – 20:30 · Thứ 2 đến Thứ 7</p>
+                    <p>8:00 – 20:30 · Thứ 2 đến Thứ 7 (GMT+7)</p>
                   </div>
                 </li>
               </ul>
@@ -742,15 +742,19 @@ function mm_get_floating_contact_markup() {
           togglePopover(false);
           if (officeModal) {
             officeModal.hidden = false;
+            officeModal.removeAttribute('inert');
             document.body.style.overflow = 'hidden';
           }
+        }
         }
 
         function closeOfficeModal() {
           if (officeModal) {
             officeModal.hidden = true;
+            officeModal.setAttribute('inert', '');
             document.body.style.overflow = '';
           }
+        }
         }
 
         if (openOfficeBtn) {
